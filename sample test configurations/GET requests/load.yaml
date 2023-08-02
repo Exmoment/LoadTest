@@ -1,0 +1,30 @@
+phantom:
+  address: example.net:443
+  header_http: "1.1"
+  headers:
+    - "[Host: example.net]"
+    - "[User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36]"
+  uris:
+    - /example
+    - /my
+    - /test
+  ssl: true
+  instances: 1000
+  load_profile:
+    load_type: rps
+    schedule: line(1, 10000, 5m) const(5000,2m)
+console:
+  enabled: true
+telegraf:
+ enabled: false
+autostp:
+  enabled: true
+  package: yandextank.plugins.Autostop
+  autostop:
+    - http(5xx,10%,20s), time(10s,20s), net(110,5%,60s)
+overload:
+  enabled: true
+  job_name: loadGET
+  job_dsc: testing_GET_requests
+  package: yandextank.plugins.DataUploader
+  token_file: "token.txt"

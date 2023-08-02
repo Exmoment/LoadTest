@@ -1,0 +1,24 @@
+phantom:
+  address: example.net:443
+  ammo_type: phantom
+  ammofile: ammo_POST.txt
+  ssl: true
+  load_profile:
+    load_type: rps
+    schedule: line(1, 10000, 5m) const(5000,2m)
+  instances: 1000
+console:
+  enabled: true
+telegraf:
+ enabled: false
+autostp:
+  enabled: true
+  package: yandextank.plugins.Autostop
+  autostop:
+    - http(5xx,10%,20s), time(10s,20s), net(110,5%,60s)
+overload:
+  enabled: true
+  job_name: loadPOST
+  job_dsc: testing_POST_requests
+  package: yandextank.plugins.DataUploader
+  token_file: "token.txt"
