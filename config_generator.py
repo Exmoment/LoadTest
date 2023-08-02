@@ -122,6 +122,7 @@ class loadGET:
 
 '''
 def create_loadGET():
+
     create_loadGET = loadGET("loadGET")
     create_loadGET.host = "example.net"
     create_loadGET.port = "443"
@@ -144,40 +145,46 @@ def create_loadGET():
 create_loadGET()
 '''
 
+def create_LoadPOST()
+    
+    create_loadPOST = loadPOST("loadPOST")
+    create_loadPOST.host = "example.net"
+    create_loadPOST.port = "443"
+    create_loadPOST.ammo_file = "ammo_POST.txt"
+    create_loadPOST.ssl = "true"
+    create_loadPOST.schedule = "line(1, 10000, 5m) const(5000,2m)"
+    create_loadPOST.instances = "1000"
+    create_loadPOST.c_enabled = "true"
+    create_loadPOST.t_enabled = "false"
+    create_loadPOST.o_enabled = "true"
+    create_loadPOST.job_dsc = "testing_POST_requests"
+    loadPOST_text = create_loadPOST.load()
+    with open('load.yaml', 'w+') as loadPOST_file:
+        loadPOST_file.write(loadPOST_text)
+    print(loadPOST_text)
 
-create_loadPOST = loadPOST("loadPOST")
-create_loadPOST.host = "example.net"
-create_loadPOST.port = "443"
-create_loadPOST.ammo_file = "ammo_POST.txt"
-create_loadPOST.ssl = "true"
-create_loadPOST.schedule = "line(1, 10000, 5m) const(5000,2m)"
-create_loadPOST.instances = "1000"
-create_loadPOST.c_enabled = "true"
-create_loadPOST.t_enabled = "false"
-create_loadPOST.o_enabled = "true"
-create_loadPOST.job_dsc = "testing_POST_requests"
-loadPOST_text = create_loadPOST.load()
-with open('load.yaml', 'w+') as loadPOST_file:
-    loadPOST_file.write(loadPOST_text)
-print(loadPOST_text)
-
+ create_LoadPOST()
 
 
 '''
-create_ammo = ammo_POST("POST")
-create_ammo.method = "POST"
-create_ammo.path_url = "/my/test"
-create_ammo.host = "example.net"
-create_ammo.port = "443"
-create_ammo.body = """
-{
-    example
-}
-"""
-ammo_text = create_ammo.ammo()
-nameAmmoFile = str(input('Введите имя для создаваемого файла: '))
-with open(nameAmmoFile+'.txt', "w+") as file:
-    file.write(create_ammo.ammo())
-print("Файл с запросом успешно создан")
-print(ammo_text)
+def create_ammo():
+
+    create_ammo = ammo_POST("POST")
+    create_ammo.method = "POST"
+    create_ammo.path_url = "/my/test"
+    create_ammo.host = "example.net"
+    create_ammo.port = "443"
+    create_ammo.body = """
+    {
+        example
+    }
+    """
+    ammo_text = create_ammo.ammo()
+    nameAmmoFile = str(input('Введите имя для создаваемого файла: '))
+    with open(nameAmmoFile+'.txt', "w+") as file:
+        file.write(create_ammo.ammo())
+    print("Файл с запросом успешно создан")
+    print(ammo_text)
+
+create_ammo()
 '''
