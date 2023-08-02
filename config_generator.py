@@ -120,55 +120,60 @@ class loadGET:
         return tank
 
 
+'''
 def create_loadGET():
     create_loadGET = loadGET("loadGET")
-    create_loadGET.host = "61.upstorage.net"
+    create_loadGET.host = "example.net"
     create_loadGET.port = "443"
     create_loadGET.agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
-    create_loadGET.url = """- /signin
-- /api/fairs
-- /markets"""
+    create_loadGET.url = """- /example
+- /my
+- /test"""
     create_loadGET.ssl = "true"
     create_loadGET.instances = "1000"
     create_loadGET.schedule = "line(1, 10000, 5m) const(5000,2m)"
     create_loadGET.c_enabled = "true"
     create_loadGET.t_enabled = "false"
     create_loadGET.o_enabled = "true"
-    create_loadGET.job_dsc = "123"
+    create_loadGET.job_dsc = "example"
     loadGET_text = create_loadGET.load()
     with open('load.yaml', 'w+') as loadGET_file:
         loadGET_file.write(loadGET_text)
     print(loadGET_text)
 
 create_loadGET()
-
-
 '''
+
+
 create_loadPOST = loadPOST("loadPOST")
-create_loadPOST.host = "61.upstorage.net"
+create_loadPOST.host = "example.net"
 create_loadPOST.port = "443"
-create_loadPOST.ammo_file = "ammo.json"
+create_loadPOST.ammo_file = "ammo_POST.txt"
 create_loadPOST.ssl = "true"
 create_loadPOST.schedule = "line(1, 10000, 5m) const(5000,2m)"
 create_loadPOST.instances = "1000"
 create_loadPOST.c_enabled = "true"
 create_loadPOST.t_enabled = "false"
 create_loadPOST.o_enabled = "true"
-create_loadPOST.job_dsc = "testing POST"
+create_loadPOST.job_dsc = "testing_POST_requests"
 loadPOST_text = create_loadPOST.load()
 with open('load.yaml', 'w+') as loadPOST_file:
     loadPOST_file.write(loadPOST_text)
 print(loadPOST_text)
-'''
+
 
 
 '''
 create_ammo = ammo_POST("POST")
 create_ammo.method = "POST"
-create_ammo.path_url = "/api/fairs"
-create_ammo.host = "61.upstorage.net"
+create_ammo.path_url = "/my/test"
+create_ammo.host = "example.net"
 create_ammo.port = "443"
-create_ammo.body = """Сережа редиска"""
+create_ammo.body = """
+{
+    example
+}
+"""
 ammo_text = create_ammo.ammo()
 nameAmmoFile = str(input('Введите имя для создаваемого файла: '))
 with open(nameAmmoFile+'.txt', "w+") as file:
