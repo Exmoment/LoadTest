@@ -1,18 +1,20 @@
 import functions
 
 
-typeLoad = str(input('Enter which load tests you want to run POST/GET/GET and POST: '))
+def objects():
 
-if ('GET and POST' in typeLoad) or ('get and post' in typeLoad) or ('POST and GET' in typeLoad) or ('post and get' in typeLoad):
-    functions.POSTandGET()
+    typeLoad = str(input('Enter which load tests you want to run POST/GET/GET and POST: '))
 
-elif ('POST' in typeLoad) or ('post' in typeLoad):
-    functions.POST()
+    if ('GET and POST' in typeLoad) or ('get and post' in typeLoad) or ('POST and GET' in typeLoad) or ('post and get' in typeLoad):
+        functions.POSTandGET()
 
-elif ('GET' in typeLoad) or ('get' in typeLoad):
-    functions.GET()
+    elif ('POST' in typeLoad) or ('post' in typeLoad):
+        functions.POST()
 
-else:
-    print('Invalid value')
+    elif ('GET' in typeLoad) or ('get' in typeLoad):
+        functions.GET()
+
+    else:
+        print('Invalid value')
 
 print('Test completed')
