@@ -17,4 +17,4 @@ def objects():
     else:
         print('Invalid value')
 
-print('Test completed')
+#print('Test completed')
