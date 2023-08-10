@@ -12,13 +12,13 @@ def clicked():
     print(chose_tupe.get())
     typeLoad = chose_tupe.get()
 
-    if ('GET and POST' in typeLoad) or ('get and post' in typeLoad) or ('POST and GET' in typeLoad) or ('post and get' in typeLoad):
+    if ('GET and POST' in typeLoad):
         functions.POSTandGET()
 
-    elif ('POST' in typeLoad) or ('post' in typeLoad):
+    elif ('POST' in typeLoad):
         functions.POST()
 
-    elif ('GET' in typeLoad) or ('get' in typeLoad):
+    elif ('GET' in typeLoad):
         functions.GET()
 
     else:
