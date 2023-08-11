@@ -2,27 +2,41 @@ from tkinter import *
 from tkinter.ttk import *
 from tkinter import messagebox
 import functions
+import check
 
 
 def clicked():
-    text_1 = Label(window, text = "Введите путь к файлу конфигурации:", font = ("Arial", 12))
-    text_1.pack(pady = [10, 0])
-    entry_path = Entry(window, width = 10)
-    entry_path.pack(pady = 10)
+    
     print(chose_tupe.get())
     typeLoad = chose_tupe.get()
 
     if ('GET and POST' in typeLoad):
+        text_1 = Label(window, text = "Введите количество итераций тестов:", font = ("Arial", 12))
+        text_1.pack(pady = [5,0])
+        entry_path = Entry(window, width = 25)
+        entry_path.pack(pady = [5, 5])
+        window.geometry('600x450')
         functions.POSTandGET()
 
     elif ('POST' in typeLoad):
+        text_1 = Label(window, text = "Введите количество итераций тестов:", font = ("Arial", 12))
+        text_1.pack(pady = [5,0])
+        entry_path = Entry(window, width = 25)
+        entry_path.pack(pady = [5, 5])
+        window.geometry('600x450')
         functions.POST()
 
     elif ('GET' in typeLoad):
+        text_1 = Label(window, text = "Введите количество итераций тестов:", font = ("Arial", 12))
+        text_1.pack(pady = [5,0])
+        entry_path = Entry(window, width = 25)
+        entry_path.pack(pady = [5, 5])
+        window.geometry('600x450')
         functions.GET()
 
     else:
-        print('Invalid value')
+        error_text = Label(window, text = 'Invalid value', font = ("Arial", 12))
+        error_text.pack(side = BOTTOM, padx = 5, pady = 5)
 
 
 #    messagebox.showinfo('Тест1', "Тест")
@@ -36,10 +50,10 @@ text = Label(window, text = "Выберите тип запросов:", font = 
 text.pack(pady = [10, 0])
 
 tupeTest = ("GET", "POST", "GET and POST")
-btn1 = Button(window, text = 'ОК', command = clicked).pack(side = BOTTOM, fill = X, padx= 5, pady= 5)
-chose_tupe = Combobox(window, values = tupeTest)
+btn1 = Button(window, text = 'ОК', command = clicked).pack(side = BOTTOM, fill = X, padx = 5, pady = 5)
+chose_tupe = Combobox(window, values = tupeTest, width = 25)
 chose_tupe.current()
-chose_tupe.pack(pady = 10)
+chose_tupe.pack(pady = [5, 5])
 
 
 window.mainloop()
