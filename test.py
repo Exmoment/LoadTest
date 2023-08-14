@@ -2,8 +2,11 @@ from tkinter import *
 from tkinter.ttk import *
 from tkinter import messagebox
 import functions
+import os
 import check
 
+def clicked1():
+    tests_iter_entry.get()
 
 def clicked():
     
@@ -19,12 +22,17 @@ def clicked():
         functions.POSTandGET()
 
     elif ('POST' in typeLoad):
+        
+        global tests_iter_entry
+
         POSTreq = Frame(relief = FLAT)
         POSTreq.pack(pady = [5, 5])
         tests_iter = Label(master = POSTreq, text = "Количество итераций тестов:", font = ("Arial", 12))
         tests_iter.grid(column = 0, row = 0, padx = [5, 5], pady = [5, 5], sticky = 'e')
         tests_iter_entry = Entry(master = POSTreq, width = 25)
         tests_iter_entry.grid(column = 1, row = 0, padx = [5, 5], pady = [5, 5])
+        tests_iter_btn = Button(master = POSTreq, text = 'ОК', command = clicked1)
+        tests_iter_btn.grid(column = 2, row = 0, padx = [5, 5], pady = [5, 5])
         tests_config = Label(master = POSTreq, text = "Путь к файлу конфигурации:", font = ("Arial", 12))
         tests_config.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
         tests_config_path = Entry(master = POSTreq, width = 25)
