@@ -21,7 +21,7 @@ def createPOST():
         print(iterTest_entry.get())
 
     else:
-        messagebox.showinfo('Error', 'Должно быть введено положительно число')
+        messagebox.showinfo('Error', 'В поле итераций должно быть введено положительно число')
 
 def clicked():
     print(choice_tupe.get())
