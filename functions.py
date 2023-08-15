@@ -1,78 +1,91 @@
 import time
-import check #import LoadPOSTTesting, LoadGETTesting
+import check
+import click
+from tkinter import *
+from tkinter.ttk import *
+from tkinter import messagebox
 
-def POSTandGET():
-    iterrationGET = int(input('Enter the number of planned scenarios GET requests: '))
-    iterrationPOST = int(input('Enter the number of planned scenarios POST requests: '))
-    
-    if (iterrationGET > 0) and (iterrationPOST > 0):
+
+class choiceType:
+
+    def __init__(self, name):
+        self.name = name
+        self.iterrationGET = ''
+        self.iterrationPOST = ''
+
+    def POSTandGET(self):
+        self.iterrationGET = int()
+        self.iterrationPOST = int()
         
-        while iterrationGET > 0:
-            case = check.LoadGETTesting("CaseGET")
-            try:
-                case.path = input('Enter the name of the file with the body of the tank: ')
-            except:
-                print('No ammo file or tank body found for the first scenario. You need to check the path to the files')
-            case.CaseGET()
-            iterrationGET -= 1
-            print('iterration = ', iterrationGET)
-            time.sleep(30)
-        
-        while iterrationPOST > 0:
-            case = check.LoadPOSTTesting("CasePOST")                    
-            try:
-                case.path = input('Enter the path to the ammo file, or a name from the working folder: ')
-                case.path_2 = input('Enter the name of the file with the body of the tank: ')
-            except:
-                print('No ammo file or tank body found for the first scenario. You need to check the path to the files')
-            case.CasePOST()
-            iterrationPOST -= 1
-            print('iterration = ', iterrationPOST)
-            time.sleep(30)
-
-    else:
-        print('You entered an invalid value')
-        exit(0)
-
-
-def POST():
-    iterration = int(input('Enter the number of planned scenarios: '))
-    
-    if iterration > 0:
-
-        while iterration > 0:
-            case = check.LoadPOSTTesting("CasePOST")                    
-            try:
-                case.path = input('Enter the path to the ammo file, or a name from the working folder: ')
-                case.path_2 = input('Enter the name of the file with the body of the tank: ')
-            except:
-                print('No ammo file or tank body found for the first scenario. You need to check the path to the files')
-            case.CasePOST()
-            iterration -= 1
-            print('iterration = ', iterration)
-            time.sleep(30)
+        if (self.iterrationGET > 0) and (self.iterrationPOST > 0):
             
-    else:
-        print('You entered an invalid value')
-        exit(0)
+            while self.iterrationGET > 0:
+                case = check.LoadGETTesting("CaseGET")
+                try:
+                    case.path = input('Enter the name of the file with the body of the tank: ')
+                except:
+                    print('No ammo file or tank body found for the first scenario. You need to check the path to the files')
+                case.CaseGET()
+                self.iterrationGET -= 1
+                print('iterration = ', self.iterrationGET)
+                time.sleep(30)
+            
+            while self.iterrationPOST > 0:
+                case = check.LoadPOSTTesting("CasePOST")                    
+                try:
+                    case.path = input('Enter the path to the ammo file, or a name from the working folder: ')
+                    case.path_2 = input('Enter the name of the file with the body of the tank: ')
+                except:
+                    print('No ammo file or tank body found for the first scenario. You need to check the path to the files')
+                case.CasePOST()
+                self.iterrationPOST -= 1
+                print('iterration = ', self.iterrationPOST)
+                time.sleep(30)
+
+        else:
+            print('You entered an invalid value')
+            exit(0)
 
 
-def GET():
-    iterration = int(input('Enter the number of planned scenarios: '))
-    
-    if iterration > 0:
+    def POST(self):
+        self.iterrationPOST
+        
+        if self.iterrationPOST > 0:
 
-        while iterration > 0:
-            case = check.LoadGETTesting("CaseGET")
-            try:
-                case.path = input('Enter the name of the file with the body of the tank: ')
-            except:
-                print('No ammo file or tank body found for the first scenario. You need to check the path to the files')
-            case.CaseGET()
-            iterration -= 1
-            print('iterration = ', iterration)
-            time.sleep(30)
+            while self.iterrationPOST > 0:
+                case = check.LoadPOSTTesting("CasePOST")                    
+                try:
+                    case.path = input('Enter the path to the ammo file, or a name from the working folder: ')
+                    case.path_2 = input('Enter the name of the file with the body of the tank: ')
+                except:
+                    print('No ammo file or tank body found for the first scenario. You need to check the path to the files')
+                case.CasePOST()
+                self.iterrationPOST -= 1
+                print('iterration = ', self.iterrationPOST)
+                time.sleep(30)
+                
+        else:
+            print('You entered an invalid value')
+            exit(0)
 
-    else:
-        print('You entered an invalid value')
-        exit(0)
+
+    def GET(self):
+        click.pause('Введите количество итераций сценария GET запросов: ')
+        self.iterrationGET = int(input('Enter the number of planned scenarios: '))
+        
+        if self.iterrationGET > 0:
+
+            while self.iterrationGET > 0:
+                case = check.LoadGETTesting("CaseGET")
+                try:
+                    case.path = input('Enter the name of the file with the body of the tank: ')
+                except:
+                    print('No ammo file or tank body found for the first scenario. You need to check the path to the files')
+                case.CaseGET()
+                self.iterrationGET -= 1
+                print('iterration = ', self.iterrationGET)
+                time.sleep(30)
+
+        else:
+            print('You entered an invalid value')
+            exit(0)
