@@ -14,7 +14,6 @@ def createGETandPOST():
 
 
 def createPOST():
-
     if  ((iterTest_entry.get().isdigit()) > 0) and (int(iterTest_entry.get()) > 0):
         POST = functions.choiceType('POST')
         POST.iterrationPOST = int(iterTest_entry.get())
@@ -38,7 +37,6 @@ def clicked():
     global ammoTest_path
     global bodyTest_path
     global POSTreq
-
 
     if ('GET and POST' in typeLoad):
         tests_iter = Label(window, text = "Введите количество итераций тестов:", font = ("Arial", 12))
@@ -69,7 +67,6 @@ def clicked():
         back_btn = Button(master = POSTreq, text = 'Вернуться к выбору запросов', command = lambda:[destroyPOSTreq(), wiget_dontgenerate()])
         back_btn.grid(column = 0, row = 3, padx = 5, pady = 5)
         print('Ожидание ввода параметров')
-
 
     elif ('GET' in typeLoad):
         GETreq = Frame(relief = FLAT)
