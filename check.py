@@ -1,7 +1,7 @@
 import os
 import time
 from shell_command import run
-
+    
 
 class LoadPOSTTesting:
 
@@ -21,9 +21,9 @@ class LoadPOSTTesting:
             if POST in text: # действия, выполняемые в случае, если load.yaml оказался телом танка для POST запросов
                 print('Checking and preparing files for sending POST requests')
                 time.sleep(5)
-                os.rename(self.path, 'ammo.json')
+                os.rename(self.path, 'ammo.txt')
                 os.system(run)
-                os.rename('ammo.json', self.path)
+                os.rename('ammo.txt', self.path)
                 os.rename('load.yaml', self.path_2)
                 print('Scenario complete')
                 time.sleep(5)
@@ -32,10 +32,10 @@ class LoadPOSTTesting:
                 os.rename('load.yaml', 'GET_запросы.yaml')
                 print('Replacing a tank with GET requests for a tank with POST requests')
                 time.sleep(5)
-                os.rename(self.path, 'ammo.json')
+                os.rename(self.path, 'ammo.txt')
                 os.rename(self.path_2, 'load.yaml')
                 os.system(run)
-                os.rename('ammo.json', self.path)
+                os.rename('ammo.txt', self.path)
                 os.rename('load.yaml', self.path_2)
                 print('Scenario complete')
                 time.sleep(5)
@@ -43,10 +43,10 @@ class LoadPOSTTesting:
         elif os.path.exists(self.path_2): # запуск действий, если в рабочей папке был только один файл, путь к которому передается в объекте
             print('Preparing files for sending POST requests')
             time.sleep(5)
-            os.rename(self.path, 'ammo.json')
+            os.rename(self.path, 'ammo.txt')
             os.rename(self.path_2, 'load.yaml')
             os.system(run)
-            os.rename('ammo.json', self.path)
+            os.rename('ammo.txt', self.path)
             os.rename('load.yaml', self.path_2)
             print('Scenario complete')
             time.sleep(5)
@@ -58,9 +58,9 @@ class LoadPOSTTesting:
             if POST in text: # действия, выполняемые в случае, если load.yaml оказался телом танка для POST запросов
                 print('Checking and preparing files for sending POST requests')
                 time.sleep(5)
-                os.rename(self.path, 'ammo.json')
+                os.rename(self.path, 'ammo.txt')
                 os.system(run)
-                os.rename('ammo.json', self.path)
+                os.rename('ammo.txt', self.path)
                 os.rename('load.yaml', self.path_2)
                 print('Scenario complete')
                 time.sleep(5)
@@ -69,10 +69,10 @@ class LoadPOSTTesting:
                 os.rename('load.yaml', 'GET_запросы.yaml')
                 print('Replacing a tank with GET requests for a tank with POST requests')
                 time.sleep(5)
-                os.rename(self.path, 'ammo.json')
+                os.rename(self.path, 'ammo.txt')
                 os.rename(self.path_2, 'load.yaml')
                 os.system(run)
-                os.rename('ammo.json', self.path)
+                os.rename('ammo.txt', self.path)
                 os.rename('load.yaml', self.path_2)
                 print('Scenario complete')
                 time.sleep(5)
