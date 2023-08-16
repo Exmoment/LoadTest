@@ -86,7 +86,6 @@ def clicked():
 
 def wiget_dontgenerate():
         global choice_tupe
-        global btn1
         global start
 
         start = Frame(window, relief = FLAT, padding = [8, 10])
