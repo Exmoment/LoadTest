@@ -6,16 +6,19 @@ import functions
 #    messagebox.showinfo('Тест1', "Тест")
 
 def createGETandPOST():
-    GET_POST = functions.choiceType('GET and POST')
-    GET_POST.iterrationGET = int(iterTest_entry.get())
-    GET_POST.iterrationPOST = int(iterTest_entry.get())
-    GET_POST.POSTandGET()
+    if  ((iterTest_entry.get().isdigit()) > 0) and (int(iterTest_entry.get()) > 0):
+        GET_POST = functions.choiceType('GET and POST')
+        GET_POST.iterrationGET = int(iterTest_entry.get())
+        GET_POST.iterrationPOST = int(iterTest_entry.get())
+        GET_POST.pathBody = bodyTest_path.get()
+        GET_POST.pathAmmo = ammoTest_path.get()
+        GET_POST.POSTandGET()
 
 
 def createPOST():
-    if  ((iterTest_entry.get().isdigit()) > 0) and (int(iterTest_entry.get()) > 0):
+    if  ((iterTestPOST_entry.get().isdigit()) > 0) and (int(iterTestPOST_entry.get()) > 0):
         POST = functions.choiceType('POST')
-        POST.iterrationPOST = int(iterTest_entry.get())
+        POST.iterrationPOST = int(iterTestPOST_entry.get())
         POST.pathBody = bodyTest_path.get()
         POST.pathAmmo = ammoTest_path.get()
         POST.POST()
@@ -25,9 +28,9 @@ def createPOST():
 
 
 def createGET():
-    if  ((iterTest_entry.get().isdigit()) > 0) and (int(iterTest_entry.get()) > 0):
+    if  ((iterTestGET_entry.get().isdigit()) > 0) and (int(iterTestGET_entry.get()) > 0):
         GET = functions.choiceType('GET')
-        GET.iterrationGET = int(iterTest_entry.get())
+        GET.iterrationGET = int(iterTestGET_entry.get())
         GET.pathBody = bodyTest_path.get()
         GET.GET()
     else:
@@ -45,7 +48,8 @@ def destroyGETreq():
 def clicked():
     print(choice_tupe.get())
     typeLoad = choice_tupe.get()
-    global iterTest_entry
+    global iterTestPOST_entry
+    global iterTestGET_entry
     global ammoTest_path
     global bodyTest_path
     global POSTreq
@@ -64,8 +68,8 @@ def clicked():
         POSTreq.pack(pady = [5, 5])
         iterTest = Label(master = POSTreq, text = "Количество итераций тестов:", font = ("Arial", 12))
         iterTest.grid(column = 0, row = 0, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        iterTest_entry = Entry(master = POSTreq, width = 25)
-        iterTest_entry.grid(column = 1, row = 0, padx = [5, 5], pady = [5, 5])
+        iterTestPOST_entry = Entry(master = POSTreq, width = 25)
+        iterTestPOST_entry.grid(column = 1, row = 0, padx = [5, 5], pady = [5, 5])
         bodyTest = Label(master = POSTreq, text = "Путь или имя файла конфигурации:", font = ("Arial", 12))
         bodyTest.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
         bodyTest_path = Entry(master = POSTreq, width = 25)
@@ -85,10 +89,10 @@ def clicked():
         start.destroy()
         GETreq = Frame(relief = FLAT)
         GETreq.pack(pady = [5, 5])
-        tests_iter = Label(master = GETreq, text = "Введите количество итераций тестов:", font = ("Arial", 12))
-        tests_iter.grid(column = 0, row = 0, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        tests_iter_entry = Entry(master = GETreq, width = 25)
-        tests_iter_entry.grid(column = 1, row = 0, padx = [5, 5], pady = [5, 5])
+        iterTest = Label(master = GETreq, text = "Введите количество итераций тестов:", font = ("Arial", 12))
+        iterTest.grid(column = 0, row = 0, padx = [5, 5], pady = [5, 5], sticky = 'e')
+        iterTestGET_entry = Entry(master = GETreq, width = 25)
+        iterTestGET_entry.grid(column = 1, row = 0, padx = [5, 5], pady = [5, 5])
         tests_config = Label(master = GETreq, text = "Путь или имя файла конфигурации:", font = ("Arial", 12))
         tests_config.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
         tests_config_path = Entry(master = GETreq, width = 25)

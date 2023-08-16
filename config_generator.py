@@ -145,7 +145,7 @@ def create_loadGET():
 create_loadGET()
 '''
 
-def create_LoadPOST()
+def create_LoadPOST():
     
     create_loadPOST = loadPOST("loadPOST")
     create_loadPOST.host = "example.net"
@@ -163,7 +163,7 @@ def create_LoadPOST()
         loadPOST_file.write(loadPOST_text)
     print(loadPOST_text)
 
- create_LoadPOST()
+create_LoadPOST()
 
 
 '''
