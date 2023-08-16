@@ -12,6 +12,8 @@ class choiceType:
         self.name = name
         self.iterrationGET = ''
         self.iterrationPOST = ''
+        self.pathBody = ''
+        self.pathAmmo = ''
 
     def POSTandGET(self):
         self.iterrationGET = int()
@@ -49,14 +51,16 @@ class choiceType:
 
     def POST(self):
         self.iterrationPOST
+        self.pathBody
+        self.pathAmmo
         
         if self.iterrationPOST > 0:
 
             while self.iterrationPOST > 0:
                 case = check.LoadPOSTTesting("CasePOST")                    
                 try:
-                    case.path = input('Enter the path to the ammo file, or a name from the working folder: ')
-                    case.path_2 = input('Enter the name of the file with the body of the tank: ')
+                    case.path = self.pathAmmo
+                    case.path_2 = self.pathBody
                 except:
                     print('No ammo file or tank body found for the first scenario. You need to check the path to the files')
                 case.CasePOST()

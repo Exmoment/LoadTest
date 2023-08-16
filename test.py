@@ -17,16 +17,20 @@ def createPOST():
     if  ((iterTest_entry.get().isdigit()) > 0) and (int(iterTest_entry.get()) > 0):
         POST = functions.choiceType('POST')
         POST.iterrationPOST = int(iterTest_entry.get())
+        POST.pathBody = bodyTest_path.get()
+        POST.pathAmmo = ammoTest_path.get()
         POST.POST()
         print(iterTest_entry.get())
 
     else:
-        messagebox.showinfo('Error', 'В поле итераций должно быть введено положительно число')
+        messagebox.showinfo('Error', 'В поле итераций должно быть введено значение больше нуля')
 
 def clicked():
     print(choice_tupe.get())
     typeLoad = choice_tupe.get()
     global iterTest_entry
+    global ammoTest_path
+    global bodyTest_path
 
     if ('GET and POST' in typeLoad):
         tests_iter = Label(window, text = "Введите количество итераций тестов:", font = ("Arial", 12))
@@ -52,7 +56,7 @@ def clicked():
         ammoTest.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
         ammoTest_path = Entry(master = POSTreq, width = 25)
         ammoTest_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
-        print('Введите количество итераций сценариев POST запросов:')
+        print('Введите количество итераций сценариев POST запросов: ', iterTest_entry.get())
         window.geometry('650x450')
 
     elif ('GET' in typeLoad):
