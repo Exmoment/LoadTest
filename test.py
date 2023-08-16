@@ -24,7 +24,7 @@ def createPOST():
         POST.POST()
 
     else:
-        messagebox.showinfo('Error', 'В поле итераций должно быть введено значение больше нуля')
+        messagebox.showinfo('Error', 'Поле итераций должно содержать натуральное число')
 
 
 def createGET():
@@ -34,7 +34,7 @@ def createGET():
         GET.pathBody = bodyTest_path.get()
         GET.GET()
     else:
-        messagebox.showinfo('Error', 'В поле итераций должно быть введено значение больше нуля')
+        messagebox.showinfo('Error', 'Поле итераций должно содержать натуральное число')
 
 
 def destroyPOSTreq():
