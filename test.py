@@ -12,6 +12,7 @@ def createGETandPOST():
     GET_POST.POSTandGET()
     print(iterTest_entry.get())
 
+
 def createPOST():
 
     if  ((iterTest_entry.get().isdigit()) > 0) and (int(iterTest_entry.get()) > 0):
@@ -25,12 +26,19 @@ def createPOST():
     else:
         messagebox.showinfo('Error', 'В поле итераций должно быть введено значение больше нуля')
 
+
+def destroyPOSTreq():
+    POSTreq.destroy()
+
+
 def clicked():
     print(choice_tupe.get())
     typeLoad = choice_tupe.get()
     global iterTest_entry
     global ammoTest_path
     global bodyTest_path
+    global POSTreq
+
 
     if ('GET and POST' in typeLoad):
         tests_iter = Label(window, text = "Введите количество итераций тестов:", font = ("Arial", 12))
@@ -40,14 +48,14 @@ def clicked():
         window.geometry('600x450')
 
     elif ('POST' in typeLoad):
+        start.destroy()
+        window.geometry('650x150')
         POSTreq = Frame(relief = FLAT)
         POSTreq.pack(pady = [5, 5])
         iterTest = Label(master = POSTreq, text = "Количество итераций тестов:", font = ("Arial", 12))
         iterTest.grid(column = 0, row = 0, padx = [5, 5], pady = [5, 5], sticky = 'e')
         iterTest_entry = Entry(master = POSTreq, width = 25)
         iterTest_entry.grid(column = 1, row = 0, padx = [5, 5], pady = [5, 5])
-        iterTest_btn = Button(master = POSTreq, text = 'ОК', command = createPOST)
-        iterTest_btn.grid(column = 2, row = 0, padx = [5, 5], pady = [5, 5])
         bodyTest = Label(master = POSTreq, text = "Путь к файлу конфигурации:", font = ("Arial", 12))
         bodyTest.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
         bodyTest_path = Entry(master = POSTreq, width = 25)
@@ -56,8 +64,12 @@ def clicked():
         ammoTest.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
         ammoTest_path = Entry(master = POSTreq, width = 25)
         ammoTest_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
-        print('Введите количество итераций сценариев POST запросов: ', iterTest_entry.get())
-        window.geometry('650x450')
+        iterTest_btn = Button(master = POSTreq, text = 'Принять', command = createPOST)
+        iterTest_btn.grid(column = 1, row = 3, padx = 5, pady = 5)
+        back_btn = Button(master = POSTreq, text = 'Вернуться к выбору запросов', command = lambda:[destroyPOSTreq(), wiget_dontgenerate()])
+        back_btn.grid(column = 0, row = 3, padx = 5, pady = 5)
+        print('Ожидание ввода параметров')
+
 
     elif ('GET' in typeLoad):
         GETreq = Frame(relief = FLAT)
@@ -75,19 +87,28 @@ def clicked():
     else:
         messagebox.showinfo('Ошибка ввода', 'Вы не выбрали тип запросов, попробуйте еще раз')
 
+def wiget_dontgenerate():
+        global choice_tupe
+        global btn1
+        global start
+
+        start = Frame(window, relief = FLAT, padding = [8, 10])
+        start.pack(padx = 10, pady = 10)
+        type_req = Label(master = start, text = "Выберите тип запросов:", font = ("Arial", 12))
+        type_req.pack(pady = [5, 5])
+        tupeTest = ("GET", "POST", "GET and POST")
+        btn1 = Button(master = start, text = 'Выбрать', command = clicked).pack(side = BOTTOM, fill = X, padx = 5, pady = 5)
+        choice_tupe = Combobox(master = start, values = tupeTest, width = 25)
+        choice_tupe.current()
+        choice_tupe.pack(pady = [5, 5])
+        window.geometry('400x150')
+
 
 window = Tk()
-window.title("Тест")
+window.title("Тестовое окно")
 window.geometry('400x150')
-
-type_req = Label(window, text = "Выберите тип запросов:", font = ("Arial", 12))
-type_req.pack(pady = [5, 5])
-
-tupeTest = ("GET", "POST", "GET and POST")
-btn1 = Button(window, text = 'ОК', command = clicked).pack(side = BOTTOM, fill = X, padx = 5, pady = 5)
-choice_tupe = Combobox(window, values = tupeTest, width = 25)
-choice_tupe.current()
-choice_tupe.pack(pady = [5, 5])
+window.resizable(False, False)
+wiget_dontgenerate()
 
 
 window.mainloop()
