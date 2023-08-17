@@ -1,6 +1,5 @@
 import time
 import check
-import click
 from tkinter import *
 from tkinter.ttk import *
 from tkinter import messagebox
