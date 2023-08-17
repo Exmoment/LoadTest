@@ -73,7 +73,6 @@ class choiceType:
 
 
     def GET(self):
-        click.pause('Введите количество итераций сценария GET запросов: ')
         self.iterrationGET = int(input('Enter the number of planned scenarios: '))
         
         if self.iterrationGET > 0:
