@@ -16,10 +16,10 @@ def createPOST():
             POST.POST()
 
         else:
-            messagebox.showinfo('Error', 'Поле итераций должно содержать натуральное число')
+            messagebox.showinfo('Error', 'Поле итераций POST запросов должно содержать натуральное число')
 
     else:
-        messagebox.showinfo('Error', 'Все поля должны быть заполнены')
+        messagebox.showinfo('Error', 'Все поля POST запросов должны быть заполнены')
 
 
 def createGET():
@@ -32,10 +32,10 @@ def createGET():
             GET.GET()
 
         else:
-            messagebox.showinfo('Error', 'Поле итераций должно содержать натуральное число')
+            messagebox.showinfo('Error', 'Поле итераций GET запросов должно содержать натуральное число')
 
     else:
-        messagebox.showinfo('Error', 'Все поля должны быть заполнены')
+        messagebox.showinfo('Error', 'Все поля GET запросов должны быть заполнены')
 
 
 def destroyPOSTreq():
