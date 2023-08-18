@@ -1,7 +1,7 @@
 import functions
 
 
-def objects():
+def objects(self):
 
     typeLoad = str(input('Enter which load tests you want to run POST/GET/GET and POST: '))
 
@@ -16,5 +16,3 @@ def objects():
 
     else:
         print('Invalid value')
-
-#print('Test completed')
