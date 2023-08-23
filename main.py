@@ -109,10 +109,10 @@ def clicked():
         bodyTestGET_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
 
         iterTest_btn = Button(master = GETreq, text = 'Принять', command = lambda:[createGET(), createPOST()])
-        iterTest_btn.grid(column = 1, row = 3, padx = 5, pady = [10, 5])
+        iterTest_btn.grid(column = 1, row = 3, padx = 5, pady = [5, 10])
 
         back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[destroyGETreq(), destroyPOSTreq(), wiget_dontgenerate()])
-        back_btn.grid(column = 0, row = 3, padx = 5, pady = [10, 5])
+        back_btn.grid(column = 0, row = 3, padx = 5, pady = [5, 10])
 
         print('Ожидание ввода параметров')
 
@@ -141,10 +141,10 @@ def clicked():
         ammoTest_path.grid(column = 1, row = 3, padx = [5, 5], pady = [5, 5])
 
         iterTest_btn = Button(master = POSTreq, text = 'Принять', command = createPOST)
-        iterTest_btn.grid(column = 1, row = 4, padx = 5, pady = [10, 5])
+        iterTest_btn.grid(column = 1, row = 4, padx = 5, pady = [5, 10])
 
         back_btn = Button(master = POSTreq, text = 'Вернуться к выбору запросов', command = lambda:[destroyPOSTreq(), wiget_dontgenerate()])
-        back_btn.grid(column = 0, row = 4, padx = 5, pady = [10, 5])
+        back_btn.grid(column = 0, row = 4, padx = 5, pady = [5, 10])
 
         print('Ожидание ввода параметров')
 
@@ -168,10 +168,10 @@ def clicked():
         bodyTestGET_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
 
         iterTest_btn = Button(master = GETreq, text = 'Принять', command = createGET)
-        iterTest_btn.grid(column = 1, row = 3, padx = 5, pady = [10, 5])
+        iterTest_btn.grid(column = 1, row = 3, padx = 5, pady = [5, 5])
 
         back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[destroyGETreq(), wiget_dontgenerate()])
-        back_btn.grid(column = 0, row = 3, padx = 5, pady = [10, 5])
+        back_btn.grid(column = 0, row = 3, padx = 5, pady = [5, 10])
 
         print('Ожидание ввода параметров')
 
@@ -207,9 +207,9 @@ def create_yes():
 
     window = Tk()
     window.title("Тестовое окно")
-    window.maxsize(800, 800)
+    window.maxsize(800, 400)
     window.minsize(550, 150)
-    window.resizable(True, True)
+    window.resizable(False, False)
 
     wiget_dontgenerate()
 
@@ -234,5 +234,6 @@ def create_main():
     btn_no.pack(fill = X, padx = 10, pady = [0, 10])
 
     main_window.mainloop()
+
 
 create_main()

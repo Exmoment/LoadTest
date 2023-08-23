@@ -2,6 +2,7 @@ import os
 import time
 from shell_command import run
     
+# Не забыть исправить все условия с заменой файлов с ренейма из рабочей директории на копирование и удаление из любой папки
 
 class LoadPOSTTesting:
 
