@@ -61,6 +61,7 @@ def clicked():
     global POSTreq
     global GETreq
 
+
     if ('GET and POST' in choice_tupe.get()):
         start_destroy()
         POSTreq = Frame(relief = FLAT)
@@ -108,6 +109,7 @@ def clicked():
         print('Ожидание ввода параметров')
         window.geometry('550x300')
 
+
     elif ('POST' in choice_tupe.get()):
         start_destroy()
         POSTreq = Frame(relief = FLAT)
@@ -140,6 +142,7 @@ def clicked():
         print('Ожидание ввода параметров')
         window.geometry('550x200')
 
+
     elif ('GET' in choice_tupe.get()):
         start_destroy()
         GETreq = Frame(relief = FLAT)
@@ -167,8 +170,10 @@ def clicked():
         print('Ожидание ввода параметров')
         window.geometry('550x170')
 
+
     else:
         messagebox.showinfo('Ошибка ввода', 'Вы не выбрали тип запросов, попробуйте еще раз')
+
 
 def wiget_dontgenerate():
         global choice_tupe
@@ -200,7 +205,4 @@ def create_window():
     window.resizable(False, False)
     wiget_dontgenerate()
 
-
     window.mainloop()
-
-create_window()
