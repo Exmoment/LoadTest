@@ -115,7 +115,6 @@ def clicked():
         back_btn.grid(column = 0, row = 3, padx = 5, pady = [10, 5])
 
         print('Ожидание ввода параметров')
-        window.geometry('550x300')
 
 
     elif ('POST' in choice_tupe.get()):
@@ -148,7 +147,6 @@ def clicked():
         back_btn.grid(column = 0, row = 4, padx = 5, pady = [10, 5])
 
         print('Ожидание ввода параметров')
-        window.geometry('550x200')
 
 
     elif ('GET' in choice_tupe.get()):
@@ -176,7 +174,6 @@ def clicked():
         back_btn.grid(column = 0, row = 3, padx = 5, pady = [10, 5])
 
         print('Ожидание ввода параметров')
-        window.geometry('550x170')
 
 
     else:
@@ -195,16 +192,14 @@ def wiget_dontgenerate():
 
         tupeTest = ("GET", "POST", "GET and POST")
 
-        choice_btn = Button(master = start, text = 'Выбрать', command = clicked)
-        choice_btn.pack(side = BOTTOM, fill = X, padx = 5, pady = 5)
-        back_btn = Button(master = start, text = 'Назад', command = lambda:[yes_destroy(), create_main()])
-        back_btn.pack(side = BOTTOM, fill = X, padx = 5, pady = 5)
         choice_tupe = Combobox(master = start, values = tupeTest, width = 25)
         choice_tupe.current()
         choice_tupe.pack(pady = [5, 5])
 
-
-        window.geometry('400x150')
+        choice_btn = Button(master = start, text = 'Выбрать', command = clicked)
+        choice_btn.pack(fill = X, padx = 5, pady = 5)
+        back_btn = Button(master = start, text = 'Назад', command = lambda:[yes_destroy(), create_main()])
+        back_btn.pack(fill = X, padx = 5, pady = 5)
 
 
 def create_yes():
@@ -212,8 +207,10 @@ def create_yes():
 
     window = Tk()
     window.title("Тестовое окно")
-    window.geometry('400x150')
-    window.resizable(False, False)
+    window.maxsize(800, 800)
+    window.minsize(550, 150)
+    window.resizable(True, True)
+
     wiget_dontgenerate()
 
     window.mainloop()
@@ -226,10 +223,13 @@ def create_main():
     main_window.title('Редиска')
     main_window.maxsize(800, 800)
     main_window.minsize(400, 150)
+
     start_title = Label(main_window, text = "У вас есть файлы конфигурации?", font = ("Arial", 18))
     start_title.pack(padx = 10, pady = 10)
+
     btn_yes = Button(main_window, text = 'Есть конфигурационные файлы', command = lambda:[main_destroy(), create_yes(), wiget_dontgenerate()])
     btn_yes.pack(fill = X, padx = 10, pady = [10, 10])
+
     btn_no = Button(main_window, text = 'Нет конфигурационных файлов', command = lambda:[main_destroy(), create_yes(), wiget_dontgenerate()])
     btn_no.pack(fill = X, padx = 10, pady = [0, 10])
 
