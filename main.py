@@ -77,6 +77,10 @@ def clicked():
         GETreq = Frame(relief = FLAT)
         GETreq.pack(padx = [5, 5])
 
+        loadFileMenu = Menu(window)
+        window.config(menu = loadFileMenu)
+        loadFileMenu.add_command(label = '123')
+
         nameTestPOST = Label(master = POSTreq, text = "POST", font = ("Arial", 16), foreground = 'red')
         nameTestPOST.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 5])
 
@@ -111,7 +115,7 @@ def clicked():
         iterTest_btn = Button(master = GETreq, text = 'Принять', command = lambda:[createGET(), createPOST()])
         iterTest_btn.grid(column = 1, row = 3, padx = 5, pady = [5, 10])
 
-        back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[destroyGETreq(), destroyPOSTreq(), wiget_dontgenerate()])
+        back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[destroyGETreq(), destroyPOSTreq(), wiget_dontgenerate(), window.config(loadFileMenu.destroy())])
         back_btn.grid(column = 0, row = 3, padx = 5, pady = [5, 10])
 
         print('Ожидание ввода параметров')
@@ -121,6 +125,10 @@ def clicked():
         start_destroy()
         POSTreq = Frame(relief = FLAT)
         POSTreq.pack(pady = [5, 5])
+
+        loadFileMenu = Menu(window)
+        window.config(menu = loadFileMenu)
+        loadFileMenu.add_command(label = '123')
 
         nameTestPOST = Label(master = POSTreq, text = "POST", font = ("Arial", 16), foreground = 'red')
         nameTestPOST.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 5])
@@ -143,7 +151,7 @@ def clicked():
         iterTest_btn = Button(master = POSTreq, text = 'Принять', command = createPOST)
         iterTest_btn.grid(column = 1, row = 4, padx = 5, pady = [5, 10])
 
-        back_btn = Button(master = POSTreq, text = 'Вернуться к выбору запросов', command = lambda:[destroyPOSTreq(), wiget_dontgenerate()])
+        back_btn = Button(master = POSTreq, text = 'Вернуться к выбору запросов', command = lambda:[destroyPOSTreq(), wiget_dontgenerate(), window.config(loadFileMenu.destroy())])
         back_btn.grid(column = 0, row = 4, padx = 5, pady = [5, 10])
 
         print('Ожидание ввода параметров')
@@ -153,6 +161,10 @@ def clicked():
         start_destroy()
         GETreq = Frame(relief = FLAT)
         GETreq.pack(pady = [5, 5])
+
+        loadFileMenu = Menu(window)
+        window.config(menu = loadFileMenu)
+        loadFileMenu.add_command(label = '123')
 
         nameTestGET = Label(master = GETreq, text = "GET", font = ("Arial", 16), foreground = 'red')
         nameTestGET.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 5])
@@ -170,7 +182,7 @@ def clicked():
         iterTest_btn = Button(master = GETreq, text = 'Принять', command = createGET)
         iterTest_btn.grid(column = 1, row = 3, padx = 5, pady = [5, 5])
 
-        back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[destroyGETreq(), wiget_dontgenerate()])
+        back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[destroyGETreq(), wiget_dontgenerate(), window.config(loadFileMenu.destroy())])
         back_btn.grid(column = 0, row = 3, padx = 5, pady = [5, 10])
 
         print('Ожидание ввода параметров')
