@@ -86,6 +86,7 @@ def clicked():
     global POSTreq
     global GETreq
 
+# //------------------- ВИДЖЕТ ДЛЯ РАБОТЫ С НАПИСАННЫМИ ЗАРАНЕЕ КОНФИГАМИ -------------------\\
 
     if ('GET and POST' in choice_tupe.get()):
         start_destroy()
@@ -258,6 +259,8 @@ def create_yes():
     wiget_dontgenerate()
 
     window.mainloop()
+
+# //------------------- КОНЕЦ ВИДЖЕТА ДЛЯ РАБОТЫ С НАПИСАННЫМИ ЗАРАНЕЕ КОНФИГАМИ -------------------\\
 
 
 def create_main():
