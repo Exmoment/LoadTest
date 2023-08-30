@@ -3,6 +3,7 @@ from tkinter.ttk import *
 from tkinter import messagebox
 from tkinter import filedialog as fd
 import run_test
+#import config_generator
 
 #    messagebox.showinfo('Тест1', "Тест")
 
@@ -266,25 +267,32 @@ def create_yes():
 def generateFiles():
     
     if 'GET and POST' in choice_tupe.get():
-        start.destroy()
+        print('123')
 
         if 'yes' in selected.get():
             print('123')
+        
+        elif 'no' in selected.get():
+            print('123')
+
+        else:
+            print('123')
 
     elif 'POST' in choice_tupe.get():
-        start.destroy()
+        print('123')
 
         if 'yes' in selected.get():
             print('123')
 
     elif 'GET' in choice_tupe.get():
-        start.destroy()
+        print('123')
 
         if 'yes' in selected.get():
             print('123')
 
 
 def clicked_no():
+    start.destroy()
     global choice_auth
     global selected
 
@@ -300,15 +308,17 @@ def clicked_no():
     dontNeedToken = Radiobutton(master = choice_auth, text = 'Нет, токен не требуется', value = 'no', variable = selected)
     dontNeedToken.grid(column = 1, row = 1)
     
-    btn = Button(master = choice_auth, text = 'Выбрать', command = generateFiles())
-    btn.pack(fill = X, padx = 5, pady = 5)
+    btn = Button(master = choice_auth, text = 'Выбрать', command = generateFiles)
+    btn.grid(columnspan = 2, row = 2, padx = 5, pady = [25, 5])
+    back_btn = Button(master = choice_auth, text = 'Назад', command = lambda:[choice_auth.destroy(), wiget_generate()])
+    back_btn.grid(columnspan = 2, row = 3, padx = 5, pady = 5)
 
 
 def wiget_generate():
     global choice_tupe
     global start
 
-    start = Frame(window_no, relief = FLAT, padding = [8, 10])
+    start = Frame(window_no, relief = FLAT)
     start.pack(padx = 10, pady = 10) 
 
     type_req = Label(master = start, text = "Выберите тип запросов:", font = ("Arial", 16))
@@ -331,7 +341,7 @@ def create_no():
 
     window_no = Tk()
     window_no.title("Тестовое окно")
-    window_no.maxsize(900, 900)
+    window_no.maxsize(1000, 1000)
     window_no.minsize(550, 150)
     window_no.resizable(False, False)
 
