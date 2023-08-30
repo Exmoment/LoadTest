@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter.ttk import *
 from tkinter import messagebox
+from tkinter import filedialog as fd
 import run_test
 
 #    messagebox.showinfo('Тест1', "Тест")
@@ -29,6 +30,7 @@ def createGET():
             GET = run_test.choiceType('GET')
             GET.iterrationGET = int(iterTestGET_entry.get())
             GET.pathBodyGET = bodyTestGET_path.get()
+
             GET.GET()
 
         else:
@@ -58,6 +60,21 @@ def start_destroy():
     start.destroy()
 
 
+def insertFileGET():
+    file_name = fd.askopenfilename()
+    bodyTestGET_path.insert(0, file_name)
+
+
+def insertFilePOST():
+    file_name = fd.askopenfilename()
+    bodyTestPOST_path.insert(0, file_name)
+
+
+def insertFileAmmo():
+    file_name = fd.askopenfilename()
+    ammoTest_path.insert(0, file_name)
+
+
 def clicked():
     print(choice_tupe.get())
     choice_tupe.get()
@@ -82,7 +99,7 @@ def clicked():
         loadFileMenu.add_command(label = '123')
 
         nameTestPOST = Label(master = POSTreq, text = "POST", font = ("Arial", 16), foreground = 'red')
-        nameTestPOST.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 5])
+        nameTestPOST.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 30])
 
         iterTest = Label(master = POSTreq, text = "Количество итераций тестов:", font = ("Arial", 12))
         iterTest.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
@@ -100,7 +117,7 @@ def clicked():
         ammoTest_path.grid(column = 1, row = 3, padx = [5, 5], pady = [5, 5])
 
         nameTestGET = Label(master = GETreq, text = "GET", font = ("Arial", 16), foreground = 'red')
-        nameTestGET.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 5])
+        nameTestGET.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [25, 30])
 
         iterTest = Label(master = GETreq, text = "Количество итераций тестов:", font = ("Arial", 12))
         iterTest.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
@@ -113,10 +130,17 @@ def clicked():
         bodyTestGET_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
 
         iterTest_btn = Button(master = GETreq, text = 'Принять', command = lambda:[createGET(), createPOST()])
-        iterTest_btn.grid(column = 1, row = 3, padx = 5, pady = [5, 10])
+        iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 5])
 
         back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[destroyGETreq(), destroyPOSTreq(), wiget_dontgenerate(), window.config(loadFileMenu.destroy())])
-        back_btn.grid(column = 0, row = 3, padx = 5, pady = [5, 10])
+        back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 5])
+
+        btn_insertFile = Button(master = POSTreq, text = 'Открыть', command = insertFilePOST)
+        btn_insertFile.grid(column = 2, row = 2, padx = [44, 20], pady = [5, 5])
+        btn1_insertFile = Button(master = POSTreq, text = 'Открыть', command = insertFileAmmo)
+        btn1_insertFile.grid(column = 2, row = 3, padx = [44, 20], pady = [5, 5])
+        btn2_insertFile = Button(master = GETreq, text = 'Открыть', command = insertFileGET)
+        btn2_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
 
         print('Ожидание ввода параметров')
 
@@ -131,7 +155,7 @@ def clicked():
         loadFileMenu.add_command(label = '123')
 
         nameTestPOST = Label(master = POSTreq, text = "POST", font = ("Arial", 16), foreground = 'red')
-        nameTestPOST.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 5])
+        nameTestPOST.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 30])
 
         iterTest = Label(master = POSTreq, text = "Количество итераций тестов:", font = ("Arial", 12))
         iterTest.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
@@ -149,10 +173,15 @@ def clicked():
         ammoTest_path.grid(column = 1, row = 3, padx = [5, 5], pady = [5, 5])
 
         iterTest_btn = Button(master = POSTreq, text = 'Принять', command = createPOST)
-        iterTest_btn.grid(column = 1, row = 4, padx = 5, pady = [5, 10])
+        iterTest_btn.grid(column = 2, row = 4, padx = [10, 20], pady = [50, 5])
 
         back_btn = Button(master = POSTreq, text = 'Вернуться к выбору запросов', command = lambda:[destroyPOSTreq(), wiget_dontgenerate(), window.config(loadFileMenu.destroy())])
-        back_btn.grid(column = 0, row = 4, padx = 5, pady = [5, 10])
+        back_btn.grid(column = 1, row = 4, padx = [10, 20], pady = [50, 5])
+
+        btn_insertFile = Button(master = POSTreq, text = 'Открыть', command = insertFilePOST)
+        btn_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
+        btn1_insertFile = Button(master = POSTreq, text = 'Открыть', command = insertFileAmmo)
+        btn1_insertFile.grid(column = 2, row = 3, padx = [10, 20], pady = [5, 5])
 
         print('Ожидание ввода параметров')
 
@@ -167,7 +196,7 @@ def clicked():
         loadFileMenu.add_command(label = '123')
 
         nameTestGET = Label(master = GETreq, text = "GET", font = ("Arial", 16), foreground = 'red')
-        nameTestGET.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 5])
+        nameTestGET.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 30])
 
         iterTest = Label(master = GETreq, text = "Количество итераций тестов:", font = ("Arial", 12))
         iterTest.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
@@ -180,10 +209,13 @@ def clicked():
         bodyTestGET_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
 
         iterTest_btn = Button(master = GETreq, text = 'Принять', command = createGET)
-        iterTest_btn.grid(column = 1, row = 3, padx = 5, pady = [5, 5])
+        iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 5])
 
         back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[destroyGETreq(), wiget_dontgenerate(), window.config(loadFileMenu.destroy())])
-        back_btn.grid(column = 0, row = 3, padx = 5, pady = [5, 10])
+        back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 5])
+
+        btn_insertFile = Button(master = GETreq, text = 'Открыть', command = insertFileGET)
+        btn_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
 
         print('Ожидание ввода параметров')
 
@@ -208,7 +240,7 @@ def wiget_dontgenerate():
         choice_tupe.current()
         choice_tupe.pack(pady = [5, 5])
 
-        choice_btn = Button(master = start, text = 'Выбрать', command = clicked)
+        choice_btn = Button(master = start,  text = 'Выбрать', command = clicked)
         choice_btn.pack(fill = X, padx = 5, pady = 5)
         back_btn = Button(master = start, text = 'Назад', command = lambda:[yes_destroy(), create_main()])
         back_btn.pack(fill = X, padx = 5, pady = 5)
@@ -219,7 +251,7 @@ def create_yes():
 
     window = Tk()
     window.title("Тестовое окно")
-    window.maxsize(800, 400)
+    window.maxsize(800, 500)
     window.minsize(550, 150)
     window.resizable(False, False)
 
