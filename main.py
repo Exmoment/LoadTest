@@ -41,26 +41,6 @@ def createGET():
         messagebox.showinfo('Error', 'Все поля GET запросов должны быть заполнены')
 
 
-def main_destroy():
-    main_window.destroy()
-
-
-def yes_destroy():
-    window_yes.destroy()
-
-
-def no_destroy():
-    window_no.destroy()
-
-
-def destroyPOSTreq():
-    POSTreq.destroy()
-
-
-def destroyGETreq():
-    GETreq.destroy()
-
-
 def insertFileGET():
     file_name = fd.askopenfilename()
     bodyTestGET_path.insert(0, file_name)
@@ -133,7 +113,7 @@ def clicked_yes():
         iterTest_btn = Button(master = GETreq, text = 'Принять', command = lambda:[createGET(), createPOST()])
         iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
 
-        back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[destroyGETreq(), destroyPOSTreq(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
+        back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), POSTreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
         back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
 
         btn_insertFile = Button(master = POSTreq, text = 'Открыть', command = insertFilePOST)
@@ -176,7 +156,7 @@ def clicked_yes():
         iterTest_btn = Button(master = POSTreq, text = 'Принять', command = createPOST)
         iterTest_btn.grid(column = 2, row = 4, padx = [10, 20], pady = [50, 10])
 
-        back_btn = Button(master = POSTreq, text = 'Вернуться к выбору запросов', command = lambda:[destroyPOSTreq(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
+        back_btn = Button(master = POSTreq, text = 'Вернуться к выбору запросов', command = lambda:[POSTreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
         back_btn.grid(column = 1, row = 4, padx = [10, 20], pady = [50, 10])
 
         btn_insertFile = Button(master = POSTreq, text = 'Открыть', command = insertFilePOST)
@@ -212,7 +192,7 @@ def clicked_yes():
         iterTest_btn = Button(master = GETreq, text = 'Принять', command = createGET)
         iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
 
-        back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[destroyGETreq(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
+        back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
         back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
 
         btn_insertFile = Button(master = GETreq, text = 'Открыть', command = insertFileGET)
@@ -243,7 +223,7 @@ def wiget_dontgenerate():
 
     choice_btn = Button(master = start,  text = 'Выбрать', command = clicked_yes)
     choice_btn.pack(fill = X, padx = 5, pady = 5)
-    back_btn = Button(master = start, text = 'Назад', command = lambda:[yes_destroy(), create_main()])
+    back_btn = Button(master = start, text = 'Назад', command = lambda:[window_yes.destroy(), create_main()])
     back_btn.pack(fill = X, padx = 5, pady = 5)
 
 
@@ -332,7 +312,7 @@ def wiget_generate():
 
     choice_btn = Button(master = start,  text = 'Выбрать', command = clicked_no)
     choice_btn.pack(fill = X, padx = 5, pady = 5)
-    back_btn = Button(master = start, text = 'Назад', command = lambda:[no_destroy(), create_main()])
+    back_btn = Button(master = start, text = 'Назад', command = lambda:[window_no.destroy(), create_main()])
     back_btn.pack(fill = X, padx = 5, pady = 5)
 
 
@@ -363,10 +343,10 @@ def create_main():
     start_title = Label(main_window, text = "У вас есть файлы конфигурации?", font = ("Arial", 18))
     start_title.pack(padx = 10, pady = 10)
 
-    btn_yes = Button(main_window, text = 'Есть конфигурационные файлы', command = lambda:[main_destroy(), create_yes(), wiget_dontgenerate()])
+    btn_yes = Button(main_window, text = 'Есть конфигурационные файлы', command = lambda:[main_window.destroy(), create_yes(), wiget_dontgenerate()])
     btn_yes.pack(fill = X, padx = 10, pady = [10, 10])
 
-    btn_no = Button(main_window, text = 'Нет конфигурационных файлов', command = lambda:[main_destroy(), create_no(), wiget_generate()])
+    btn_no = Button(main_window, text = 'Нет конфигурационных файлов', command = lambda:[main_window.destroy(), create_no(), wiget_generate()])
     btn_no.pack(fill = X, padx = 10, pady = [0, 10])
 
     main_window.mainloop()
