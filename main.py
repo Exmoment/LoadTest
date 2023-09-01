@@ -3,7 +3,7 @@ from tkinter.ttk import *
 from tkinter import messagebox
 from tkinter import filedialog as fd
 import run_test
-#import config_generator
+import config_generator
 
 #    messagebox.showinfo('Тест1', "Тест")
 
@@ -40,6 +40,25 @@ def createGET():
     else:
         messagebox.showinfo('Error', 'Все поля GET запросов должны быть заполнены')
 
+'''
+def generatePOST():
+
+    generatePOST = config_generator.loadPOST("loadPOST")
+    generatePOST.host = "example.net"
+    generatePOST.port = "443"
+    generatePOST.ammo_file = "ammo_POST.txt"
+    generatePOST.ssl = "true"
+    generatePOST.schedule = "line(1, 10000, 5m) const(5000,2m)"
+    generatePOST.instances = "1000"
+    generatePOST.c_enabled = "true"
+    generatePOST.t_enabled = "false"
+    generatePOST.o_enabled = "true"
+    generatePOST.job_dsc = "testing_POST_requests"
+    loadPOST_text = generatePOST.load()
+    with open('load.yaml', 'w+') as loadPOST_file:
+        loadPOST_file.write(loadPOST_text)
+    print(loadPOST_text)
+'''
 
 def insertFileGET():
     file_name = fd.askopenfilename()
@@ -69,7 +88,6 @@ def clicked_yes():
 
 
     if 'GET and POST' in choice_tupe.get():
-        start.destroy()
         POSTreq = Frame(window_yes, relief = FLAT)
         POSTreq.pack(padx = [5, 5])
         GETreq = Frame(window_yes, relief = FLAT)
@@ -127,7 +145,6 @@ def clicked_yes():
 
 
     elif 'POST' in choice_tupe.get():
-        start.destroy()
         POSTreq = Frame(window_yes, relief = FLAT)
         POSTreq.pack(pady = [5, 5])
 
@@ -168,7 +185,6 @@ def clicked_yes():
 
 
     elif 'GET' in choice_tupe.get():
-        start.destroy()
         GETreq = Frame(window_yes, relief = FLAT)
         GETreq.pack(pady = [5, 5])
 
@@ -221,7 +237,7 @@ def wiget_dontgenerate():
     choice_tupe.current()
     choice_tupe.pack(pady = [5, 5])
 
-    choice_btn = Button(master = start,  text = 'Выбрать', command = clicked_yes)
+    choice_btn = Button(master = start,  text = 'Выбрать', command = lambda:[clicked_yes(), start.destroy()])
     choice_btn.pack(fill = X, padx = 5, pady = 5)
     back_btn = Button(master = start, text = 'Назад', command = lambda:[window_yes.destroy(), create_main()])
     back_btn.pack(fill = X, padx = 5, pady = 5)
@@ -245,36 +261,38 @@ def create_yes():
 # //------------------- ВИДЖЕТ ДЛЯ ГЕНЕРАЦИИ КОНФИГУРАЦИОННЫХ ФАЙЛОВ И РАБОТЫ С НИМИ -------------------\\
 
 def generateFiles():
-    
-    if 'GET and POST' in choice_tupe.get():
+    print(selected.get())
+    print(typeREQ)
+
+    if 'GET and POST' in typeREQ:
         print('123')
 
-        if 'yes' in selected.get():
-            print('123')
-        
-        elif 'no' in selected.get():
-            print('123')
+        if "yes" in selected.get():
+            print(selected.get())
+            config_generator.generateGET()
+            config_generator.generatePOST()
+            config_generator.generateAmmo()
 
-        else:
-            print('123')
+    elif 'POST' in typeREQ:
 
-    elif 'POST' in choice_tupe.get():
-        print('123')
+        if "yes" in selected.get():
+            print(selected.get())
+            config_generator.generatePOST()
+            config_generator.generateAmmo()
 
-        if 'yes' in selected.get():
-            print('123')
+    elif 'GET' in typeREQ:
 
-    elif 'GET' in choice_tupe.get():
-        print('123')
-
-        if 'yes' in selected.get():
-            print('123')
+        if "yes" in selected.get():
+            print(selected.get())
+            config_generator.generateGET()
+       
 
 
 def clicked_no():
-    start.destroy()
     global choice_auth
     global selected
+    global typeREQ
+    typeREQ = choice_tupe.get()
 
     choice_auth = Frame(window_no, relief = FLAT)
     choice_auth.pack(padx = 10, pady = 10)
@@ -282,13 +300,14 @@ def clicked_no():
     auth_yes_no = Label(master = choice_auth, text = "Нужно ли указать токен для авторизации?", font = ("Arial", 16))
     auth_yes_no.grid(columnspan = 2, pady = [5, 5])
 
-    selected = IntVar()
-    needToken = Radiobutton(master = choice_auth, text = 'Да, токен необходим', value = 'yes', variable = selected)
+    selected = StringVar()
+    selected.set('')
+    needToken = Radiobutton(master = choice_auth, text = 'Да, токен необходим', value = "yes", variable = selected)
     needToken.grid(column = 0, row = 1)
-    dontNeedToken = Radiobutton(master = choice_auth, text = 'Нет, токен не требуется', value = 'no', variable = selected)
+    dontNeedToken = Radiobutton(master = choice_auth, text = 'Нет, токен не требуется', value = "no", variable = selected)
     dontNeedToken.grid(column = 1, row = 1)
     
-    btn = Button(master = choice_auth, text = 'Выбрать', command = generateFiles)
+    btn = Button(master = choice_auth, text = 'Выбрать', command = lambda:[generateFiles(), choice_auth.destroy()])
     btn.grid(columnspan = 2, row = 2, padx = 5, pady = [25, 5])
     back_btn = Button(master = choice_auth, text = 'Назад', command = lambda:[choice_auth.destroy(), wiget_generate()])
     back_btn.grid(columnspan = 2, row = 3, padx = 5, pady = 5)
@@ -310,7 +329,7 @@ def wiget_generate():
     choice_tupe.current()
     choice_tupe.pack(pady = [5, 5])
 
-    choice_btn = Button(master = start,  text = 'Выбрать', command = clicked_no)
+    choice_btn = Button(master = start,  text = 'Выбрать', command = lambda:[clicked_no(), start.destroy()])
     choice_btn.pack(fill = X, padx = 5, pady = 5)
     back_btn = Button(master = start, text = 'Назад', command = lambda:[window_no.destroy(), create_main()])
     back_btn.pack(fill = X, padx = 5, pady = 5)
