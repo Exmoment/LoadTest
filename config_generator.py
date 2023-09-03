@@ -120,8 +120,7 @@ class loadGET:
         return tank
 
 
-'''
-def create_loadGET():
+def generatePOST():
 
     create_loadGET = loadGET("loadGET")
     create_loadGET.host = "example.net"
@@ -142,10 +141,8 @@ def create_loadGET():
         loadGET_file.write(loadGET_text)
     print(loadGET_text)
 
-create_loadGET()
-'''
 
-def create_LoadPOST():
+def generateGET():
     
     create_loadPOST = loadPOST("loadPOST")
     create_loadPOST.host = "example.net"
@@ -163,11 +160,8 @@ def create_LoadPOST():
         loadPOST_file.write(loadPOST_text)
     print(loadPOST_text)
 
-create_LoadPOST()
 
-
-'''
-def create_ammo():
+def generateAmmo():
 
     create_ammo = ammo_POST("POST")
     create_ammo.method = "POST"
@@ -185,6 +179,3 @@ def create_ammo():
         file.write(create_ammo.ammo())
     print("Файл с запросом успешно создан")
     print(ammo_text)
-
-create_ammo()
-'''
