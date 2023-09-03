@@ -270,8 +270,8 @@ def generateFiles():
         if "yes" in selected.get():
             print(selected.get())
             config_generator.generateGET()
-            config_generator.generatePOST()
             config_generator.generateAmmo()
+            config_generator.generatePOST()
 
     elif 'POST' in typeREQ:
 

@@ -120,7 +120,7 @@ class loadGET:
         return tank
 
 
-def generatePOST():
+def generateGET():
 
     create_loadGET = loadGET("loadGET")
     create_loadGET.host = "example.net"
@@ -142,12 +142,12 @@ def generatePOST():
     print(loadGET_text)
 
 
-def generateGET():
+def generatePOST():
     
     create_loadPOST = loadPOST("loadPOST")
     create_loadPOST.host = "example.net"
     create_loadPOST.port = "443"
-    create_loadPOST.ammo_file = "ammo_POST.txt"
+    create_loadPOST.ammo_file = nameAmmoFile + '.json'
     create_loadPOST.ssl = "true"
     create_loadPOST.schedule = "line(1, 10000, 5m) const(5000,2m)"
     create_loadPOST.instances = "1000"
@@ -162,6 +162,7 @@ def generateGET():
 
 
 def generateAmmo():
+    global nameAmmoFile
 
     create_ammo = ammo_POST("POST")
     create_ammo.method = "POST"
@@ -182,7 +183,7 @@ def generateAmmo():
     """
     ammo_text = create_ammo.ammo()
     nameAmmoFile = 'Редиска' #str(input('Введите имя для создаваемого файла: '))
-    with open(nameAmmoFile+'.txt', "w+") as file:
+    with open(nameAmmoFile+'.json', "w+") as file:
         file.write(create_ammo.ammo())
     print("Файл с запросом успешно создан")
     print(ammo_text)
