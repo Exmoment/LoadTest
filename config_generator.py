@@ -170,11 +170,18 @@ def generateAmmo():
     create_ammo.port = "443"
     create_ammo.body = """
     {
-        example
+        Сережа
+        самый
+        пандовый
+        редиска
+        из
+        всех
+        пандовых
+        редисок
     }
     """
     ammo_text = create_ammo.ammo()
-    nameAmmoFile = str(input('Введите имя для создаваемого файла: '))
+    nameAmmoFile = 'Редиска' #str(input('Введите имя для создаваемого файла: '))
     with open(nameAmmoFile+'.txt', "w+") as file:
         file.write(create_ammo.ammo())
     print("Файл с запросом успешно создан")
