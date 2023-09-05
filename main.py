@@ -88,6 +88,7 @@ def clicked_yes():
 
 
     if 'GET and POST' in choice_tupe.get():
+        start.destroy()
         POSTreq = Frame(window_yes, relief = FLAT)
         POSTreq.pack(padx = [5, 5])
         GETreq = Frame(window_yes, relief = FLAT)
@@ -145,6 +146,7 @@ def clicked_yes():
 
 
     elif 'POST' in choice_tupe.get():
+        start.destroy()
         POSTreq = Frame(window_yes, relief = FLAT)
         POSTreq.pack(pady = [5, 5])
 
@@ -185,6 +187,7 @@ def clicked_yes():
 
 
     elif 'GET' in choice_tupe.get():
+        start.destroy()
         GETreq = Frame(window_yes, relief = FLAT)
         GETreq.pack(pady = [5, 5])
 
@@ -218,7 +221,7 @@ def clicked_yes():
 
 
     else:
-        messagebox.showinfo('Ошибка ввода', 'Вы не выбрали тип запросов, попробуйте еще раз')
+        messagebox.showinfo('Ошибка ввода', 'Не выбран тип запросов или введен неверный формат, попробуйте еще раз')
 
 
 def wiget_dontgenerate():
@@ -237,7 +240,7 @@ def wiget_dontgenerate():
     choice_tupe.current()
     choice_tupe.pack(pady = [5, 5])
 
-    choice_btn = Button(master = start,  text = 'Выбрать', command = lambda:[clicked_yes(), start.destroy()])
+    choice_btn = Button(master = start,  text = 'Выбрать', command = clicked_yes)
     choice_btn.pack(fill = X, padx = 5, pady = 5)
     back_btn = Button(master = start, text = 'Назад', command = lambda:[window_yes.destroy(), create_main()])
     back_btn.pack(fill = X, padx = 5, pady = 5)
