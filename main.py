@@ -59,6 +59,186 @@ def generatePOST():
         loadPOST_file.write(loadPOST_text)
     print(loadPOST_text)
 '''
+#  //--------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET И POST ЗАПРОСОВ ----------------\\
+def GETandPOST():
+    global iterTestPOST_entry
+    global iterTestGET_entry
+    global ammoTest_path
+    global bodyTestPOST_path
+    global bodyTestGET_path
+    global POSTreq
+    global GETreq
+
+    start.destroy()
+
+    POSTreq = Frame(window_yes, relief = FLAT)
+    POSTreq.pack(padx = [5, 5])
+    GETreq = Frame(window_yes, relief = FLAT)
+    GETreq.pack(padx = [5, 5])
+
+    loadFileMenu = Menu(window_yes)
+    window_yes.config(menu = loadFileMenu)
+    loadFileMenu.add_command(label = 'Справка')
+
+    nameTestPOST = Label(master = POSTreq, text = "--- POST ---", font = ("Arial", 16), foreground = 'gray')
+    nameTestPOST.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 30])
+
+    iterTest = Label(master = POSTreq, text = "Количество итераций тестов:", font = ("Arial", 12))
+    iterTest.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
+    iterTestPOST_entry = Entry(master = POSTreq, width = 25)
+    iterTestPOST_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
+
+    bodyTestPOST = Label(master = POSTreq, text = "Путь или имя файла конфигурации:", font = ("Arial", 12))
+    bodyTestPOST.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
+    bodyTestPOST_path = Entry(master = POSTreq, width = 25)
+    bodyTestPOST_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
+
+    ammoTest = Label(master = POSTreq, text = "Путь или имя файла запросов:", font = ("Arial", 12))
+    ammoTest.grid(column = 0, row = 3, padx = [5, 5], pady = [5, 5], sticky = 'e')
+    ammoTest_path = Entry(master = POSTreq, width = 25)
+    ammoTest_path.grid(column = 1, row = 3, padx = [5, 5], pady = [5, 5])
+
+    nameTestGET = Label(master = GETreq, text = "--- GET ---", font = ("Arial", 16), foreground = 'gray')
+    nameTestGET.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [25, 30])
+
+    iterTest = Label(master = GETreq, text = "Количество итераций тестов:", font = ("Arial", 12))
+    iterTest.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
+    iterTestGET_entry = Entry(master = GETreq, width = 25)
+    iterTestGET_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'w')
+
+    bodyTestGET = Label(master = GETreq, text = "Путь или имя файла конфигурации:", font = ("Arial", 12))
+    bodyTestGET.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
+    bodyTestGET_path = Entry(master = GETreq, width = 25)
+    bodyTestGET_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'w')
+
+    iterTest_btn = Button(master = GETreq, text = 'Принять', command = lambda:[createGET(), createPOST()])
+    iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
+
+    back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), POSTreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
+    back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
+
+    btn_insertFile = Button(master = POSTreq, text = 'Открыть', command = insertFilePOST)
+    btn_insertFile.grid(column = 2, row = 2, padx = [44, 20], pady = [5, 5])
+    btn1_insertFile = Button(master = POSTreq, text = 'Открыть', command = insertFileAmmo)
+    btn1_insertFile.grid(column = 2, row = 3, padx = [44, 20], pady = [5, 5])
+    btn2_insertFile = Button(master = GETreq, text = 'Открыть', command = insertFileGET)
+    btn2_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
+
+    print('Ожидание ввода параметров')
+#  \\--------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET И POST ЗАПРОСОВ ----------------//
+#  ------------------------------------------------------------------------------------------------------
+#  //------------------ КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ POST ЗАПРОСОВ -------------------\\
+def POST():
+    global iterTestPOST_entry
+    global ammoTest_path
+    global bodyTestPOST_path
+    global POSTreq
+
+    start.destroy()
+
+    POSTreq = Frame(window_yes, relief = FLAT)
+    POSTreq.pack(pady = [5, 5])
+
+    loadFileMenu = Menu(window_yes)
+    window_yes.config(menu = loadFileMenu)
+    loadFileMenu.add_command(label = 'Справка')
+
+    nameTestPOST = Label(master = POSTreq, text = "--- POST ---", font = ("Arial", 16), foreground = 'gray')
+    nameTestPOST.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 30])
+
+    iterTest = Label(master = POSTreq, text = "Количество итераций тестов:", font = ("Arial", 12))
+    iterTest.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
+    iterTestPOST_entry = Entry(master = POSTreq, width = 25)
+    iterTestPOST_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
+
+    bodyTestPOST = Label(master = POSTreq, text = "Путь или имя файла конфигурации:", font = ("Arial", 12))
+    bodyTestPOST.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
+    bodyTestPOST_path = Entry(master = POSTreq, width = 25)
+    bodyTestPOST_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
+
+    ammoTest = Label(master = POSTreq, text = "Путь или имя файла запросов:", font = ("Arial", 12))
+    ammoTest.grid(column = 0, row = 3, padx = [5, 5], pady = [5, 5], sticky = 'e')
+    ammoTest_path = Entry(master = POSTreq, width = 25)
+    ammoTest_path.grid(column = 1, row = 3, padx = [5, 5], pady = [5, 5])
+
+    iterTest_btn = Button(master = POSTreq, text = 'Принять', command = createPOST)
+    iterTest_btn.grid(column = 2, row = 4, padx = [10, 20], pady = [50, 10])
+
+    back_btn = Button(master = POSTreq, text = 'Вернуться к выбору запросов', command = lambda:[POSTreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
+    back_btn.grid(column = 1, row = 4, padx = [10, 20], pady = [50, 10])
+
+    btn_insertFile = Button(master = POSTreq, text = 'Открыть', command = insertFilePOST)
+    btn_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
+    btn1_insertFile = Button(master = POSTreq, text = 'Открыть', command = insertFileAmmo)
+    btn1_insertFile.grid(column = 2, row = 3, padx = [10, 20], pady = [5, 5])
+
+    print('Ожидание ввода параметров')
+#  \\------------------ КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ POST ЗАПРОСОВ -------------------//
+#  ------------------------------------------------------------------------------------------------------
+#  //------------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET ЗАПРОСОВ -------------------\\
+def GET():
+    global iterTestGET_entry
+    global bodyTestGET_path
+    global GETreq
+
+    start.destroy()
+
+    GETreq = Frame(window_yes, relief = FLAT)
+    GETreq.pack(pady = [5, 5])
+
+    loadFileMenu = Menu(window_yes)
+    window_yes.config(menu = loadFileMenu)
+    loadFileMenu.add_command(label = 'Справка')
+
+    nameTestGET = Label(master = GETreq, text = "--- GET ---", font = ("Arial", 16), foreground = 'gray')
+    nameTestGET.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 30])
+
+    iterTest = Label(master = GETreq, text = "Количество итераций тестов:", font = ("Arial", 12))
+    iterTest.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
+    iterTestGET_entry = Entry(master = GETreq, width = 25)
+    iterTestGET_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
+
+    bodyTestGET = Label(master = GETreq, text = "Путь или имя файла конфигурации:", font = ("Arial", 12))
+    bodyTestGET.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
+    bodyTestGET_path = Entry(master = GETreq, width = 25)
+    bodyTestGET_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
+
+    class btnTYPE:
+
+        def __init__(self, name):
+            self.name = name
+            self.btnType = ''
+
+        def create_btn(self):
+
+            if 'yes' in self.btnType:
+
+                iterTest_btn = Button(master = GETreq, text = 'Принять', command = createGET)
+                iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
+
+                back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
+                back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
+
+                print('Редиска')
+
+            elif 'no' in self.btnType:
+
+                iterTest_btn = Button(master = GETreq, text = 'Принять', command = createGET)
+                iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
+
+                back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
+                back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
+
+    create_button = btnTYPE('create_button')
+    create_button.btnType = TYPE_btn
+    create_button.create_btn()
+
+    btn_insertFile = Button(master = GETreq, text = 'Открыть', command = insertFileGET)
+    btn_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
+
+    print('Ожидание ввода параметров')
+# \\------------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET ЗАПРОСОВ -------------------//
+
 
 def insertFileGET():
     file_name = fd.askopenfilename()
@@ -74,151 +254,23 @@ def insertFileAmmo():
     file_name = fd.askopenfilename()
     ammoTest_path.insert(0, file_name)
 
+
 #   //------------------- ВИДЖЕТ ДЛЯ РАБОТЫ С НАПИСАННЫМИ ЗАРАНЕЕ КОНФИГАМИ -------------------\\
 
 def clicked_yes():
+    global TYPE_btn
+    TYPE_btn = 'yes'
     print(choice_tupe.get())
-    global iterTestPOST_entry
-    global iterTestGET_entry
-    global ammoTest_path
-    global bodyTestPOST_path
-    global bodyTestGET_path
-    global POSTreq
-    global GETreq
-
 
     if 'GET and POST' in choice_tupe.get():
-        start.destroy()
-        POSTreq = Frame(window_yes, relief = FLAT)
-        POSTreq.pack(padx = [5, 5])
-        GETreq = Frame(window_yes, relief = FLAT)
-        GETreq.pack(padx = [5, 5])
-
-        loadFileMenu = Menu(window_yes)
-        window_yes.config(menu = loadFileMenu)
-        loadFileMenu.add_command(label = 'Справка')
-
-        nameTestPOST = Label(master = POSTreq, text = "--- POST ---", font = ("Arial", 16), foreground = 'gray')
-        nameTestPOST.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 30])
-
-        iterTest = Label(master = POSTreq, text = "Количество итераций тестов:", font = ("Arial", 12))
-        iterTest.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        iterTestPOST_entry = Entry(master = POSTreq, width = 25)
-        iterTestPOST_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
-
-        bodyTestPOST = Label(master = POSTreq, text = "Путь или имя файла конфигурации:", font = ("Arial", 12))
-        bodyTestPOST.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        bodyTestPOST_path = Entry(master = POSTreq, width = 25)
-        bodyTestPOST_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
-
-        ammoTest = Label(master = POSTreq, text = "Путь или имя файла запросов:", font = ("Arial", 12))
-        ammoTest.grid(column = 0, row = 3, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        ammoTest_path = Entry(master = POSTreq, width = 25)
-        ammoTest_path.grid(column = 1, row = 3, padx = [5, 5], pady = [5, 5])
-
-        nameTestGET = Label(master = GETreq, text = "--- GET ---", font = ("Arial", 16), foreground = 'gray')
-        nameTestGET.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [25, 30])
-
-        iterTest = Label(master = GETreq, text = "Количество итераций тестов:", font = ("Arial", 12))
-        iterTest.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        iterTestGET_entry = Entry(master = GETreq, width = 25)
-        iterTestGET_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'w')
-
-        bodyTestGET = Label(master = GETreq, text = "Путь или имя файла конфигурации:", font = ("Arial", 12))
-        bodyTestGET.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        bodyTestGET_path = Entry(master = GETreq, width = 25)
-        bodyTestGET_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'w')
-
-        iterTest_btn = Button(master = GETreq, text = 'Принять', command = lambda:[createGET(), createPOST()])
-        iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
-
-        back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), POSTreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
-        back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
-
-        btn_insertFile = Button(master = POSTreq, text = 'Открыть', command = insertFilePOST)
-        btn_insertFile.grid(column = 2, row = 2, padx = [44, 20], pady = [5, 5])
-        btn1_insertFile = Button(master = POSTreq, text = 'Открыть', command = insertFileAmmo)
-        btn1_insertFile.grid(column = 2, row = 3, padx = [44, 20], pady = [5, 5])
-        btn2_insertFile = Button(master = GETreq, text = 'Открыть', command = insertFileGET)
-        btn2_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
-
-        print('Ожидание ввода параметров')
-
+        GETandPOST()
 
     elif 'POST' in choice_tupe.get():
-        start.destroy()
-        POSTreq = Frame(window_yes, relief = FLAT)
-        POSTreq.pack(pady = [5, 5])
-
-        loadFileMenu = Menu(window_yes)
-        window_yes.config(menu = loadFileMenu)
-        loadFileMenu.add_command(label = 'Справка')
-
-        nameTestPOST = Label(master = POSTreq, text = "--- POST ---", font = ("Arial", 16), foreground = 'gray')
-        nameTestPOST.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 30])
-
-        iterTest = Label(master = POSTreq, text = "Количество итераций тестов:", font = ("Arial", 12))
-        iterTest.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        iterTestPOST_entry = Entry(master = POSTreq, width = 25)
-        iterTestPOST_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
-
-        bodyTestPOST = Label(master = POSTreq, text = "Путь или имя файла конфигурации:", font = ("Arial", 12))
-        bodyTestPOST.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        bodyTestPOST_path = Entry(master = POSTreq, width = 25)
-        bodyTestPOST_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
-
-        ammoTest = Label(master = POSTreq, text = "Путь или имя файла запросов:", font = ("Arial", 12))
-        ammoTest.grid(column = 0, row = 3, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        ammoTest_path = Entry(master = POSTreq, width = 25)
-        ammoTest_path.grid(column = 1, row = 3, padx = [5, 5], pady = [5, 5])
-
-        iterTest_btn = Button(master = POSTreq, text = 'Принять', command = createPOST)
-        iterTest_btn.grid(column = 2, row = 4, padx = [10, 20], pady = [50, 10])
-
-        back_btn = Button(master = POSTreq, text = 'Вернуться к выбору запросов', command = lambda:[POSTreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
-        back_btn.grid(column = 1, row = 4, padx = [10, 20], pady = [50, 10])
-
-        btn_insertFile = Button(master = POSTreq, text = 'Открыть', command = insertFilePOST)
-        btn_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
-        btn1_insertFile = Button(master = POSTreq, text = 'Открыть', command = insertFileAmmo)
-        btn1_insertFile.grid(column = 2, row = 3, padx = [10, 20], pady = [5, 5])
-
-        print('Ожидание ввода параметров')
+        POST()
 
 
     elif 'GET' in choice_tupe.get():
-        start.destroy()
-        GETreq = Frame(window_yes, relief = FLAT)
-        GETreq.pack(pady = [5, 5])
-
-        loadFileMenu = Menu(window_yes)
-        window_yes.config(menu = loadFileMenu)
-        loadFileMenu.add_command(label = 'Справка')
-
-        nameTestGET = Label(master = GETreq, text = "--- GET ---", font = ("Arial", 16), foreground = 'gray')
-        nameTestGET.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 30])
-
-        iterTest = Label(master = GETreq, text = "Количество итераций тестов:", font = ("Arial", 12))
-        iterTest.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        iterTestGET_entry = Entry(master = GETreq, width = 25)
-        iterTestGET_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
-
-        bodyTestGET = Label(master = GETreq, text = "Путь или имя файла конфигурации:", font = ("Arial", 12))
-        bodyTestGET.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        bodyTestGET_path = Entry(master = GETreq, width = 25)
-        bodyTestGET_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
-
-        iterTest_btn = Button(master = GETreq, text = 'Принять', command = createGET)
-        iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
-
-        back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
-        back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
-
-        btn_insertFile = Button(master = GETreq, text = 'Открыть', command = insertFileGET)
-        btn_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
-
-        print('Ожидание ввода параметров')
-
+        GET()
 
     else:
         messagebox.showinfo('Ошибка ввода', 'Не выбран тип запросов или введен неверный формат, попробуйте еще раз')
@@ -264,61 +316,76 @@ def create_yes():
 # //------------------- ВИДЖЕТ ДЛЯ ГЕНЕРАЦИИ КОНФИГУРАЦИОННЫХ ФАЙЛОВ И РАБОТЫ С НИМИ -------------------\\
 
 def generateFiles():
+
     print(selected.get())
     print(typeREQ)
 
-    if 'GET and POST' in typeREQ:
-        print('123')
+    if ('yes' in selected.get()) or ('no' in selected.get()):
 
-        if "yes" in selected.get():
-            print(selected.get())
-            config_generator.generateGET()
-            config_generator.generateAmmo()
-            config_generator.generatePOST()
+        if 'GET and POST' in typeREQ:
+            choice_auth.destroy()
 
-    elif 'POST' in typeREQ:
+            if "yes" in selected.get():
+                print(selected.get())
+                config_generator.generateGET()
+                config_generator.generateAmmo()
+                config_generator.generatePOST()
 
-        if "yes" in selected.get():
-            print(selected.get())
-            config_generator.generatePOST()
-            config_generator.generateAmmo()
+        elif 'POST' in typeREQ:
+            choice_auth.destroy()
 
-    elif 'GET' in typeREQ:
+            if "yes" in selected.get():
+                print(selected.get())
+                config_generator.generatePOST()
+                config_generator.generateAmmo()
 
-        if "yes" in selected.get():
-            print(selected.get())
-            config_generator.generateGET()
+        elif 'GET' in typeREQ:
+            choice_auth.destroy()
+
+            if "yes" in selected.get():
+                print(selected.get())
+                config_generator.generateGET()
+
+    else:
+        messagebox.showinfo('Ошибка ввода', 'Необходимо указать нужен ли токен для авторизации')
        
 
-
 def clicked_no():
-    global choice_auth
-    global selected
-    global typeREQ
-    typeREQ = choice_tupe.get()
 
-    choice_auth = Frame(window_no, relief = FLAT)
-    choice_auth.pack(padx = 10, pady = 10)
+    if choice_tupe.get() in typeTest:
+        global choice_auth
+        global selected
+        global typeREQ
+        typeREQ = choice_tupe.get()
 
-    auth_yes_no = Label(master = choice_auth, text = "Нужно ли указать токен для авторизации?", font = ("Arial", 16))
-    auth_yes_no.grid(columnspan = 2, pady = [5, 5])
+        start.destroy()
 
-    selected = StringVar()
-    selected.set('')
-    needToken = Radiobutton(master = choice_auth, text = 'Да, токен необходим', value = "yes", variable = selected)
-    needToken.grid(column = 0, row = 1)
-    dontNeedToken = Radiobutton(master = choice_auth, text = 'Нет, токен не требуется', value = "no", variable = selected)
-    dontNeedToken.grid(column = 1, row = 1)
-    
-    btn = Button(master = choice_auth, text = 'Выбрать', command = lambda:[generateFiles(), choice_auth.destroy()])
-    btn.grid(columnspan = 2, row = 2, padx = 5, pady = [25, 5])
-    back_btn = Button(master = choice_auth, text = 'Назад', command = lambda:[choice_auth.destroy(), wiget_generate()])
-    back_btn.grid(columnspan = 2, row = 3, padx = 5, pady = 5)
+        choice_auth = Frame(window_no, relief = FLAT)
+        choice_auth.pack(padx = 10, pady = 10)
+
+        auth_yes_no = Label(master = choice_auth, text = "Нужно ли указать токен для авторизации?", font = ("Arial", 16))
+        auth_yes_no.grid(columnspan = 2, pady = [5, 5])
+
+        selected = StringVar()
+        selected.set('')
+        needToken = Radiobutton(master = choice_auth, text = 'Да, токен необходим', value = 'yes', variable = selected)
+        needToken.grid(column = 0, row = 1)
+        dontNeedToken = Radiobutton(master = choice_auth, text = 'Нет, токен не требуется', value = 'no', variable = selected)
+        dontNeedToken.grid(column = 1, row = 1)
+        
+        btn = Button(master = choice_auth, text = 'Выбрать', command = generateFiles)
+        btn.grid(columnspan = 2, row = 2, padx = 5, pady = [25, 5])
+        back_btn = Button(master = choice_auth, text = 'Назад', command = lambda:[choice_auth.destroy(), wiget_generate()])
+        back_btn.grid(columnspan = 2, row = 3, padx = 5, pady = 5)
+
+    else:
+        messagebox.showinfo('Ошибка ввода', 'Не выбран тип запросов или введен неверный формат, попробуйте еще раз')
 
 
 def wiget_generate():
     global choice_tupe
     global start
+    global typeTest
 
     start = Frame(window_no, relief = FLAT)
     start.pack(padx = 10, pady = 10) 
@@ -326,13 +393,13 @@ def wiget_generate():
     type_req = Label(master = start, text = "Выберите тип запросов:", font = ("Arial", 16))
     type_req.pack(pady = [5, 5])
 
-    tupeTest = ("GET", "POST", "GET and POST")
+    typeTest = ("GET", "POST", "GET and POST")
 
-    choice_tupe = Combobox(master = start, values = tupeTest, width = 25)
+    choice_tupe = Combobox(master = start, values = typeTest, width = 25)
     choice_tupe.current()
     choice_tupe.pack(pady = [5, 5])
 
-    choice_btn = Button(master = start,  text = 'Выбрать', command = lambda:[clicked_no(), start.destroy()])
+    choice_btn = Button(master = start,  text = 'Выбрать', command = clicked_no)
     choice_btn.pack(fill = X, padx = 5, pady = 5)
     back_btn = Button(master = start, text = 'Назад', command = lambda:[window_no.destroy(), create_main()])
     back_btn.pack(fill = X, padx = 5, pady = 5)
