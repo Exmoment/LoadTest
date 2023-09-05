@@ -14,7 +14,7 @@ class LoadPOSTTesting:
     def ammo_File(self):
         with open(self.path, 'r') as ammo:                               # создаем файл в директории программы
             ammo_text = ammo.read()                                      # путем чтения и записи указанного пользователем
-        with open('ammo.txt', 'w') as ammo:
+        with open('ammo.json', 'w') as ammo:
             ammo.write(ammo_text)
 
     def POST_File(self):
