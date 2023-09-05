@@ -29,13 +29,10 @@ def createGET():
 
         if  ((iterTestGET_entry.get().isdigit()) > 0) and (int(iterTestGET_entry.get()) > 0):
             GET = run_test.choiceType('GET')
-            GET.iterrationGET = int(iterTestGET_entry.get())
+            GET.iterrationGET = int(iterGET.get())
             GET.pathBodyGET = bodyTestGET_path.get()
 
             GET.GET()
-
-        else:
-            messagebox.showinfo('Error', 'Поле итераций GET запросов должно содержать натуральное число')
 
     else:
         messagebox.showinfo('Error', 'Все поля GET запросов должны быть заполнены')
@@ -76,10 +73,61 @@ def insertFileAmmo():
 
 #   //------------------- ВИДЖЕТ ДЛЯ РАБОТЫ С НАПИСАННЫМИ ЗАРАНЕЕ КОНФИГАМИ -------------------\\
 
+def GET():
+    global iterTestGET_entry
+    global GETreq_iter
+
+    GETreq_iter = Frame(window_yes, relief = FLAT)
+    GETreq_iter.pack(pady = [5, 5])
+
+    iterTest = Label(master = GETreq_iter, text = "Количество итераций тестов:", font = ("Arial", 12))
+    iterTest.pack(pady = [5, 5])
+    iterTestGET_entry = Entry(master = GETreq_iter, width = 25)
+    iterTestGET_entry.pack(pady = [5, 5])
+
+    goGET_btn = Button(master = GETreq_iter, text = 'ОК', command = goGET)
+    goGET_btn.pack(pady = 5)
+
+
+def goGET():
+    global iterGET
+    iterGET = iterTestGET_entry
+
+    if ((iterGET.get().isdigit()) > 0) and (int(iterGET.get()) > 0):
+        GETreq_iter.destroy()
+        
+        GETreq = Frame(window_yes, relief = FLAT)
+        GETreq.pack(pady = [5, 5])
+
+        loadFileMenu = Menu(window_yes)
+        window_yes.config(menu = loadFileMenu)
+        loadFileMenu.add_command(label = 'Справка')
+
+        nameTestGET = Label(master = GETreq, text = "--- GET ---", font = ("Arial", 16), foreground = 'gray')
+        nameTestGET.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 30])
+
+        bodyTestGET = Label(master = GETreq, text = "Путь или имя файла конфигурации:", font = ("Arial", 12))
+        bodyTestGET.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
+        bodyTestGET_path = Entry(master = GETreq, width = 25)
+        bodyTestGET_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
+
+        iterTest_btn = Button(master = GETreq, text = 'Принять', command = createGET)
+        iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
+
+        back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
+        back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
+
+        btn_insertFile = Button(master = GETreq, text = 'Открыть', command = insertFileGET)
+        btn_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
+
+        print('Ожидание ввода параметров')
+
+    else:
+        messagebox.showinfo('Error', 'Поле итераций GET запросов должно содержать натуральное число')
+
 def clicked_yes():
     print(choice_tupe.get())
     global iterTestPOST_entry
-    global iterTestGET_entry
     global ammoTest_path
     global bodyTestPOST_path
     global bodyTestGET_path
@@ -88,6 +136,8 @@ def clicked_yes():
 
 
     if 'GET and POST' in choice_tupe.get():
+        start.destroy()
+
         POSTreq = Frame(window_yes, relief = FLAT)
         POSTreq.pack(padx = [5, 5])
         GETreq = Frame(window_yes, relief = FLAT)
@@ -95,7 +145,7 @@ def clicked_yes():
 
         loadFileMenu = Menu(window_yes)
         window_yes.config(menu = loadFileMenu)
-        loadFileMenu.add_command(label = '123')
+        loadFileMenu.add_command(label = 'Справка')
 
         nameTestPOST = Label(master = POSTreq, text = "--- POST ---", font = ("Arial", 16), foreground = 'gray')
         nameTestPOST.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 30])
@@ -145,12 +195,14 @@ def clicked_yes():
 
 
     elif 'POST' in choice_tupe.get():
+        start.destroy()
+
         POSTreq = Frame(window_yes, relief = FLAT)
         POSTreq.pack(pady = [5, 5])
 
         loadFileMenu = Menu(window_yes)
         window_yes.config(menu = loadFileMenu)
-        loadFileMenu.add_command(label = '123')
+        loadFileMenu.add_command(label = 'Справка')
 
         nameTestPOST = Label(master = POSTreq, text = "--- POST ---", font = ("Arial", 16), foreground = 'gray')
         nameTestPOST.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 30])
@@ -185,40 +237,12 @@ def clicked_yes():
 
 
     elif 'GET' in choice_tupe.get():
-        GETreq = Frame(window_yes, relief = FLAT)
-        GETreq.pack(pady = [5, 5])
+        start.destroy()
 
-        loadFileMenu = Menu(window_yes)
-        window_yes.config(menu = loadFileMenu)
-        loadFileMenu.add_command(label = '123')
-
-        nameTestGET = Label(master = GETreq, text = "--- GET ---", font = ("Arial", 16), foreground = 'gray')
-        nameTestGET.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 30])
-
-        iterTest = Label(master = GETreq, text = "Количество итераций тестов:", font = ("Arial", 12))
-        iterTest.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        iterTestGET_entry = Entry(master = GETreq, width = 25)
-        iterTestGET_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
-
-        bodyTestGET = Label(master = GETreq, text = "Путь или имя файла конфигурации:", font = ("Arial", 12))
-        bodyTestGET.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        bodyTestGET_path = Entry(master = GETreq, width = 25)
-        bodyTestGET_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
-
-        iterTest_btn = Button(master = GETreq, text = 'Принять', command = createGET)
-        iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
-
-        back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
-        back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
-
-        btn_insertFile = Button(master = GETreq, text = 'Открыть', command = insertFileGET)
-        btn_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
-
-        print('Ожидание ввода параметров')
-
+        GET() 
 
     else:
-        messagebox.showinfo('Ошибка ввода', 'Вы не выбрали тип запросов, попробуйте еще раз')
+        messagebox.showinfo('Ошибка ввода', 'Вы не выбрали тип запросов или ввели неверный формат, попробуйте еще раз')
 
 
 def wiget_dontgenerate():
@@ -237,7 +261,7 @@ def wiget_dontgenerate():
     choice_tupe.current()
     choice_tupe.pack(pady = [5, 5])
 
-    choice_btn = Button(master = start,  text = 'Выбрать', command = lambda:[clicked_yes(), start.destroy()])
+    choice_btn = Button(master = start,  text = 'Выбрать', command = clicked_yes)
     choice_btn.pack(fill = X, padx = 5, pady = 5)
     back_btn = Button(master = start, text = 'Назад', command = lambda:[window_yes.destroy(), create_main()])
     back_btn.pack(fill = X, padx = 5, pady = 5)
