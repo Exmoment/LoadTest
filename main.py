@@ -111,11 +111,32 @@ def GETandPOST():
     bodyTestGET_path = Entry(master = GETreq, width = 25)
     bodyTestGET_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'w')
 
-    iterTest_btn = Button(master = GETreq, text = 'Принять', command = lambda:[createGET(), createPOST()])
-    iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
+    class btnTYPE:
 
-    back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), POSTreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
-    back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
+        def __init__(self, name):
+            self.name = name
+            self.btnType = ''
+
+        def create_btn(self):
+            if 'yes' in self.btnType:
+                iterTest_btn = Button(master = GETreq, text = 'Принять', command = lambda:[createGET(), createPOST()])
+                iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
+
+                back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), POSTreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
+                back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
+
+                print('Редиска')
+
+            elif 'no' in self.btnType:
+                iterTest_btn = Button(master = GETreq, text = 'Принять', command = lambda:[createGET(), createPOST()])
+                iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
+
+                back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), POSTreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
+                back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
+
+    create_button = btnTYPE('create_button')
+    create_button.btnType = TYPE_btn
+    create_button.create_btn()
 
     btn_insertFile = Button(master = POSTreq, text = 'Открыть', command = insertFilePOST)
     btn_insertFile.grid(column = 2, row = 2, padx = [44, 20], pady = [5, 5])
@@ -161,11 +182,32 @@ def POST():
     ammoTest_path = Entry(master = POSTreq, width = 25)
     ammoTest_path.grid(column = 1, row = 3, padx = [5, 5], pady = [5, 5])
 
-    iterTest_btn = Button(master = POSTreq, text = 'Принять', command = createPOST)
-    iterTest_btn.grid(column = 2, row = 4, padx = [10, 20], pady = [50, 10])
+    class btnTYPE:
 
-    back_btn = Button(master = POSTreq, text = 'Вернуться к выбору запросов', command = lambda:[POSTreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
-    back_btn.grid(column = 1, row = 4, padx = [10, 20], pady = [50, 10])
+        def __init__(self, name):
+            self.name = name
+            self.btnType = ''
+
+        def create_btn(self):
+            if 'yes' in self.btnType:
+                iterTest_btn = Button(master = POSTreq, text = 'Принять', command = createPOST)
+                iterTest_btn.grid(column = 2, row = 4, padx = [10, 20], pady = [50, 10])
+
+                back_btn = Button(master = POSTreq, text = 'Вернуться к выбору запросов', command = lambda:[POSTreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
+                back_btn.grid(column = 1, row = 4, padx = [10, 20], pady = [50, 10])
+
+                print('Редиска')
+
+            elif 'no' in self.btnType:
+                iterTest_btn = Button(master = POSTreq, text = 'Принять', command = createPOST)
+                iterTest_btn.grid(column = 2, row = 4, padx = [10, 20], pady = [50, 10])
+
+                back_btn = Button(master = POSTreq, text = 'Вернуться к выбору запросов', command = lambda:[POSTreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
+                back_btn.grid(column = 1, row = 4, padx = [10, 20], pady = [50, 10])
+
+    create_button = btnTYPE('create_button')
+    create_button.btnType = TYPE_btn
+    create_button.create_btn()
 
     btn_insertFile = Button(master = POSTreq, text = 'Открыть', command = insertFilePOST)
     btn_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
@@ -210,9 +252,7 @@ def GET():
             self.btnType = ''
 
         def create_btn(self):
-
             if 'yes' in self.btnType:
-
                 iterTest_btn = Button(master = GETreq, text = 'Принять', command = createGET)
                 iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
 
@@ -222,7 +262,6 @@ def GET():
                 print('Редиска')
 
             elif 'no' in self.btnType:
-
                 iterTest_btn = Button(master = GETreq, text = 'Принять', command = createGET)
                 iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
 
@@ -316,7 +355,6 @@ def create_yes():
 # //------------------- ВИДЖЕТ ДЛЯ ГЕНЕРАЦИИ КОНФИГУРАЦИОННЫХ ФАЙЛОВ И РАБОТЫ С НИМИ -------------------\\
 
 def generateFiles():
-
     print(selected.get())
     print(typeREQ)
 
@@ -351,7 +389,6 @@ def generateFiles():
        
 
 def clicked_no():
-
     if choice_tupe.get() in typeTest:
         global choice_auth
         global selected
