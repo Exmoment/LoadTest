@@ -344,8 +344,14 @@ def create_yes():
 #   \\------------------- КОНЕЦ ВИДЖЕТА ДЛЯ РАБОТЫ С НАПИСАННЫМИ ЗАРАНЕЕ КОНФИГАМИ -------------------//
 # --------------------------------------------------------------------------------------------------------
 # //------------------- ВИДЖЕТ ДЛЯ ГЕНЕРАЦИИ КОНФИГУРАЦИОННЫХ ФАЙЛОВ И РАБОТЫ С НИМИ -------------------\\
+def qwerty():
+    print(entry_list[4])
 
 def generateFiles():
+    global entry_list
+    entry_list = []
+    x = 0
+    y = 1
     print(selected.get())
     print(typeREQ)
 
@@ -355,25 +361,52 @@ def generateFiles():
             choice_auth.destroy()
 
             if "yes" in selected.get():
+
                 print(selected.get())
-                config_generator.generateGET()
-                config_generator.generateAmmo()
-                config_generator.generatePOST()
+                #config_generator.generateGET()
+                #config_generator.generateAmmo()
+                #config_generator.generatePOST()
 
         elif 'POST' in typeREQ:
             choice_auth.destroy()
 
             if "yes" in selected.get():
+                
                 print(selected.get())
-                config_generator.generatePOST()
-                config_generator.generateAmmo()
+                #config_generator.generatePOST()
+                #config_generator.generateAmmo()
 
         elif 'GET' in typeREQ:
             choice_auth.destroy()
 
-            if "yes" in selected.get():
+            if "yes" in selected.get(): 
+                generate_GET = Frame(window_no, relief = FLAT)
+                generate_GET.pack(pady = [5, 5])
+
+                generatorGET_name = Label(master = generate_GET, text = '--- GET query customization generator ---', font = ('Arial', 16), foreground = 'gray')
+                generatorGET_name.grid(columnspan = 3, row = 0, pady = [5, 5])
+                
+                labels = ['Хост сайта:', 'Порт:', 'Agent:', 'Ссылка(и) на страницы:',
+                          'Количество потоков:', 'Параметры нагрузки:', 'Имя теста:']
+                
+                for a in labels:
+                    enter_name = Label(master = generate_GET, text = a, font = ('Arial', 12))
+                    enter_name.grid(column = 0, row = y, padx = [5, 5], pady = [5, 5], sticky = 'se')
+                    y += 1
+                
+                for x in range(1, 8):
+                    exec("entry_%s = Entry(master = generate_GET, width = 25)" % x)
+                    #entry = Entry(master = generatorGET_name, width = 25)
+                    exec("entry_%s.grid(column = 1, row = x, padx = [5, 5], pady = [5, 5])" % x)
+                    entry_list.append(exec("entry_%s" % x))
+                    x += 1
+
+                btn = Button(master = generatorGET_name, text = 'OK', command = qwerty)
+                btn.grid(column = 1, row = 8, padx = 5, pady = 5)
+                
+
                 print(selected.get())
-                config_generator.generateGET()
+                #config_generator.generateGET()
 
     else:
         messagebox.showinfo('Ошибка ввода', 'Необходимо указать нужен ли токен для авторизации')
