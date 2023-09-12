@@ -263,6 +263,48 @@ class wigetGET_requests:
 
         print('Ожидание ввода параметров')
 # \\------------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET ЗАПРОСОВ -------------------//
+#  ------------------------------------------------------------------------------------------------------
+#      //------------------- КОД ВИДЖЕТА ГЕНЕРАТОРА КОНФИГУРАЦИЙ GET ЗАПРОСОВ -------------------\\
+class wiget_generator_GET:
+
+    def __init__(self, name):
+        self.name = name
+        self.createToken = ''
+
+    def generator_GET(self):
+        generate_GET = Frame(window_no, relief = FLAT)
+        generate_GET.pack(pady = [5, 5])
+
+        generatorGET_name = Label(master = generate_GET, text = '--- GET query customization generator ---', font = ('Arial', 16), foreground = 'gray')
+        generatorGET_name.grid(columnspan = 3, row = 0, pady = [5, 5])
+
+        if 'no' in self.createToken:
+            labels = ['Хост сайта:', 'Порт:', 'Agent:', 'Ссылка(и) на страницы:',
+                      'Количество потоков:', 'Параметры нагрузки:', 'Имя теста:']
+        
+        elif 'yes' in self.createToken:
+            labels = ['Хост сайта:', 'Порт:', 'Agent:', 'Токен авторизации:', 'Ссылка(и) на страницы:',
+                      'Количество потоков:', 'Параметры нагрузки:', 'Имя теста:']
+        
+        y = 1
+        for a in labels:
+            enter_name = Label(master = generate_GET, text = a, font = ('Arial', 12))
+            enter_name.grid(column = 0, row = y, padx = [5, 5], pady = [5, 5], sticky = 'se')
+            y += 1
+        
+        y -= 1
+        nameTest_entry = Entry(master = generate_GET, width = 25)
+        nameTest_entry.grid(column = 1, row = (y), padx = [5, 5], pady = [5, 5])
+
+        y -= 1
+        loadParams = Entry(master = generate_GET, width = 25)
+        loadParams.grid(column = 1, row = (y), padx = [5, 5], pady = [5, 5])
+
+        y -= 1
+        quantityThreads = Entry(master = generate_GET, width = 25)
+        quantityThreads.grid(column = 1, row = (y), padx = [5, 5], pady = [5, 5])
+
+
 
 
 def insertFileGET():
@@ -283,23 +325,21 @@ def insertFileAmmo():
 #   //------------------- ВИДЖЕТ ДЛЯ РАБОТЫ С НАПИСАННЫМИ ЗАРАНЕЕ КОНФИГАМИ -------------------\\
 
 def clicked_yes():
-    TYPE_btn = 'yes'
-    print(choice_tupe.get())
 
     if 'GET and POST' in choice_tupe.get():
         create_wiget = wigetGETandPOST_requests('create_wiget')
-        create_wiget.btnType = TYPE_btn
+        create_wiget.btnType = 'yes'
         create_wiget.GETandPOST()
 
     elif 'POST' in choice_tupe.get():
         create_wiget = wigetPOST_requests('create_wiget')
-        create_wiget.btnType = TYPE_btn
+        create_wiget.btnType = 'yes'
         create_wiget.POST()
 
 
     elif 'GET' in choice_tupe.get():
         create_wiget = wigetGET_requests('create_wiget')
-        create_wiget.btnType = TYPE_btn
+        create_wiget.btnType = 'yes'
         create_wiget.GET()
 
     else:
@@ -328,7 +368,7 @@ def wiget_dontgenerate():
     back_btn.pack(fill = X, padx = 5, pady = 5)
 
 
-def create_yes():
+def create_present():
     global window_yes
 
     window_yes = Tk()
@@ -344,15 +384,9 @@ def create_yes():
 #   \\------------------- КОНЕЦ ВИДЖЕТА ДЛЯ РАБОТЫ С НАПИСАННЫМИ ЗАРАНЕЕ КОНФИГАМИ -------------------//
 # --------------------------------------------------------------------------------------------------------
 # //------------------- ВИДЖЕТ ДЛЯ ГЕНЕРАЦИИ КОНФИГУРАЦИОННЫХ ФАЙЛОВ И РАБОТЫ С НИМИ -------------------\\
-def qwerty():
-    print(entry_list[4])
+
 
 def generateFiles():
-    global entry_list
-    entry_list = []
-    x = 0
-    y = 1
-    print(selected.get())
     print(typeREQ)
 
     if ('yes' in selected.get()) or ('no' in selected.get()):
@@ -380,36 +414,19 @@ def generateFiles():
             choice_auth.destroy()
 
             if "yes" in selected.get(): 
-                generate_GET = Frame(window_no, relief = FLAT)
-                generate_GET.pack(pady = [5, 5])
+                create_wiget = wiget_generator_GET('create_wiget')
+                create_wiget.createToken = selected.get()
+                create_wiget.generator_GET()
 
-                generatorGET_name = Label(master = generate_GET, text = '--- GET query customization generator ---', font = ('Arial', 16), foreground = 'gray')
-                generatorGET_name.grid(columnspan = 3, row = 0, pady = [5, 5])
+            elif "no" in selected.get(): 
+                create_wiget = wiget_generator_GET('create_wiget')
+                create_wiget.createToken = selected.get()
+                create_wiget.generator_GET()
                 
-                labels = ['Хост сайта:', 'Порт:', 'Agent:', 'Ссылка(и) на страницы:',
-                          'Количество потоков:', 'Параметры нагрузки:', 'Имя теста:']
                 
-                for a in labels:
-                    enter_name = Label(master = generate_GET, text = a, font = ('Arial', 12))
-                    enter_name.grid(column = 0, row = y, padx = [5, 5], pady = [5, 5], sticky = 'se')
-                    y += 1
-                
-                for x in range(1, 8):
-                    exec("entry_%s = Entry(master = generate_GET, width = 25)" % x)
-                    #entry = Entry(master = generatorGET_name, width = 25)
-                    exec("entry_%s.grid(column = 1, row = x, padx = [5, 5], pady = [5, 5])" % x)
-                    entry_list.append(exec("entry_%s" % x))
-                    x += 1
-
-                btn = Button(master = generatorGET_name, text = 'OK', command = qwerty)
-                btn.grid(column = 1, row = 8, padx = 5, pady = 5)
-                
-
-                print(selected.get())
-                #config_generator.generateGET()
 
     else:
-        messagebox.showinfo('Ошибка ввода', 'Необходимо указать нужен ли токен для авторизации')
+        messagebox.showinfo('Ошибка ввода', 'Необходимо указать нужен ли токен для авторизации= на сайте')
        
 
 def clicked_no():
@@ -466,7 +483,7 @@ def wiget_generate():
     back_btn.pack(fill = X, padx = 5, pady = 5)
 
 
-def create_no():
+def create_absent():
     global window_no
 
     window_no = Tk()
@@ -493,10 +510,10 @@ def create_main():
     start_title = Label(main_window, text = "У вас есть файлы конфигурации?", font = ("Arial", 18))
     start_title.pack(padx = 10, pady = 10)
 
-    btn_yes = Button(main_window, text = 'Есть конфигурационные файлы', command = lambda:[main_window.destroy(), create_yes(), wiget_dontgenerate()])
+    btn_yes = Button(main_window, text = 'Есть конфигурационные файлы', command = lambda:[main_window.destroy(), create_present(), wiget_dontgenerate()])
     btn_yes.pack(fill = X, padx = 10, pady = [10, 10])
 
-    btn_no = Button(main_window, text = 'Нет конфигурационных файлов', command = lambda:[main_window.destroy(), create_no(), wiget_generate()])
+    btn_no = Button(main_window, text = 'Нет конфигурационных файлов', command = lambda:[main_window.destroy(), create_absent(), wiget_generate()])
     btn_no.pack(fill = X, padx = 10, pady = [0, 10])
 
     main_window.mainloop()
