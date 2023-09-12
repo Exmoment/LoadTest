@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter.ttk import *
 from tkinter import messagebox
 from tkinter import filedialog as fd
+from tkinter import scrolledtext
 import run_test
 import config_generator
 
@@ -279,32 +280,57 @@ class wiget_generator_GET:
         generatorGET_name.grid(columnspan = 3, row = 0, pady = [5, 5])
 
         if 'no' in self.createToken:
-            labels = ['Хост сайта:', 'Порт:', 'Agent:', 'Ссылка(и) на страницы:',
-                      'Количество потоков:', 'Параметры нагрузки:', 'Имя теста:']
+            labels = ['Хост сайта:', 'Порт:', 'Agent:', 'Количество потоков:',
+                      'Параметры нагрузки:', 'Имя теста:']
         
         elif 'yes' in self.createToken:
-            labels = ['Хост сайта:', 'Порт:', 'Agent:', 'Токен авторизации:', 'Ссылка(и) на страницы:',
+            labels = ['Хост сайта:', 'Порт:', 'User agent:', 'Токен авторизации:',
                       'Количество потоков:', 'Параметры нагрузки:', 'Имя теста:']
-        
+
         y = 1
         for a in labels:
             enter_name = Label(master = generate_GET, text = a, font = ('Arial', 12))
             enter_name.grid(column = 0, row = y, padx = [5, 5], pady = [5, 5], sticky = 'se')
             y += 1
         
-        y -= 1
-        nameTest_entry = Entry(master = generate_GET, width = 25)
-        nameTest_entry.grid(column = 1, row = (y), padx = [5, 5], pady = [5, 5])
+        pathURL_label = Label(master = generate_GET, text = 'Введите ссылки на страницы без хоста:', font = ('Arial', 12))
+        pathURL_label.grid(columnspan = 3, row = y, pady = [25, 5])
+        pathURL_entry = scrolledtext.ScrolledText(master = generate_GET, width = 50, height = 5)
+        pathURL_entry.grid(columnspan = 3, row = (y + 1), padx = [5, 5], pady = [5, 5])
+
+        select_btn = Button(master = generate_GET, text = 'Принять', command = print('selected'))
+        select_btn.grid(column = 2, row = (y + 2), padx = [10, 10], pady = [20, 10])
+        back_btn =Button(master = generate_GET, text = 'Вернуться у выбору запросов', command = lambda:[generate_GET.destroy(), wiget_generate()])
+        back_btn.grid(column = 1, row = (y + 2), padx = [10, 10], pady = [20, 10])
 
         y -= 1
-        loadParams = Entry(master = generate_GET, width = 25)
-        loadParams.grid(column = 1, row = (y), padx = [5, 5], pady = [5, 5])
+        nameTest_entry = Entry(master = generate_GET, width = 27)
+        nameTest_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
 
         y -= 1
-        quantityThreads = Entry(master = generate_GET, width = 25)
-        quantityThreads.grid(column = 1, row = (y), padx = [5, 5], pady = [5, 5])
+        loadParams_entry = Entry(master = generate_GET, width = 27)
+        loadParams_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
 
+        y -= 1
+        quantityThreads_entry = Entry(master = generate_GET, width = 27)
+        quantityThreads_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
 
+        if 'yes' in self.createToken:
+            y -= 1
+            authToken_entry = Entry(master = generate_GET, width = 27)
+            authToken_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
+
+        y -= 1
+        userAgent_entry = Entry(master = generate_GET, width = 27)
+        userAgent_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
+
+        y -= 1
+        port_entry = Entry(master = generate_GET, width = 27)
+        port_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
+
+        y -= 1
+        host_entry = Entry(master = generate_GET, width = 27)
+        host_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
 
 
 def insertFileGET():
