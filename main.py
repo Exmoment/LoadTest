@@ -308,10 +308,14 @@ class wiget_generator_GET:
         path_url_entry.insert('1.0', 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки!')
         path_url_entry.configure(foreground = 'gray')
         path_url_entry.grid(columnspan = 3, row = (y + 1), padx = [5, 5], pady = [5, 5])
-        path_url_entry.bind("<FocusIn>", (lambda args: (path_url_entry.delete('1.0', 'end'), path_url_entry.configure(foreground = 'black'))
-                                          if (path_url_entry.get('1.0') == 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки!')
-                                          else None)(path_url_entry.get('1.0'), None))
-        path_url_entry.bind("<FocusOut>", lambda args:[path_url_entry.insert('1.0', 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки!')])
+        text = path_url_entry.get('1.0', 'end')
+        path_url_entry.bind("<FocusIn>", (lambda args: (path_url_entry.delete('1.0', 'end'), path_url_entry.configure(foreground = 'black'), (text == path_url_entry.get('1.0', 'end')))
+                                          if (text == 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки!')
+                                          else None))
+        path_url_entry.bind("<FocusOut>", (lambda args: (path_url_entry.insert('1.0', 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки!'),
+                                                         path_url_entry.configure(foreground = 'gray'))
+                                          if (text == '')
+                                          else None))
 
         select_btn = Button(master = generate_GET, text = 'Принять', command = print('selected'))
         select_btn.grid(column = 2, row = (y + 2), padx = [10, 10], pady = [20, 10])

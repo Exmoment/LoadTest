@@ -96,7 +96,7 @@ class loadGET:
                     agent = get.agent
                 ).replace('-"[', '    - "['),
                 uris = "  uris:\r\n{url}".format(
-                    url = get.url.replace('- /', '    - /')
+                    url = get.url.replace('-/', '    - /')
                 ),
                 ssl = get.ssl,
                 instances = get.instances,
