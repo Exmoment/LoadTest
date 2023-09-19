@@ -293,14 +293,29 @@ class wiget_generator_GET:
             enter_name.grid(column = 0, row = y, padx = [5, 5], pady = [5, 5], sticky = 'se')
             y += 1
         
-        pathURL_label = Label(master = generate_GET, text = 'Введите ссылки на страницы без хоста:', font = ('Arial', 12))
-        pathURL_label.grid(columnspan = 3, row = y, pady = [25, 5])
-        pathURL_entry = scrolledtext.ScrolledText(master = generate_GET, width = 50, height = 5)
-        pathURL_entry.grid(columnspan = 3, row = (y + 1), padx = [5, 5], pady = [5, 5])
+        def placeholder_delete():
+            path_url_entry.delete('1.0', 'end'),
+            path_url_entry.configure(foreground = 'black')
+        
+        def placeholder_insert():
+            if path_url_entry.get() == '':
+                path_url_entry.insert('1.0', 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки!')
+                path_url_entry.configure(foreground = 'gray')
+
+        path_url_label = Label(master = generate_GET, text = 'Введите ссылки на страницы без хоста сайта:', font = ('Arial', 12))
+        path_url_label.grid(columnspan = 3, row = y, pady = [25, 5])
+        path_url_entry = scrolledtext.ScrolledText(master = generate_GET, width = 50, height = 5)
+        path_url_entry.insert('1.0', 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки!')
+        path_url_entry.configure(foreground = 'gray')
+        path_url_entry.grid(columnspan = 3, row = (y + 1), padx = [5, 5], pady = [5, 5])
+        path_url_entry.bind("<FocusIn>", (lambda args: (path_url_entry.delete('1.0', 'end'), path_url_entry.configure(foreground = 'black'))
+                                          if (path_url_entry.get('1.0') == 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки!')
+                                          else None)(path_url_entry.get('1.0'), None))
+        path_url_entry.bind("<FocusOut>", lambda args:[path_url_entry.insert('1.0', 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки!')])
 
         select_btn = Button(master = generate_GET, text = 'Принять', command = print('selected'))
         select_btn.grid(column = 2, row = (y + 2), padx = [10, 10], pady = [20, 10])
-        back_btn =Button(master = generate_GET, text = 'Вернуться у выбору запросов', command = lambda:[generate_GET.destroy(), wiget_generate()])
+        back_btn =Button(master = generate_GET, text = 'Вернуться к выбору запросов', command = lambda:[generate_GET.destroy(), wiget_generate()])
         back_btn.grid(column = 1, row = (y + 2), padx = [10, 10], pady = [20, 10])
 
         y -= 1
@@ -308,8 +323,8 @@ class wiget_generator_GET:
         nameTest_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
 
         y -= 1
-        loadParams_entry = Entry(master = generate_GET, width = 27)
-        loadParams_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
+        load_params_entry = Entry(master = generate_GET, width = 27)
+        load_params_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
 
         y -= 1
         quantityThreads_entry = Entry(master = generate_GET, width = 27)
@@ -352,18 +367,18 @@ def insertFileAmmo():
 
 def clicked_yes():
 
-    if 'GET and POST' in choice_tupe.get():
+    if 'GET and POST' in choice_type.get():
         create_wiget = wigetGETandPOST_requests('create_wiget')
         create_wiget.btnType = 'yes'
         create_wiget.GETandPOST()
 
-    elif 'POST' in choice_tupe.get():
+    elif 'POST' in choice_type.get():
         create_wiget = wigetPOST_requests('create_wiget')
         create_wiget.btnType = 'yes'
         create_wiget.POST()
 
 
-    elif 'GET' in choice_tupe.get():
+    elif 'GET' in choice_type.get():
         create_wiget = wigetGET_requests('create_wiget')
         create_wiget.btnType = 'yes'
         create_wiget.GET()
@@ -373,7 +388,7 @@ def clicked_yes():
 
 
 def wiget_dontgenerate():
-    global choice_tupe
+    global choice_type
     global start
 
     start = Frame(window_yes, relief = FLAT)
@@ -384,9 +399,9 @@ def wiget_dontgenerate():
 
     tupeTest = ("GET", "POST", "GET and POST")
 
-    choice_tupe = Combobox(master = start, values = tupeTest, width = 25)
-    choice_tupe.current()
-    choice_tupe.pack(pady = [5, 5])
+    choice_type = Combobox(master = start, values = tupeTest, width = 25)
+    choice_type.current()
+    choice_type.pack(pady = [5, 5])
 
     choice_btn = Button(master = start,  text = 'Выбрать', command = clicked_yes)
     choice_btn.pack(fill = X, padx = 5, pady = 5)
@@ -413,7 +428,7 @@ def create_present():
 
 
 def generateFiles():
-    print(typeREQ)
+    choice_type
 
     if ('yes' in selected.get()) or ('no' in selected.get()):
 
@@ -448,19 +463,17 @@ def generateFiles():
                 create_wiget = wiget_generator_GET('create_wiget')
                 create_wiget.createToken = selected.get()
                 create_wiget.generator_GET()
-                
-                
 
     else:
-        messagebox.showinfo('Ошибка ввода', 'Необходимо указать нужен ли токен для авторизации= на сайте')
+        messagebox.showinfo('Ошибка ввода', 'Необходимо указать нужен ли токен для авторизации на сайте')
        
 
 def clicked_no():
-    if choice_tupe.get() in typeTest:
+    if choice_type.get() in typeTest:
         global choice_auth
         global selected
         global typeREQ
-        typeREQ = choice_tupe.get()
+        typeREQ = choice_type.get()
 
         start.destroy()
 
@@ -487,7 +500,7 @@ def clicked_no():
 
 
 def wiget_generate():
-    global choice_tupe
+    global choice_type
     global start
     global typeTest
 
@@ -499,9 +512,9 @@ def wiget_generate():
 
     typeTest = ("GET", "POST", "GET and POST")
 
-    choice_tupe = Combobox(master = start, values = typeTest, width = 25)
-    choice_tupe.current()
-    choice_tupe.pack(pady = [5, 5])
+    choice_type = Combobox(master = start, values = typeTest, width = 25)
+    choice_type.current()
+    choice_type.pack(pady = [5, 5])
 
     choice_btn = Button(master = start,  text = 'Выбрать', command = clicked_no)
     choice_btn.pack(fill = X, padx = 5, pady = 5)
