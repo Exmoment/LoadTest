@@ -294,29 +294,23 @@ class wiget_generator_GET:
             y += 1
         
         def placeholder_delete():
-            text = path_url_entry.get(1.0, END)
-            #path_url_entry.delete('1.0', 'end'),
-            #path_url_entry.configure(foreground = 'black')
+            if (path_url_entry.get(1.0, 'end-1c') == 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки'):
+                path_url_entry.delete(1.0, 'end')
+                path_url_entry.configure(foreground = 'black')
         
         def placeholder_insert():
-            text = path_url_entry.get(1.0, END)
-            if text == '':
-                path_url_entry.insert('1.0', 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки!')
+            if len(path_url_entry.get(1.0, 'end-1c')) == 0:
+                path_url_entry.insert(1.0, 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки')
                 path_url_entry.configure(foreground = 'gray')
 
         path_url_label = Label(master = generate_GET, text = 'Введите ссылки на страницы без хоста сайта:', font = ('Arial', 12))
         path_url_label.grid(columnspan = 3, row = y, pady = [25, 5])
         path_url_entry = scrolledtext.ScrolledText(master = generate_GET, width = 50, height = 5)
-        path_url_entry.insert('1.0', 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки!')
+        path_url_entry.insert(1.0, 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки')
         path_url_entry.configure(foreground = 'gray')
         path_url_entry.grid(columnspan = 3, row = (y + 1), padx = [5, 5], pady = [5, 5])
-        path_url_entry.bind("<FocusIn>", (lambda args: (path_url_entry.delete('1.0', 'end'), path_url_entry.configure(foreground = 'black')))
-                                          if (path_url_entry.get('1.0', 'end') == 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки!')
-                                          else None)
-        path_url_entry.bind("<FocusOut>", (lambda args: (path_url_entry.insert('1.0', 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки!'),
-                                                         path_url_entry.configure(foreground = 'gray'))
-                                          if (path_url_entry.get(1.0, END) == '')
-                                          else (print(path_url_entry.get(1.0, END)))))
+        path_url_entry.bind('<FocusIn>', (lambda args:[placeholder_delete()]))
+        path_url_entry.bind('<FocusOut>', (lambda args:[placeholder_insert()]))
 
         select_btn = Button(master = generate_GET, text = 'Принять', command = print('selected'))
         select_btn.grid(column = 2, row = (y + 2), padx = [10, 10], pady = [20, 10])
