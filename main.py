@@ -294,12 +294,12 @@ class wiget_generator_GET:
             y += 1
         
         def placeholder_delete():
-            if (path_url_entry.get(1.0, 'end-1c') == 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки'):
+            if path_url_entry.get(1.0, 'end-1c') == 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки':
                 path_url_entry.delete(1.0, 'end')
                 path_url_entry.configure(foreground = 'black')
         
         def placeholder_insert():
-            if len(path_url_entry.get(1.0, 'end-1c')) == 0:
+            if path_url_entry.get(1.0, 'end-1c') == '':
                 path_url_entry.insert(1.0, 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки')
                 path_url_entry.configure(foreground = 'gray')
 
