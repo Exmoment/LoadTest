@@ -297,6 +297,16 @@ class wiget_generator_GET:
             if name_test_entry.get() == 'Как-нибудь назовите тест':
                 name_test_entry.delete(0, 'end')
                 name_test_entry.configure(foreground = 'black')
+
+        def placeholder_load_params_delete():
+            if load_params_entry.get() == 'line(1, 100, 5m) const(50,2m)':
+                load_params_entry.delete(0, 'end')
+                load_params_entry.configure(foreground = 'black')
+
+        def placeholder_quantity_threads_entry_delete():
+            if quantity_threads_entry.get() == '1000':
+                quantity_threads_entry.delete(0, 'end')
+                quantity_threads_entry.configure(foreground = 'black')
         
         def placeholder_url_insert():
             if path_url_entry.get(1.0, 'end-1c') == '':
@@ -307,6 +317,16 @@ class wiget_generator_GET:
             if name_test_entry.get() == '':
                 name_test_entry.insert(0, 'Как-нибудь назовите тест')
                 name_test_entry.configure(foreground = 'gray')
+        
+        def placeholder_load_params_insert():
+            if load_params_entry.get() == '':
+                load_params_entry.insert(0, 'line(1, 100, 5m) const(50,2m)')
+                load_params_entry.configure(foreground = 'gray')
+
+        def placeholder_quantity_threads_entry_insert():
+            if quantity_threads_entry.get() == '':
+                quantity_threads_entry.insert(0, '1000')
+                quantity_threads_entry.configure(foreground = 'gray')
 
         path_url_label = Label(master = generate_GET, text = 'Введите ссылки на страницы без хоста сайта:', font = ('Arial', 12))
         path_url_label.grid(columnspan = 3, row = y, pady = [25, 5])
@@ -332,11 +352,19 @@ class wiget_generator_GET:
 
         y -= 1
         load_params_entry = Entry(master = generate_GET, width = 27)
+        load_params_entry.insert(0, 'line(1, 100, 5m) const(50,2m)')
+        load_params_entry.configure(foreground = 'gray')
         load_params_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
+        load_params_entry.bind('<FocusIn>', (lambda args: [placeholder_load_params_delete()]))
+        load_params_entry.bind('<FocusOut>', (lambda args: [placeholder_load_params_insert()]))
 
         y -= 1
-        quantityThreads_entry = Entry(master = generate_GET, width = 27)
-        quantityThreads_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
+        quantity_threads_entry = Entry(master = generate_GET, width = 27)
+        quantity_threads_entry.insert(0, '1000')
+        quantity_threads_entry.configure(foreground = 'gray')
+        quantity_threads_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
+        quantity_threads_entry.bind('<FocusIn>', (lambda args: [placeholder_quantity_threads_entry_delete()]))
+        quantity_threads_entry.bind('<FocusOut>', (lambda args: [placeholder_quantity_threads_entry_insert()]))
 
         if 'yes' in self.createToken:
             y -= 1
