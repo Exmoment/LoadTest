@@ -265,7 +265,7 @@ class wiget_generator_GET:
 
     def __init__(self, name):
         self.name = name
-        self.createToken = ''
+        self.create_token = ''
 
     def generator_GET(self):
         generate_GET = Frame(window_no, relief = FLAT)
@@ -274,11 +274,11 @@ class wiget_generator_GET:
         generatorGET_name = Label(master = generate_GET, text = '--- GET query customization generator ---', font = ('Arial', 16), foreground = 'gray')
         generatorGET_name.grid(columnspan = 3, row = 0, pady = [5, 5])
 
-        if 'no' in self.createToken:
+        if 'no' in self.create_token:
             labels = ['Хост сайта:', 'Порт:', 'Agent:', 'Количество потоков:',
                       'Параметры нагрузки:', 'Имя теста:']
         
-        elif 'yes' in self.createToken:
+        elif 'yes' in self.create_token:
             labels = ['Хост сайта:', 'Порт:', 'User agent:', 'Токен авторизации:',
                       'Количество потоков:', 'Параметры нагрузки:', 'Имя теста:']
 
@@ -307,6 +307,11 @@ class wiget_generator_GET:
             if quantity_threads_entry.get() == '1000':
                 quantity_threads_entry.delete(0, 'end')
                 quantity_threads_entry.configure(foreground = 'black')
+
+        def placeholder_auth_token_delete():
+            if auth_token_entry.get() == 'Введите cookie авторизации':
+                auth_token_entry.delete(0, 'end')
+                auth_token_entry.configure(foreground = 'black')
         
         def placeholder_url_insert():
             if path_url_entry.get(1.0, 'end-1c') == '':
@@ -327,6 +332,11 @@ class wiget_generator_GET:
             if quantity_threads_entry.get() == '':
                 quantity_threads_entry.insert(0, '1000')
                 quantity_threads_entry.configure(foreground = 'gray')
+
+        def placeholder_auth_token_insert():
+            if auth_token_entry.get() == '':
+                auth_token_entry.insert(0, 'Введите cookie авторизации')
+                auth_token_entry.configure(foreground = 'gray')
 
         path_url_label = Label(master = generate_GET, text = 'Введите ссылки на страницы без хоста сайта:', font = ('Arial', 12))
         path_url_label.grid(columnspan = 3, row = y, pady = [25, 5])
@@ -366,10 +376,14 @@ class wiget_generator_GET:
         quantity_threads_entry.bind('<FocusIn>', (lambda args: [placeholder_quantity_threads_entry_delete()]))
         quantity_threads_entry.bind('<FocusOut>', (lambda args: [placeholder_quantity_threads_entry_insert()]))
 
-        if 'yes' in self.createToken:
+        if 'yes' in self.create_token:
             y -= 1
-            authToken_entry = Entry(master = generate_GET, width = 27)
-            authToken_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
+            auth_token_entry = Entry(master = generate_GET, width = 27)
+            auth_token_entry.insert(0, 'Введите cookie авторизации')
+            auth_token_entry.configure(foreground = 'gray')
+            auth_token_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
+            auth_token_entry.bind('<FocusIn>', (lambda args: [placeholder_auth_token_delete()]))
+            auth_token_entry.bind('<FocusOut>', (lambda args: [placeholder_auth_token_insert()]))
 
         y -= 1
         userAgent_entry = Entry(master = generate_GET, width = 27)
@@ -493,12 +507,12 @@ def generateFiles():
 
             if "yes" in selected.get(): 
                 create_wiget = wiget_generator_GET('create_wiget')
-                create_wiget.createToken = selected.get()
+                create_wiget.create_token = selected.get()
                 create_wiget.generator_GET()
 
             elif "no" in selected.get(): 
                 create_wiget = wiget_generator_GET('create_wiget')
-                create_wiget.createToken = selected.get()
+                create_wiget.create_token = selected.get()
                 create_wiget.generator_GET()
 
     else:
