@@ -8,11 +8,11 @@ import config_generator
 
 #    messagebox.showinfo('Тест1', "Тест")
 
-def createPOST():
+def create_post():
     if len(bodyTestPOST_path.get()) > 0 and len(ammoTest_path.get()) > 0:
 
         if  ((iterTestPOST_entry.get().isdigit()) > 0) and (int(iterTestPOST_entry.get()) > 0):
-            POST = run_test.choiceType('POST')
+            POST = run_test.Choice_Type('POST')
             POST.iterrationPOST = int(iterTestPOST_entry.get())
             POST.pathBodyPOST = bodyTestPOST_path.get()
             POST.pathAmmo = ammoTest_path.get()
@@ -25,11 +25,11 @@ def createPOST():
         messagebox.showinfo('Error', 'Все поля POST запросов должны быть заполнены')
 
 
-def createGET():
+def create_get():
     if len(bodyTestGET_path.get()) > 0:
 
         if  ((iterTestGET_entry.get().isdigit()) > 0) and (int(iterTestGET_entry.get()) > 0):
-            GET = run_test.choiceType('GET')
+            GET = run_test.Choice_Type('GET')
             GET.iterrationGET = int(iterTestGET_entry.get())
             GET.pathBodyGET = bodyTestGET_path.get()
 
@@ -61,6 +61,7 @@ def generatePOST():
     print(loadPOST_text)
 '''
 #  //--------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET И POST ЗАПРОСОВ ----------------\\
+
 class wigetGETandPOST_requests:
 
     def __init__(self, name):
@@ -120,16 +121,14 @@ class wigetGETandPOST_requests:
 
         
         if 'yes' in self.btnType:
-            iterTest_btn = Button(master = GETreq, text = 'Принять', command = lambda:[createGET(), createPOST()])
+            iterTest_btn = Button(master = GETreq, text = 'Принять', command = lambda:[create_get(), create_post()])
             iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
 
             back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), POSTreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
             back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
 
-            print('Редиска')
-
         elif 'no' in self.btnType:
-            iterTest_btn = Button(master = GETreq, text = 'Принять', command = lambda:[createGET(), createPOST()])
+            iterTest_btn = Button(master = GETreq, text = 'Принять', command = lambda:[create_get(), create_get()])
             iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
 
             back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), POSTreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
@@ -142,10 +141,10 @@ class wigetGETandPOST_requests:
         btn2_insertFile = Button(master = GETreq, text = 'Открыть', command = insertFileGET)
         btn2_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
 
-        print('Ожидание ввода параметров')
 #  \\--------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET И POST ЗАПРОСОВ ----------------//
 #  ------------------------------------------------------------------------------------------------------
 #  //------------------ КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ POST ЗАПРОСОВ -------------------\\
+
 class wigetPOST_requests:
 
     def __init__(self, name):
@@ -186,16 +185,14 @@ class wigetPOST_requests:
         ammoTest_path.grid(column = 1, row = 3, padx = [5, 5], pady = [5, 5])
 
         if 'yes' in self.btnType:
-            iterTest_btn = Button(master = POSTreq, text = 'Принять', command = createPOST)
+            iterTest_btn = Button(master = POSTreq, text = 'Принять', command = create_post)
             iterTest_btn.grid(column = 2, row = 4, padx = [10, 20], pady = [50, 10])
         
             back_btn = Button(master = POSTreq, text = 'Вернуться к выбору запросов', command = lambda:[POSTreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
             back_btn.grid(column = 1, row = 4, padx = [10, 20], pady = [50, 10])
 
-            print('Редиска')
-
         elif 'no' in self.btnType:
-            iterTest_btn = Button(master = POSTreq, text = 'Принять', command = createPOST)
+            iterTest_btn = Button(master = POSTreq, text = 'Принять', command = create_post)
             iterTest_btn.grid(column = 2, row = 4, padx = [10, 20], pady = [50, 10])
 
             back_btn = Button(master = POSTreq, text = 'Вернуться к выбору запросов', command = lambda:[POSTreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
@@ -206,10 +203,10 @@ class wigetPOST_requests:
         btn1_insertFile = Button(master = POSTreq, text = 'Открыть', command = insertFileAmmo)
         btn1_insertFile.grid(column = 2, row = 3, padx = [10, 20], pady = [5, 5])
 
-        print('Ожидание ввода параметров')
 #  \\------------------ КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ POST ЗАПРОСОВ -------------------//
 #  ------------------------------------------------------------------------------------------------------
 #  //------------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET ЗАПРОСОВ -------------------\\
+
 class wigetGET_requests:
 
     def __init__(self, name):
@@ -244,16 +241,14 @@ class wigetGET_requests:
         bodyTestGET_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
 
         if 'yes' in self.btnType:
-            iterTest_btn = Button(master = GETreq, text = 'Принять', command = createGET)
+            iterTest_btn = Button(master = GETreq, text = 'Принять', command = create_get)
             iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
 
             back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
             back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
 
-            print('Редиска')
-
         elif 'no' in self.btnType:
-            iterTest_btn = Button(master = GETreq, text = 'Принять', command = createGET)
+            iterTest_btn = Button(master = GETreq, text = 'Принять', command = create_get)
             iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
 
             back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
@@ -262,10 +257,10 @@ class wigetGET_requests:
         btn_insertFile = Button(master = GETreq, text = 'Открыть', command = insertFileGET)
         btn_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
 
-        print('Ожидание ввода параметров')
 # \\------------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET ЗАПРОСОВ -------------------//
 #  ------------------------------------------------------------------------------------------------------
 #      //------------------- КОД ВИДЖЕТА ГЕНЕРАТОРА КОНФИГУРАЦИЙ GET ЗАПРОСОВ -------------------\\
+
 class wiget_generator_GET:
 
     def __init__(self, name):
@@ -293,15 +288,25 @@ class wiget_generator_GET:
             enter_name.grid(column = 0, row = y, padx = [5, 5], pady = [5, 5], sticky = 'se')
             y += 1
         
-        def placeholder_delete():
+        def placeholder_url_delete():
             if path_url_entry.get(1.0, 'end-1c') == 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки':
                 path_url_entry.delete(1.0, 'end')
                 path_url_entry.configure(foreground = 'black')
+
+        def placeholder_name_delete():            
+            if name_test_entry.get() == 'Как-нибудь назовите тест':
+                name_test_entry.delete(0, 'end')
+                name_test_entry.configure(foreground = 'black')
         
-        def placeholder_insert():
+        def placeholder_url_insert():
             if path_url_entry.get(1.0, 'end-1c') == '':
                 path_url_entry.insert(1.0, 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки')
                 path_url_entry.configure(foreground = 'gray')
+
+        def placeholder_name_insert():
+            if name_test_entry.get() == '':
+                name_test_entry.insert(0, 'Как-нибудь назовите тест')
+                name_test_entry.configure(foreground = 'gray')
 
         path_url_label = Label(master = generate_GET, text = 'Введите ссылки на страницы без хоста сайта:', font = ('Arial', 12))
         path_url_label.grid(columnspan = 3, row = y, pady = [25, 5])
@@ -309,8 +314,8 @@ class wiget_generator_GET:
         path_url_entry.insert(1.0, 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки')
         path_url_entry.configure(foreground = 'gray')
         path_url_entry.grid(columnspan = 3, row = (y + 1), padx = [5, 5], pady = [5, 5])
-        path_url_entry.bind('<FocusIn>', (lambda args:[placeholder_delete()]))
-        path_url_entry.bind('<FocusOut>', (lambda args:[placeholder_insert()]))
+        path_url_entry.bind('<FocusIn>', (lambda args:[placeholder_url_delete()]))
+        path_url_entry.bind('<FocusOut>', (lambda args:[placeholder_url_insert()]))
 
         select_btn = Button(master = generate_GET, text = 'Принять', command = print('selected'))
         select_btn.grid(column = 2, row = (y + 2), padx = [10, 10], pady = [20, 10])
@@ -318,8 +323,12 @@ class wiget_generator_GET:
         back_btn.grid(column = 1, row = (y + 2), padx = [10, 10], pady = [20, 10])
 
         y -= 1
-        nameTest_entry = Entry(master = generate_GET, width = 27)
-        nameTest_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
+        name_test_entry = Entry(master = generate_GET, width = 27)
+        name_test_entry.insert(0, 'Как-нибудь назовите тест')
+        name_test_entry.configure(foreground = 'gray')
+        name_test_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
+        name_test_entry.bind('<FocusIn>', (lambda args: [placeholder_name_delete()]))
+        name_test_entry.bind('<FocusOut>', (lambda args: [placeholder_name_insert()]))
 
         y -= 1
         load_params_entry = Entry(master = generate_GET, width = 27)
@@ -346,6 +355,7 @@ class wiget_generator_GET:
         host_entry = Entry(master = generate_GET, width = 27)
         host_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
 
+#      \\------------------- КОД ВИДЖЕТА ГЕНЕРАТОРА КОНФИГУРАЦИЙ GET ЗАПРОСОВ -------------------//
 
 def insertFileGET():
     file_name = fd.askopenfilename()
