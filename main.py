@@ -3,6 +3,7 @@ from tkinter.ttk import *
 from tkinter import messagebox
 from tkinter import filedialog as fd
 from tkinter import scrolledtext
+from textwrap import wrap
 import run_test
 import config_generator
 
@@ -268,6 +269,7 @@ class wiget_generator_GET:
         self.create_token = ''
 
     def generator_GET(self):
+        
         generate_GET = Frame(window_no, relief = FLAT)
         generate_GET.pack(pady = [5, 5])
 
@@ -276,18 +278,38 @@ class wiget_generator_GET:
 
         if 'no' in self.create_token:
             labels = ['Хост сайта:', 'Порт:', 'Agent:', 'Количество потоков:',
-                      'Параметры нагрузки:', 'Имя теста:']
+                      'Параметры нагрузки:', 'Имя теста:', 'Визуализация в консоли',
+                      'Загрузить и обработать результат']
         
         elif 'yes' in self.create_token:
             labels = ['Хост сайта:', 'Порт:', 'User agent:', 'Токен авторизации:',
-                      'Количество потоков:', 'Параметры нагрузки:', 'Имя теста:']
+                      'Количество потоков:', 'Параметры нагрузки:', 'Имя теста:',
+                      'Визуализация в консоли', 'Загрузить и обработать результат']
 
         y = 1
         for a in labels:
             enter_name = Label(master = generate_GET, text = a, font = ('Arial', 12))
             enter_name.grid(column = 0, row = y, padx = [5, 5], pady = [5, 5], sticky = 'se')
+            if a == 'Порт:':
+                enter_name.grid(column = 0, row = y, padx = [5, 5], pady = [5, 5], sticky = 'e')
+            if a == 'Хост сайта:':
+                enter_name.grid(column = 0, row = y, padx = [5, 5], pady = [5, 15], sticky = 'se')
+            if a == 'User agent:':
+                enter_name.grid(column = 0, row = y, padx = [5, 5], pady = [15, 5], sticky = 'se')
             y += 1
-        
+
+        def selected_https():
+            if port_entry.get() == 'Введите или выберите значение' or '80':
+                port_entry.delete(0, 'end')
+                port_entry.insert(0, '443')
+                port_entry.configure(foreground = 'black')
+
+        def selected_http():
+            if port_entry.get() == 'Введите или выберите значение' or '443':
+                port_entry.delete(0, 'end')
+                port_entry.insert(0, '80')
+                port_entry.configure(foreground = 'black')
+
         def placeholder_url_delete():
             if path_url_entry.get(1.0, 'end-1c') == 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки':
                 path_url_entry.delete(1.0, 'end')
@@ -312,6 +334,11 @@ class wiget_generator_GET:
             if auth_token_entry.get() == 'Введите cookie авторизации':
                 auth_token_entry.delete(0, 'end')
                 auth_token_entry.configure(foreground = 'black')
+
+        def port_entry_delete():
+            if port_entry.get() == 'Введите или выберите значение':
+                port_entry.delete(0, 'end')
+                port_entry.configure(foreground = 'black')
         
         def placeholder_url_insert():
             if path_url_entry.get(1.0, 'end-1c') == '':
@@ -335,8 +362,23 @@ class wiget_generator_GET:
 
         def placeholder_auth_token_insert():
             if auth_token_entry.get() == '':
+                selected
                 auth_token_entry.insert(0, 'Введите cookie авторизации')
                 auth_token_entry.configure(foreground = 'gray')
+
+        def port_entry_insert():
+            if port_entry.get() == '':
+                selected_port.set('')
+                port_entry.insert(0, 'Введите или выберите значение')
+                port_entry.configure(foreground = 'gray')
+            
+            if port_entry.get() == '443':
+                selected_port.set('443')
+                ssl = 'true'
+
+            if port_entry.get() == '80':
+                selected_port.set('80')
+                ssl = 'false'
 
         path_url_label = Label(master = generate_GET, text = 'Введите ссылки на страницы без хоста сайта:', font = ('Arial', 12))
         path_url_label.grid(columnspan = 3, row = y, pady = [25, 5])
@@ -351,6 +393,14 @@ class wiget_generator_GET:
         select_btn.grid(column = 2, row = (y + 2), padx = [10, 10], pady = [20, 10])
         back_btn =Button(master = generate_GET, text = 'Вернуться к выбору запросов', command = lambda:[generate_GET.destroy(), wiget_generate()])
         back_btn.grid(column = 1, row = (y + 2), padx = [10, 10], pady = [20, 10])
+
+        y -= 1
+        overload_entry = Entry(master = generate_GET, width = 27)
+        overload_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
+
+        y -= 1
+        console_entry = Entry(master = generate_GET, width = 27)
+        console_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
 
         y -= 1
         name_test_entry = Entry(master = generate_GET, width = 27)
@@ -386,16 +436,26 @@ class wiget_generator_GET:
             auth_token_entry.bind('<FocusOut>', (lambda args: [placeholder_auth_token_insert()]))
 
         y -= 1
-        userAgent_entry = Entry(master = generate_GET, width = 27)
-        userAgent_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
+        user_agent_entry = Entry(master = generate_GET, width = 27)
+        user_agent_entry.grid(column = 1, row = y, padx = [5, 5], pady = [15, 5])
 
         y -= 1
         port_entry = Entry(master = generate_GET, width = 27)
-        port_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
+        port_entry.insert(0, 'Введите или выберите значение')
+        port_entry.configure(foreground = 'gray')
+        port_entry.bind('<FocusIn>', (lambda args: [port_entry_delete()]))
+        port_entry.bind('<FocusOut>', (lambda args: [port_entry_insert()]))
+        port_entry.grid(column = 1, row = y, sticky = N, padx = [5, 5], pady = [5, 25])
+        selected_port = StringVar()
+        selected_port.set('')
+        port_radiobutton_443 = Radiobutton(master = generate_GET, text = 'https://', command = selected_https, value = '443', variable = selected_port)
+        port_radiobutton_443.grid(column = 1, row = y, sticky = SW, padx = [15, 15])
+        port_radiobutton_80 = Radiobutton(master = generate_GET, text = 'http://', command = selected_http, value = '80', variable = selected_port)
+        port_radiobutton_80.grid(column = 1, row = y, sticky = SE, padx = [15, 15])
 
         y -= 1
         host_entry = Entry(master = generate_GET, width = 27)
-        host_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
+        host_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 15])
 
 #      \\------------------- КОД ВИДЖЕТА ГЕНЕРАТОРА КОНФИГУРАЦИЙ GET ЗАПРОСОВ -------------------//
 
@@ -427,7 +487,6 @@ def clicked_yes():
         create_wiget = wigetPOST_requests('create_wiget')
         create_wiget.btnType = 'yes'
         create_wiget.POST()
-
 
     elif 'GET' in choice_type.get():
         create_wiget = wigetGET_requests('create_wiget')
@@ -465,8 +524,8 @@ def create_present():
 
     window_yes = Tk()
     window_yes.title("Тестовое окно")
-    window_yes.maxsize(800, 500)
-    window_yes.minsize(550, 150)
+    window_yes.maxsize(1000, 1000)
+    window_yes.minsize(750, 500)
     window_yes.resizable(False, False)
 
     wiget_dontgenerate()
@@ -579,7 +638,7 @@ def create_absent():
     window_no = Tk()
     window_no.title("Тестовое окно")
     window_no.maxsize(1000, 1000)
-    window_no.minsize(550, 150)
+    window_no.minsize(750, 500)
     window_no.resizable(False, False)
 
     wiget_generate()
