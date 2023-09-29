@@ -376,6 +376,18 @@ class wiget_generator_GET:
                 selected_port.set('443')
                 ssl = 'true'
 
+            if (port_entry.get() == 'https') or (port_entry.get() == 'https://') or (port_entry.get() == 'https:') or (port_entry.get() == 'https:/'):
+                selected_port.set('443')
+                port_entry.delete(0, 'end')
+                port_entry.insert(0, '443')
+                ssl = 'true'
+
+            if (port_entry.get() == 'http') or (port_entry.get() == 'http://') or (port_entry.get() == 'http:') or (port_entry.get() == 'http:/'):
+                selected_port.set('80')
+                port_entry.delete(0, 'end')
+                port_entry.insert(0, '80')
+                ssl = 'false'
+
             if port_entry.get() == '80':
                 selected_port.set('80')
                 ssl = 'false'
