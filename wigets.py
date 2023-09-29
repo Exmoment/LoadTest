@@ -688,6 +688,3 @@ def create_main():
     btn_no.pack(fill = X, padx = 10, pady = [0, 10])
 
     main_window.mainloop()
-
-
-create_main()
