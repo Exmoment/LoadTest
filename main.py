@@ -335,6 +335,11 @@ class wiget_generator_GET:
                 auth_token_entry.delete(0, 'end')
                 auth_token_entry.configure(foreground = 'black')
 
+        def host_entry_delete():
+            if host_entry.get() == 'Например: example.com':
+                host_entry.delete(0, 'end')
+                host_entry.configure(foreground = 'black')
+
         def port_entry_delete():
             if port_entry.get() == 'Введите или выберите значение':
                 port_entry.delete(0, 'end')
@@ -362,9 +367,13 @@ class wiget_generator_GET:
 
         def placeholder_auth_token_insert():
             if auth_token_entry.get() == '':
-                selected
                 auth_token_entry.insert(0, 'Введите cookie авторизации')
                 auth_token_entry.configure(foreground = 'gray')
+
+        def host_entry_insert():
+            if host_entry.get() == '':
+                host_entry.insert(0, 'Например: example.com')
+                host_entry.configure(foreground = 'gray')
 
         def port_entry_insert():
             if port_entry.get() == '':
@@ -392,37 +401,47 @@ class wiget_generator_GET:
                 selected_port.set('80')
                 ssl = 'false'
 
-        path_url_label = Label(master = generate_GET, text = 'Введите ссылки на страницы без хоста сайта:', font = ('Arial', 12))
-        path_url_label.grid(columnspan = 3, row = y, pady = [25, 5])
-        path_url_entry = scrolledtext.ScrolledText(master = generate_GET, width = 50, height = 5)
-        path_url_entry.insert(1.0, 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки')
-        path_url_entry.configure(foreground = 'gray')
-        path_url_entry.grid(columnspan = 3, row = (y + 1), padx = [5, 5], pady = [5, 5])
-        path_url_entry.bind('<FocusIn>', (lambda args:[placeholder_url_delete()]))
-        path_url_entry.bind('<FocusOut>', (lambda args:[placeholder_url_insert()]))
+        host_entry = Entry(master = generate_GET, width = 27)
+        host_entry.insert(0, 'Например: example.com')
+        host_entry.configure(foreground = 'gray')
+        host_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 15])
+        host_entry.bind('<FocusIn>', (lambda args: [host_entry_delete()]))
+        host_entry.bind('<FocusOut>', (lambda args: [host_entry_insert()]))
 
-        select_btn = Button(master = generate_GET, text = 'Принять', command = print('selected'))
-        select_btn.grid(column = 2, row = (y + 2), padx = [10, 10], pady = [20, 10])
-        back_btn =Button(master = generate_GET, text = 'Вернуться к выбору запросов', command = lambda:[generate_GET.destroy(), wiget_generate()])
-        back_btn.grid(column = 1, row = (y + 2), padx = [10, 10], pady = [20, 10])
+        port_entry = Entry(master = generate_GET, width = 27)
+        port_entry.insert(0, 'Введите или выберите значение')
+        port_entry.configure(foreground = 'gray')
+        port_entry.bind('<FocusIn>', (lambda args: [port_entry_delete()]))
+        port_entry.bind('<FocusOut>', (lambda args: [port_entry_insert()]))
+        port_entry.grid(column = 1, row = 2, sticky = N, padx = [5, 5], pady = [5, 25])
+        selected_port = StringVar()
+        selected_port.set('')
+        port_radiobutton_443 = Radiobutton(master = generate_GET, text = 'https://', command = selected_https, value = '443', variable = selected_port)
+        port_radiobutton_443.grid(column = 1, row = 2, sticky = SW, padx = [15, 15])
+        port_radiobutton_80 = Radiobutton(master = generate_GET, text = 'http://', command = selected_http, value = '80', variable = selected_port)
+        port_radiobutton_80.grid(column = 1, row = 2, sticky = SE, padx = [15, 15])
 
-        y -= 1
-        overload_entry = Entry(master = generate_GET, width = 27)
-        overload_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
+        user_agent_entry = Entry(master = generate_GET, width = 27)
+        user_agent_entry.grid(column = 1, row = 3, padx = [5, 5], pady = [15, 5])
 
-        y -= 1
-        console_entry = Entry(master = generate_GET, width = 27)
-        console_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
+        y = 4
+        if 'yes' in self.create_token:
+            y += 1
+            auth_token_entry = Entry(master = generate_GET, width = 27)
+            auth_token_entry.insert(0, 'Введите cookie авторизации')
+            auth_token_entry.configure(foreground = 'gray')
+            auth_token_entry.grid(column = 1, row = 4, padx = [5, 5], pady = [5, 5])
+            auth_token_entry.bind('<FocusIn>', (lambda args: [placeholder_auth_token_delete()]))
+            auth_token_entry.bind('<FocusOut>', (lambda args: [placeholder_auth_token_insert()]))
 
-        y -= 1
-        name_test_entry = Entry(master = generate_GET, width = 27)
-        name_test_entry.insert(0, 'Как-нибудь назовите тест')
-        name_test_entry.configure(foreground = 'gray')
-        name_test_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
-        name_test_entry.bind('<FocusIn>', (lambda args: [placeholder_name_delete()]))
-        name_test_entry.bind('<FocusOut>', (lambda args: [placeholder_name_insert()]))
-
-        y -= 1
+        quantity_threads_entry = Entry(master = generate_GET, width = 27)
+        quantity_threads_entry.insert(0, '1000')
+        quantity_threads_entry.configure(foreground = 'gray')
+        quantity_threads_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
+        quantity_threads_entry.bind('<FocusIn>', (lambda args: [placeholder_quantity_threads_entry_delete()]))
+        quantity_threads_entry.bind('<FocusOut>', (lambda args: [placeholder_quantity_threads_entry_insert()]))
+        
+        y += 1
         load_params_entry = Entry(master = generate_GET, width = 27)
         load_params_entry.insert(0, 'line(1, 100, 5m) const(50,2m)')
         load_params_entry.configure(foreground = 'gray')
@@ -430,44 +449,35 @@ class wiget_generator_GET:
         load_params_entry.bind('<FocusIn>', (lambda args: [placeholder_load_params_delete()]))
         load_params_entry.bind('<FocusOut>', (lambda args: [placeholder_load_params_insert()]))
 
-        y -= 1
-        quantity_threads_entry = Entry(master = generate_GET, width = 27)
-        quantity_threads_entry.insert(0, '1000')
-        quantity_threads_entry.configure(foreground = 'gray')
-        quantity_threads_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
-        quantity_threads_entry.bind('<FocusIn>', (lambda args: [placeholder_quantity_threads_entry_delete()]))
-        quantity_threads_entry.bind('<FocusOut>', (lambda args: [placeholder_quantity_threads_entry_insert()]))
+        y += 1
+        name_test_entry = Entry(master = generate_GET, width = 27)
+        name_test_entry.insert(0, 'Как-нибудь назовите тест')
+        name_test_entry.configure(foreground = 'gray')
+        name_test_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
+        name_test_entry.bind('<FocusIn>', (lambda args: [placeholder_name_delete()]))
+        name_test_entry.bind('<FocusOut>', (lambda args: [placeholder_name_insert()]))
 
-        if 'yes' in self.create_token:
-            y -= 1
-            auth_token_entry = Entry(master = generate_GET, width = 27)
-            auth_token_entry.insert(0, 'Введите cookie авторизации')
-            auth_token_entry.configure(foreground = 'gray')
-            auth_token_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
-            auth_token_entry.bind('<FocusIn>', (lambda args: [placeholder_auth_token_delete()]))
-            auth_token_entry.bind('<FocusOut>', (lambda args: [placeholder_auth_token_insert()]))
+        y += 1
+        console_entry = Entry(master = generate_GET, width = 27)
+        console_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
 
-        y -= 1
-        user_agent_entry = Entry(master = generate_GET, width = 27)
-        user_agent_entry.grid(column = 1, row = y, padx = [5, 5], pady = [15, 5])
+        y += 1
+        overload_entry = Entry(master = generate_GET, width = 27)
+        overload_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
 
-        y -= 1
-        port_entry = Entry(master = generate_GET, width = 27)
-        port_entry.insert(0, 'Введите или выберите значение')
-        port_entry.configure(foreground = 'gray')
-        port_entry.bind('<FocusIn>', (lambda args: [port_entry_delete()]))
-        port_entry.bind('<FocusOut>', (lambda args: [port_entry_insert()]))
-        port_entry.grid(column = 1, row = y, sticky = N, padx = [5, 5], pady = [5, 25])
-        selected_port = StringVar()
-        selected_port.set('')
-        port_radiobutton_443 = Radiobutton(master = generate_GET, text = 'https://', command = selected_https, value = '443', variable = selected_port)
-        port_radiobutton_443.grid(column = 1, row = y, sticky = SW, padx = [15, 15])
-        port_radiobutton_80 = Radiobutton(master = generate_GET, text = 'http://', command = selected_http, value = '80', variable = selected_port)
-        port_radiobutton_80.grid(column = 1, row = y, sticky = SE, padx = [15, 15])
+        path_url_label = Label(master = generate_GET, text = 'Введите ссылки на страницы без хоста сайта:', font = ('Arial', 12))
+        path_url_label.grid(columnspan = 3, row = (y + 1), pady = [25, 5])
+        path_url_entry = scrolledtext.ScrolledText(master = generate_GET, width = 50, height = 5)
+        path_url_entry.insert(1.0, 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки')
+        path_url_entry.configure(foreground = 'gray')
+        path_url_entry.grid(columnspan = 3, row = (y + 2), padx = [5, 5], pady = [5, 5])
+        path_url_entry.bind('<FocusIn>', (lambda args:[placeholder_url_delete()]))
+        path_url_entry.bind('<FocusOut>', (lambda args:[placeholder_url_insert()]))
 
-        y -= 1
-        host_entry = Entry(master = generate_GET, width = 27)
-        host_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 15])
+        select_btn = Button(master = generate_GET, text = 'Принять', command = print('selected'))
+        select_btn.grid(column = 2, row = (y + 3), padx = [10, 10], pady = [20, 10])
+        back_btn =Button(master = generate_GET, text = 'Вернуться к выбору запросов', command = lambda:[generate_GET.destroy(), wiget_generate()])
+        back_btn.grid(column = 1, row = (y + 3), padx = [10, 10], pady = [20, 10])
 
 #      \\------------------- КОД ВИДЖЕТА ГЕНЕРАТОРА КОНФИГУРАЦИЙ GET ЗАПРОСОВ -------------------//
 
