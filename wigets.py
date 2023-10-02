@@ -7,7 +7,6 @@ from textwrap import wrap
 import run_test
 import config_generator
 
-#    messagebox.showinfo('Тест1', "Тест")
 
 def create_post():
     if len(bodyTestPOST_path.get()) > 0 and len(ammoTest_path.get()) > 0:
@@ -42,6 +41,7 @@ def create_get():
     else:
         messagebox.showinfo('Error', 'Все поля GET запросов должны быть заполнены')
 
+# //---------------------------- ОБЪЕКТЫ, СОЗДАВАЕМЫЕ В ГЕНЕРАТОРАХ -------------------------------\\
 '''
 def generatePOST():
 
@@ -61,9 +61,11 @@ def generatePOST():
         loadPOST_file.write(loadPOST_text)
     print(loadPOST_text)
 '''
-#  //--------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET И POST ЗАПРОСОВ ----------------\\
+# \\------------------------------ ОБЪЕКТЫ, СОЗДАВАЕМЫЕ В ГЕНЕРАТОРАХ -----------------------------//
+# ---------------------------------------------------------------------------------------------------
+# //-------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET И POST ЗАПРОСОВ ---------------\\
 
-class wigetGETandPOST_requests:
+class Wiget_GET_and_POST_Requests:
 
     def __init__(self, name):
         self.name = name
@@ -142,11 +144,11 @@ class wigetGETandPOST_requests:
         btn2_insertFile = Button(master = GETreq, text = 'Открыть', command = insertFileGET)
         btn2_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
 
-#  \\--------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET И POST ЗАПРОСОВ ----------------//
-#  ------------------------------------------------------------------------------------------------------
-#  //------------------ КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ POST ЗАПРОСОВ -------------------\\
+# \\-------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET И POST ЗАПРОСОВ ---------------//
+# --------------------------------------------------------------------------------------------------
+# //----------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ POST ЗАПРОСОВ ------------------\\
 
-class wigetPOST_requests:
+class Wiget_POST_Requests:
 
     def __init__(self, name):
         self.name = name
@@ -204,11 +206,11 @@ class wigetPOST_requests:
         btn1_insertFile = Button(master = POSTreq, text = 'Открыть', command = insertFileAmmo)
         btn1_insertFile.grid(column = 2, row = 3, padx = [10, 20], pady = [5, 5])
 
-#  \\------------------ КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ POST ЗАПРОСОВ -------------------//
-#  ------------------------------------------------------------------------------------------------------
-#  //------------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET ЗАПРОСОВ -------------------\\
+# \\----------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ POST ЗАПРОСОВ ------------------//
+#  --------------------------------------------------------------------------------------------------
+# //------------------ КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET ЗАПРОСОВ ------------------\\
 
-class wigetGET_requests:
+class Wiget_GET_Requests:
 
     def __init__(self, name):
         self.name = name
@@ -258,9 +260,9 @@ class wigetGET_requests:
         btn_insertFile = Button(master = GETreq, text = 'Открыть', command = insertFileGET)
         btn_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
 
-# \\------------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET ЗАПРОСОВ -------------------//
-#  ------------------------------------------------------------------------------------------------------
-#      //------------------- КОД ВИДЖЕТА ГЕНЕРАТОРА КОНФИГУРАЦИЙ GET ЗАПРОСОВ -------------------\\
+# \\------------------ КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET ЗАПРОСОВ ------------------//
+# ---------------------------------------------------------------------------------------------------
+# //---------------------- КОД ВИДЖЕТА ГЕНЕРАТОРА КОНФИГУРАЦИЙ GET ЗАПРОСОВ -----------------------\\
 
 class wiget_generator_GET:
 
@@ -278,13 +280,13 @@ class wiget_generator_GET:
 
         if 'no' in self.create_token:
             labels = ['Хост сайта:', 'Порт:', 'Agent:', 'Количество потоков:',
-                      'Параметры нагрузки:', 'Имя теста:', 'Визуализация в консоли',
+                      'Параметры нагрузки:', 'Имя теста:', 'Вывод в консоли',
                       'Загрузить и обработать результат']
         
         elif 'yes' in self.create_token:
             labels = ['Хост сайта:', 'Порт:', 'User agent:', 'Токен авторизации:',
                       'Количество потоков:', 'Параметры нагрузки:', 'Имя теста:',
-                      'Визуализация в консоли', 'Загрузить и обработать результат']
+                      'Вывод в консоли', 'Загрузить и обработать результат']
 
         y = 1
         for a in labels:
@@ -298,6 +300,26 @@ class wiget_generator_GET:
                 enter_name.grid(column = 0, row = y, padx = [5, 5], pady = [15, 5], sticky = 'se')
             y += 1
 
+        def created_file_for_get():
+            created_file = config_generator.LoadGET('Load_GET')
+            created_file.host = host_entry.get()
+            created_file.port = port_entry.get()
+            created_file.agent = user_agent_entry.get()
+            created_file.url = path_url_entry.get(1.0, 'end')
+            if port_entry.get() == '443':
+                created_file.ssl = 'true'
+            elif port_entry.get() == '80':
+                created_file.ssl = 'false'
+            created_file.instances = quantity_threads_entry.get()
+            created_file.schedule = load_params_entry.get()
+            created_file.c_enabled = selected_console
+            created_file.t_enabled = 'false'
+            created_file.o_enabled = selected_overload
+            created_config_text = created_file.load()
+            with open(name_test_entry.get()+'.yaml', 'w+') as file:
+                file.write(created_file.load())
+            print(created_config_text)
+                        
         def selected_https():
             if port_entry.get() == 'Введите или выберите значение' or '80':
                 port_entry.delete(0, 'end')
@@ -316,7 +338,7 @@ class wiget_generator_GET:
                 path_url_entry.configure(foreground = 'black')
 
         def placeholder_name_delete():            
-            if name_test_entry.get() == 'Как-нибудь назовите тест':
+            if name_test_entry.get() == 'Введите название теста':
                 name_test_entry.delete(0, 'end')
                 name_test_entry.configure(foreground = 'black')
 
@@ -335,12 +357,17 @@ class wiget_generator_GET:
                 auth_token_entry.delete(0, 'end')
                 auth_token_entry.configure(foreground = 'black')
 
-        def host_entry_delete():
+        def placeholder_host_entry_delete():
             if host_entry.get() == 'Например: example.com':
                 host_entry.delete(0, 'end')
                 host_entry.configure(foreground = 'black')
 
-        def port_entry_delete():
+        def placeholder_user_agent_delete():
+            if user_agent_entry.get() == 'Используемый браузер':
+                user_agent_entry.delete(0, 'end')
+                user_agent_entry.configure(foreground = 'black')
+
+        def placeholder_port_entry_delete():
             if port_entry.get() == 'Введите или выберите значение':
                 port_entry.delete(0, 'end')
                 port_entry.configure(foreground = 'black')
@@ -352,7 +379,7 @@ class wiget_generator_GET:
 
         def placeholder_name_insert():
             if name_test_entry.get() == '':
-                name_test_entry.insert(0, 'Как-нибудь назовите тест')
+                name_test_entry.insert(0, 'Введите название теста')
                 name_test_entry.configure(foreground = 'gray')
         
         def placeholder_load_params_insert():
@@ -370,12 +397,17 @@ class wiget_generator_GET:
                 auth_token_entry.insert(0, 'Введите cookie авторизации')
                 auth_token_entry.configure(foreground = 'gray')
 
-        def host_entry_insert():
+        def placeholder_host_entry_insert():
             if host_entry.get() == '':
                 host_entry.insert(0, 'Например: example.com')
                 host_entry.configure(foreground = 'gray')
 
-        def port_entry_insert():
+        def placeholder_user_agent_insert():
+            if user_agent_entry.get() == '':
+                user_agent_entry.insert(0, 'Используемый браузер')
+                user_agent_entry.configure(foreground = 'gray')
+
+        def placeholder_port_entry_insert():
             if port_entry.get() == '':
                 selected_port.set('')
                 port_entry.insert(0, 'Введите или выберите значение')
@@ -383,58 +415,58 @@ class wiget_generator_GET:
             
             if port_entry.get() == '443':
                 selected_port.set('443')
-                ssl = 'true'
 
             if (port_entry.get() == 'https') or (port_entry.get() == 'https://') or (port_entry.get() == 'https:') or (port_entry.get() == 'https:/'):
                 selected_port.set('443')
                 port_entry.delete(0, 'end')
                 port_entry.insert(0, '443')
-                ssl = 'true'
 
             if (port_entry.get() == 'http') or (port_entry.get() == 'http://') or (port_entry.get() == 'http:') or (port_entry.get() == 'http:/'):
                 selected_port.set('80')
                 port_entry.delete(0, 'end')
                 port_entry.insert(0, '80')
-                ssl = 'false'
 
             if port_entry.get() == '80':
                 selected_port.set('80')
-                ssl = 'false'
 
-        host_entry = Entry(master = generate_GET, width = 27)
+        host_entry = Entry(master = generate_GET, width = 35)
         host_entry.insert(0, 'Например: example.com')
         host_entry.configure(foreground = 'gray')
         host_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 15])
-        host_entry.bind('<FocusIn>', (lambda args: [host_entry_delete()]))
-        host_entry.bind('<FocusOut>', (lambda args: [host_entry_insert()]))
+        host_entry.bind('<FocusIn>', (lambda args: [placeholder_host_entry_delete()]))
+        host_entry.bind('<FocusOut>', (lambda args: [placeholder_host_entry_insert()]))
 
-        port_entry = Entry(master = generate_GET, width = 27)
+        port_entry = Entry(master = generate_GET, width = 35)
         port_entry.insert(0, 'Введите или выберите значение')
         port_entry.configure(foreground = 'gray')
-        port_entry.bind('<FocusIn>', (lambda args: [port_entry_delete()]))
-        port_entry.bind('<FocusOut>', (lambda args: [port_entry_insert()]))
+        port_entry.bind('<FocusIn>', (lambda args: [placeholder_port_entry_delete()]))
+        port_entry.bind('<FocusOut>', (lambda args: [placeholder_port_entry_insert()]))
         port_entry.grid(column = 1, row = 2, sticky = N, padx = [5, 5], pady = [5, 25])
         selected_port = StringVar()
         selected_port.set('')
         port_radiobutton_443 = Radiobutton(master = generate_GET, text = 'https://', command = selected_https, value = '443', variable = selected_port)
         port_radiobutton_443.grid(column = 1, row = 2, sticky = SW, padx = [15, 15])
         port_radiobutton_80 = Radiobutton(master = generate_GET, text = 'http://', command = selected_http, value = '80', variable = selected_port)
-        port_radiobutton_80.grid(column = 1, row = 2, sticky = SE, padx = [15, 15])
+        port_radiobutton_80.grid(column = 1, row = 2, sticky = S, padx = [25, 15])
 
-        user_agent_entry = Entry(master = generate_GET, width = 27)
+        user_agent_entry = Entry(master = generate_GET, width = 36)
+        user_agent_entry.insert(0, 'Используемый браузер')
+        user_agent_entry.configure(foreground = 'gray')
+        user_agent_entry.bind('<FocusIn>', (lambda args: [placeholder_user_agent_delete()]))
+        user_agent_entry.bind('<FocusOut>', (lambda args: [placeholder_user_agent_insert()]))
         user_agent_entry.grid(column = 1, row = 3, padx = [5, 5], pady = [15, 5])
 
         y = 4
         if 'yes' in self.create_token:
             y += 1
-            auth_token_entry = Entry(master = generate_GET, width = 27)
+            auth_token_entry = Entry(master = generate_GET, width = 35)
             auth_token_entry.insert(0, 'Введите cookie авторизации')
             auth_token_entry.configure(foreground = 'gray')
             auth_token_entry.grid(column = 1, row = 4, padx = [5, 5], pady = [5, 5])
             auth_token_entry.bind('<FocusIn>', (lambda args: [placeholder_auth_token_delete()]))
             auth_token_entry.bind('<FocusOut>', (lambda args: [placeholder_auth_token_insert()]))
 
-        quantity_threads_entry = Entry(master = generate_GET, width = 27)
+        quantity_threads_entry = Entry(master = generate_GET, width = 35)
         quantity_threads_entry.insert(0, '1000')
         quantity_threads_entry.configure(foreground = 'gray')
         quantity_threads_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
@@ -442,7 +474,7 @@ class wiget_generator_GET:
         quantity_threads_entry.bind('<FocusOut>', (lambda args: [placeholder_quantity_threads_entry_insert()]))
         
         y += 1
-        load_params_entry = Entry(master = generate_GET, width = 27)
+        load_params_entry = Entry(master = generate_GET, width = 35)
         load_params_entry.insert(0, 'line(1, 100, 5m) const(50,2m)')
         load_params_entry.configure(foreground = 'gray')
         load_params_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
@@ -450,7 +482,7 @@ class wiget_generator_GET:
         load_params_entry.bind('<FocusOut>', (lambda args: [placeholder_load_params_insert()]))
 
         y += 1
-        name_test_entry = Entry(master = generate_GET, width = 27)
+        name_test_entry = Entry(master = generate_GET, width = 35)
         name_test_entry.insert(0, 'Введите название теста')
         name_test_entry.configure(foreground = 'gray')
         name_test_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
@@ -458,28 +490,38 @@ class wiget_generator_GET:
         name_test_entry.bind('<FocusOut>', (lambda args: [placeholder_name_insert()]))
 
         y += 1
-        console_entry = Radiobutton(master = generate_GET)
-        console_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
+        selected_console = StringVar()
+        selected_console.set('')
+        console_radiobutton_on = Radiobutton(master = generate_GET, text = 'включить', value = 'true', variable = selected_console)
+        console_radiobutton_on.grid(column = 1, row = y, sticky = W, padx = [15, 5])
+        console_radiobutton_off = Radiobutton(master = generate_GET, text = 'отключить', value = 'false', variable = selected_console)
+        console_radiobutton_off.grid(column = 1, row = y, padx = [55, 5])
 
         y += 1
-        overload_entry = Entry(master = generate_GET, width = 27)
-        overload_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
+        selected_overload = StringVar()
+        selected_overload.set('')
+        overload_radiobutton_on = Radiobutton(master = generate_GET, text = 'включить', value = 'true', variable = selected_overload)
+        overload_radiobutton_on.grid(column = 1, row = y, sticky = W, padx = [15, 5])
+        overload_radiobutton_off = Radiobutton(master = generate_GET, text = 'отключить', value = 'false', variable = selected_overload)
+        overload_radiobutton_off.grid(column = 1, row = y, padx = [55, 5])
+
 
         path_url_label = Label(master = generate_GET, text = 'Введите ссылки на страницы без хоста сайта:', font = ('Arial', 12))
         path_url_label.grid(columnspan = 3, row = (y + 1), pady = [25, 5])
-        path_url_entry = scrolledtext.ScrolledText(master = generate_GET, width = 50, height = 5)
+        path_url_entry = scrolledtext.ScrolledText(master = generate_GET, width = 57, height = 5)
         path_url_entry.insert(1.0, 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки')
         path_url_entry.configure(foreground = 'gray')
         path_url_entry.grid(columnspan = 3, row = (y + 2), padx = [5, 5], pady = [5, 5])
         path_url_entry.bind('<FocusIn>', (lambda args:[placeholder_url_delete()]))
         path_url_entry.bind('<FocusOut>', (lambda args:[placeholder_url_insert()]))
 
-        select_btn = Button(master = generate_GET, text = 'Принять', command = print('selected'))
+        select_btn = Button(master = generate_GET, text = 'Принять', command = created_file_for_get)
         select_btn.grid(column = 2, row = (y + 3), padx = [10, 10], pady = [20, 10])
         back_btn =Button(master = generate_GET, text = 'Вернуться к выбору запросов', command = lambda:[generate_GET.destroy(), wiget_generate()])
         back_btn.grid(column = 1, row = (y + 3), padx = [10, 10], pady = [20, 10])
+    
 
-#      \\------------------- КОД ВИДЖЕТА ГЕНЕРАТОРА КОНФИГУРАЦИЙ GET ЗАПРОСОВ -------------------//
+# \\----------------------- КОД ВИДЖЕТА ГЕНЕРАТОРА КОНФИГУРАЦИЙ GET ЗАПРОСОВ ----------------------//
 
 def insertFileGET():
     file_name = fd.askopenfilename()
@@ -496,22 +538,22 @@ def insertFileAmmo():
     ammoTest_path.insert(0, file_name)
 
 
-#   //------------------- ВИДЖЕТ ДЛЯ РАБОТЫ С НАПИСАННЫМИ ЗАРАНЕЕ КОНФИГАМИ -------------------\\
+# //--------------------- ВИДЖЕТ ДЛЯ РАБОТЫ С НАПИСАННЫМИ ЗАРАНЕЕ КОНФИГАМИ -----------------------\\
 
 def clicked_yes():
 
     if 'GET and POST' in choice_type.get():
-        create_wiget = wigetGETandPOST_requests('create_wiget')
+        create_wiget = Wiget_GET_and_POST_Requests('create_wiget')
         create_wiget.btnType = 'yes'
         create_wiget.GETandPOST()
 
     elif 'POST' in choice_type.get():
-        create_wiget = wigetPOST_requests('create_wiget')
+        create_wiget = Wiget_POST_Requests('create_wiget')
         create_wiget.btnType = 'yes'
         create_wiget.POST()
 
     elif 'GET' in choice_type.get():
-        create_wiget = wigetGET_requests('create_wiget')
+        create_wiget = Wiget_GET_Requests('create_wiget')
         create_wiget.btnType = 'yes'
         create_wiget.GET()
 
@@ -554,9 +596,9 @@ def create_present():
 
     window_yes.mainloop()
 
-#   \\------------------- КОНЕЦ ВИДЖЕТА ДЛЯ РАБОТЫ С НАПИСАННЫМИ ЗАРАНЕЕ КОНФИГАМИ -------------------//
-# --------------------------------------------------------------------------------------------------------
-# //------------------- ВИДЖЕТ ДЛЯ ГЕНЕРАЦИИ КОНФИГУРАЦИОННЫХ ФАЙЛОВ И РАБОТЫ С НИМИ -------------------\\
+# \\------------------- КОНЕЦ ВИДЖЕТА ДЛЯ РАБОТЫ С НАПИСАННЫМИ ЗАРАНЕЕ КОНФИГАМИ ------------------//
+# ---------------------------------------------------------------------------------------------------
+# //---------------- ВИДЖЕТ ДЛЯ ГЕНЕРАЦИИ КОНФИГУРАЦИОННЫХ ФАЙЛОВ И РАБОТЫ С НИМИ -----------------\\
 
 
 def generateFiles():
@@ -667,7 +709,7 @@ def create_absent():
 
     window_no.mainloop()
 
-# \\---------------- КОНЕЦ ВИДЖЕТА ДЛЯ ГЕНЕРАЦИИ КОНФИГУРАЦИОННЫХ ФАЙЛОВ И РАБОТЫ С НИМИ ----------------//
+# \\------------- КОНЕЦ ВИДЖЕТА ДЛЯ ГЕНЕРАЦИИ КОНФИГУРАЦИОННЫХ ФАЙЛОВ И РАБОТЫ С НИМИ -------------//
 
 
 def create_main():
