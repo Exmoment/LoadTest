@@ -305,6 +305,8 @@ class wiget_generator_GET:
             created_file.host = host_entry.get()
             created_file.port = port_entry.get()
             created_file.agent = user_agent_entry.get()
+            if 'yes' in self.create_token:
+                auth_token_entry = '123'#дописать генератор для токена
             created_file.url = path_url_entry.get(1.0, 'end-1c')
             if port_entry.get() == '443':
                 created_file.ssl = 'true'
@@ -312,9 +314,9 @@ class wiget_generator_GET:
                 created_file.ssl = 'false'
             created_file.instances = quantity_threads_entry.get()
             created_file.schedule = load_params_entry.get()
-            created_file.c_enabled = selected_console
+            created_file.c_enabled = selected_console.get()
             created_file.t_enabled = 'false'
-            created_file.o_enabled = selected_overload
+            created_file.o_enabled = selected_overload.get()
             created_config_text = created_file.load()
             with open(name_test_entry.get()+'.yaml', 'w+') as file:
                 file.write(created_file.load())
