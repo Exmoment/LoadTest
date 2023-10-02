@@ -264,7 +264,7 @@ class Wiget_GET_Requests:
 # ---------------------------------------------------------------------------------------------------
 # //---------------------- КОД ВИДЖЕТА ГЕНЕРАТОРА КОНФИГУРАЦИЙ GET ЗАПРОСОВ -----------------------\\
 
-class wiget_generator_GET:
+class Wiget_Generator_GET:
 
     def __init__(self, name):
         self.name = name
@@ -317,6 +317,7 @@ class wiget_generator_GET:
             created_file.c_enabled = selected_console.get()
             created_file.t_enabled = 'false'
             created_file.o_enabled = selected_overload.get()
+            created_file.job_dsc = name_test_entry.get()
             created_config_text = created_file.load()
             with open(name_test_entry.get()+'.yaml', 'w+') as file:
                 file.write(created_file.load())
@@ -631,12 +632,12 @@ def generateFiles():
             choice_auth.destroy()
 
             if "yes" in selected.get(): 
-                create_wiget = wiget_generator_GET('create_wiget')
+                create_wiget = Wiget_Generator_GET('create_wiget')
                 create_wiget.create_token = selected.get()
                 create_wiget.generator_GET()
 
             elif "no" in selected.get(): 
-                create_wiget = wiget_generator_GET('create_wiget')
+                create_wiget = Wiget_Generator_GET('create_wiget')
                 create_wiget.create_token = selected.get()
                 create_wiget.generator_GET()
 
