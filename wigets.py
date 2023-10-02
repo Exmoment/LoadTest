@@ -305,7 +305,7 @@ class wiget_generator_GET:
             created_file.host = host_entry.get()
             created_file.port = port_entry.get()
             created_file.agent = user_agent_entry.get()
-            created_file.url = path_url_entry.get(1.0, 'end')
+            created_file.url = path_url_entry.get(1.0, 'end-1c')
             if port_entry.get() == '443':
                 created_file.ssl = 'true'
             elif port_entry.get() == '80':
