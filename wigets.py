@@ -3,7 +3,7 @@ from tkinter.ttk import *
 from tkinter import messagebox
 from tkinter import filedialog as fd
 from tkinter import scrolledtext
-from textwrap import wrap
+from idlelib.tooltip import Hovertip
 import run_test
 import config_generator
 
@@ -215,50 +215,75 @@ class Wiget_GET_Requests:
     def __init__(self, name):
         self.name = name
         self.btnType = ''
+        self.file_name = ''
 
     def GET(self):
         global iterTestGET_entry
         global bodyTestGET_path
-        global GETreq
+        global get_req
 
         start.destroy()
 
-        GETreq = Frame(window_yes, relief = FLAT)
-        GETreq.pack(pady = [5, 5])
-
-        loadFileMenu = Menu(window_yes)
-        window_yes.config(menu = loadFileMenu)
-        loadFileMenu.add_command(label = 'Справка')
-
-        nameTestGET = Label(master = GETreq, text = "--- GET ---", font = ("Arial", 16), foreground = 'gray')
-        nameTestGET.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 30])
-
-        iterTest = Label(master = GETreq, text = "Количество итераций тестов:", font = ("Arial", 12))
-        iterTest.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        iterTestGET_entry = Entry(master = GETreq, width = 25)
-        iterTestGET_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
-
-        bodyTestGET = Label(master = GETreq, text = "Путь или имя файла конфигурации:", font = ("Arial", 12))
-        bodyTestGET.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        bodyTestGET_path = Entry(master = GETreq, width = 25)
-        bodyTestGET_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
-
         if 'yes' in self.btnType:
-            iterTest_btn = Button(master = GETreq, text = 'Принять', command = create_get)
-            iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
+            get_req = Frame(window_yes, relief = FLAT)
+            get_req.pack(pady = [5, 5])
 
-            back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
+            load_file_menu = Menu(window_yes)
+            window_yes.config(menu = load_file_menu)
+            load_file_menu.add_command(label = 'Справка')
+
+            name_test_get = Label(master = get_req, text = "--- GET ---", font = ("Arial", 16), foreground = 'gray')
+            name_test_get.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 30])
+
+            iter_test = Label(master = get_req, text = "Количество итераций тестов:", font = ("Arial", 12))
+            iter_test.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
+            iter_test_get_entry = Entry(master = get_req, width = 25)
+            iter_test_get_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
+
+            body_test_get = Label(master = get_req, text = "Путь или имя файла конфигурации:", font = ("Arial", 12))
+            body_test_get.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
+            body_test_get_path = Entry(master = get_req, width = 25)
+            body_test_get_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
+
+            iter_test_btn = Button(master = get_req, text = 'Принять', command = create_get)
+            iter_test_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
+
+            back_btn = Button(master = get_req, text = 'Вернуться к выбору запросов', command = lambda:[get_req.destroy(), wiget_dontgenerate(), window_yes.config(load_file_menu.destroy())])
             back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
+
+            btn_insert_file = Button(master = get_req, text = 'Открыть', command = insertFileGET)
+            btn_insert_file.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
 
         elif 'no' in self.btnType:
-            iterTest_btn = Button(master = GETreq, text = 'Принять', command = create_get)
-            iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
+            get_req = Frame(window_no, relief = FLAT)
+            get_req.pack(pady = [5, 5])
 
-            back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
+            load_file_menu = Menu(window_no)
+            window_no.config(menu = load_file_menu)
+            load_file_menu.add_command(label = 'Справка')
+
+            name_test_get = Label(master = get_req, text = "--- GET ---", font = ("Arial", 16), foreground = 'gray')
+            name_test_get.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 30])
+
+            iter_test = Label(master = get_req, text = "Количество итераций тестов:", font = ("Arial", 12))
+            iter_test.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
+            iter_test_get_entry = Entry(master = get_req, width = 25)
+            iter_test_get_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
+
+            body_test_get = Label(master = get_req, text = "Путь или имя файла конфигурации:", font = ("Arial", 12))
+            body_test_get.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
+            body_test_get_path = Entry(master = get_req, width = 25)
+            body_test_get_path.insert(0, self.file_name)
+            body_test_get_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
+
+            iter_test_btn = Button(master = get_req, text = 'Принять', command = create_get)
+            iter_test_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
+
+            back_btn = Button(master = get_req, text = 'Вернуться к конфигуратору', command = lambda:[get_req.destroy(), generateFiles(), window_no.config(load_file_menu.destroy())])
             back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
 
-        btn_insertFile = Button(master = GETreq, text = 'Открыть', command = insertFileGET)
-        btn_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
+            btn_insert_file = Button(master = get_req, text = 'Открыть', command = insertFileGET)
+            btn_insert_file.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
 
 # \\------------------ КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET ЗАПРОСОВ ------------------//
 # ---------------------------------------------------------------------------------------------------
@@ -270,12 +295,13 @@ class Wiget_Generator_GET:
         self.name = name
         self.create_token = ''
 
-    def generator_GET(self):
-        
-        generate_GET = Frame(window_no, relief = FLAT)
-        generate_GET.pack(pady = [5, 5])
+    def generator_get(self):
+        global generate_get
 
-        generatorGET_name = Label(master = generate_GET, text = '--- GET query customization generator ---', font = ('Arial', 16), foreground = 'gray')
+        generate_get = Frame(window_no, relief = FLAT)
+        generate_get.pack(pady = [5, 5])
+
+        generatorGET_name = Label(master = generate_get, text = '--- GET query customization generator ---', font = ('Arial', 16), foreground = 'gray')
         generatorGET_name.grid(columnspan = 3, row = 0, pady = [5, 5])
 
         if 'no' in self.create_token:
@@ -290,7 +316,7 @@ class Wiget_Generator_GET:
 
         y = 1
         for a in labels:
-            enter_name = Label(master = generate_GET, text = a, font = ('Arial', 12))
+            enter_name = Label(master = generate_get, text = a, font = ('Arial', 12))
             enter_name.grid(column = 0, row = y, padx = [5, 5], pady = [5, 5], sticky = 'se')
             if a == 'Порт:':
                 enter_name.grid(column = 0, row = y, padx = [5, 5], pady = [5, 5], sticky = 'e')
@@ -299,14 +325,17 @@ class Wiget_Generator_GET:
             if a == 'User agent:':
                 enter_name.grid(column = 0, row = y, padx = [5, 5], pady = [15, 5], sticky = 'se')
             y += 1
-
+        
         def created_file_for_get():
-            created_file = config_generator.LoadGET('Load_GET')
+            if 'yes' in self.create_token:
+                created_file = config_generator.Load_GET_With_Token('Load_GET_With_Token')
+            elif 'no' in self.create_token:
+                created_file = config_generator.Load_GET_Non_Token('Load_GET_Non_Token')
             created_file.host = host_entry.get()
             created_file.port = port_entry.get()
             created_file.agent = user_agent_entry.get()
             if 'yes' in self.create_token:
-                auth_token_entry = '123'#дописать генератор для токена
+                created_file.token = auth_token_entry.get()
             created_file.url = path_url_entry.get(1.0, 'end-1c')
             if port_entry.get() == '443':
                 created_file.ssl = 'true'
@@ -322,99 +351,105 @@ class Wiget_Generator_GET:
             with open(name_test_entry.get()+'.yaml', 'w+') as file:
                 file.write(created_file.load())
             print(created_config_text)
+
+        def create_next_wiget():
+            next_wiget = Wiget_GET_Requests('next_wiget')
+            next_wiget.btnType = 'no'
+            next_wiget.file_name = name_test_entry.get()+'.yaml'
+            next_wiget.GET()
                         
         def selected_https():
             if port_entry.get() == 'Введите или выберите значение' or '80':
                 port_entry.delete(0, 'end')
                 port_entry.insert(0, '443')
-                port_entry.configure(foreground = 'black')
+                port_entry.configure(foreground = 'black', font = ('Arial', 11))
 
         def selected_http():
             if port_entry.get() == 'Введите или выберите значение' or '443':
                 port_entry.delete(0, 'end')
                 port_entry.insert(0, '80')
-                port_entry.configure(foreground = 'black')
+                port_entry.configure(foreground = 'black', font = ('Arial', 11))
 
         def placeholder_url_delete():
             if path_url_entry.get(1.0, 'end-1c') == 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки':
                 path_url_entry.delete(1.0, 'end')
-                path_url_entry.configure(foreground = 'black')
+                path_url_entry.configure(foreground = 'black', font = ('Arial', 11))
 
         def placeholder_name_delete():            
             if name_test_entry.get() == 'Введите название теста':
                 name_test_entry.delete(0, 'end')
-                name_test_entry.configure(foreground = 'black')
+                name_test_entry.configure(foreground = 'black', font = ('Arial', 11))
 
         def placeholder_load_params_delete():
             if load_params_entry.get() == 'line(1, 100, 5m) const(50,2m)':
                 load_params_entry.delete(0, 'end')
-                load_params_entry.configure(foreground = 'black')
+                load_params_entry.configure(foreground = 'black', font = ('Arial', 11))
 
         def placeholder_quantity_threads_entry_delete():
             if quantity_threads_entry.get() == '1000':
                 quantity_threads_entry.delete(0, 'end')
-                quantity_threads_entry.configure(foreground = 'black')
+                quantity_threads_entry.configure(foreground = 'black', font = ('Arial', 11))
 
         def placeholder_auth_token_delete():
             if auth_token_entry.get() == 'Введите cookie авторизации':
                 auth_token_entry.delete(0, 'end')
-                auth_token_entry.configure(foreground = 'black')
+                auth_token_entry.configure(foreground = 'black', font = ('Arial', 11))
 
         def placeholder_host_entry_delete():
             if host_entry.get() == 'Например: example.com':
                 host_entry.delete(0, 'end')
-                host_entry.configure(foreground = 'black')
+                host_entry.configure(foreground = 'black', font = ('Arial', 11))
 
         def placeholder_user_agent_delete():
             if user_agent_entry.get() == 'Используемый браузер':
                 user_agent_entry.delete(0, 'end')
-                user_agent_entry.configure(foreground = 'black')
+                user_agent_entry.configure(foreground = 'black', font = ('Arial', 11))
 
         def placeholder_port_entry_delete():
             if port_entry.get() == 'Введите или выберите значение':
                 port_entry.delete(0, 'end')
-                port_entry.configure(foreground = 'black')
+                port_entry.configure(foreground = 'black', font = ('Arial', 11))
         
         def placeholder_url_insert():
             if path_url_entry.get(1.0, 'end-1c') == '':
                 path_url_entry.insert(1.0, 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки')
-                path_url_entry.configure(foreground = 'gray')
+                path_url_entry.configure(foreground = 'gray', font = ('Arial 11 italic'))
 
         def placeholder_name_insert():
             if name_test_entry.get() == '':
                 name_test_entry.insert(0, 'Введите название теста')
-                name_test_entry.configure(foreground = 'gray')
+                name_test_entry.configure(foreground = 'gray', font = ('Arial 11 italic'))
         
         def placeholder_load_params_insert():
             if load_params_entry.get() == '':
                 load_params_entry.insert(0, 'line(1, 100, 5m) const(50,2m)')
-                load_params_entry.configure(foreground = 'gray')
+                load_params_entry.configure(foreground = 'gray', font = ('Arial 11 italic'))
 
         def placeholder_quantity_threads_entry_insert():
             if quantity_threads_entry.get() == '':
                 quantity_threads_entry.insert(0, '1000')
-                quantity_threads_entry.configure(foreground = 'gray')
+                quantity_threads_entry.configure(foreground = 'gray', font = ('Arial 11 italic'))
 
         def placeholder_auth_token_insert():
             if auth_token_entry.get() == '':
                 auth_token_entry.insert(0, 'Введите cookie авторизации')
-                auth_token_entry.configure(foreground = 'gray')
+                auth_token_entry.configure(foreground = 'gray', font = ('Arial 11 italic'))
 
         def placeholder_host_entry_insert():
             if host_entry.get() == '':
                 host_entry.insert(0, 'Например: example.com')
-                host_entry.configure(foreground = 'gray')
+                host_entry.configure(foreground = 'gray', font = ('Arial 11 italic'))
 
         def placeholder_user_agent_insert():
             if user_agent_entry.get() == '':
                 user_agent_entry.insert(0, 'Используемый браузер')
-                user_agent_entry.configure(foreground = 'gray')
+                user_agent_entry.configure(foreground = 'gray', font = ('Arial 11 italic'))
 
         def placeholder_port_entry_insert():
             if port_entry.get() == '':
                 selected_port.set('')
                 port_entry.insert(0, 'Введите или выберите значение')
-                port_entry.configure(foreground = 'gray')
+                port_entry.configure(foreground = 'gray', font = ('Arial 11 italic'))
             
             if port_entry.get() == '443':
                 selected_port.set('443')
@@ -432,29 +467,29 @@ class Wiget_Generator_GET:
             if port_entry.get() == '80':
                 selected_port.set('80')
 
-        host_entry = Entry(master = generate_GET, width = 35)
+        host_entry = Entry(master = generate_get, width = 35)
         host_entry.insert(0, 'Например: example.com')
-        host_entry.configure(foreground = 'gray')
+        host_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
         host_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 15])
         host_entry.bind('<FocusIn>', (lambda args: [placeholder_host_entry_delete()]))
         host_entry.bind('<FocusOut>', (lambda args: [placeholder_host_entry_insert()]))
 
-        port_entry = Entry(master = generate_GET, width = 35)
+        port_entry = Entry(master = generate_get, width = 35)
         port_entry.insert(0, 'Введите или выберите значение')
-        port_entry.configure(foreground = 'gray')
+        port_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
         port_entry.bind('<FocusIn>', (lambda args: [placeholder_port_entry_delete()]))
         port_entry.bind('<FocusOut>', (lambda args: [placeholder_port_entry_insert()]))
         port_entry.grid(column = 1, row = 2, sticky = N, padx = [5, 5], pady = [5, 25])
         selected_port = StringVar()
         selected_port.set('')
-        port_radiobutton_443 = Radiobutton(master = generate_GET, text = 'https://', command = selected_https, value = '443', variable = selected_port)
+        port_radiobutton_443 = Radiobutton(master = generate_get, text = 'https://', command = selected_https, value = '443', variable = selected_port)
         port_radiobutton_443.grid(column = 1, row = 2, sticky = SW, padx = [15, 15])
-        port_radiobutton_80 = Radiobutton(master = generate_GET, text = 'http://', command = selected_http, value = '80', variable = selected_port)
+        port_radiobutton_80 = Radiobutton(master = generate_get, text = 'http://', command = selected_http, value = '80', variable = selected_port)
         port_radiobutton_80.grid(column = 1, row = 2, sticky = S, padx = [25, 15])
 
-        user_agent_entry = Entry(master = generate_GET, width = 36)
+        user_agent_entry = Entry(master = generate_get, width = 35)
         user_agent_entry.insert(0, 'Используемый браузер')
-        user_agent_entry.configure(foreground = 'gray')
+        user_agent_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
         user_agent_entry.bind('<FocusIn>', (lambda args: [placeholder_user_agent_delete()]))
         user_agent_entry.bind('<FocusOut>', (lambda args: [placeholder_user_agent_insert()]))
         user_agent_entry.grid(column = 1, row = 3, padx = [5, 5], pady = [15, 5])
@@ -462,14 +497,14 @@ class Wiget_Generator_GET:
         y = 4
         if 'yes' in self.create_token:
             y += 1
-            auth_token_entry = Entry(master = generate_GET, width = 35)
+            auth_token_entry = Entry(master = generate_get, width = 35)
             auth_token_entry.insert(0, 'Введите cookie авторизации')
-            auth_token_entry.configure(foreground = 'gray')
+            auth_token_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
             auth_token_entry.grid(column = 1, row = 4, padx = [5, 5], pady = [5, 5])
             auth_token_entry.bind('<FocusIn>', (lambda args: [placeholder_auth_token_delete()]))
             auth_token_entry.bind('<FocusOut>', (lambda args: [placeholder_auth_token_insert()]))
 
-        quantity_threads_entry = Entry(master = generate_GET, width = 35)
+        quantity_threads_entry = Entry(master = generate_get, width = 35)
         quantity_threads_entry.insert(0, '1000')
         quantity_threads_entry.configure(foreground = 'gray')
         quantity_threads_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
@@ -477,17 +512,17 @@ class Wiget_Generator_GET:
         quantity_threads_entry.bind('<FocusOut>', (lambda args: [placeholder_quantity_threads_entry_insert()]))
         
         y += 1
-        load_params_entry = Entry(master = generate_GET, width = 35)
+        load_params_entry = Entry(master = generate_get, width = 35)
         load_params_entry.insert(0, 'line(1, 100, 5m) const(50,2m)')
-        load_params_entry.configure(foreground = 'gray')
+        load_params_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
         load_params_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
         load_params_entry.bind('<FocusIn>', (lambda args: [placeholder_load_params_delete()]))
         load_params_entry.bind('<FocusOut>', (lambda args: [placeholder_load_params_insert()]))
 
         y += 1
-        name_test_entry = Entry(master = generate_GET, width = 35)
+        name_test_entry = Entry(master = generate_get, width = 35)
         name_test_entry.insert(0, 'Введите название теста')
-        name_test_entry.configure(foreground = 'gray')
+        name_test_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
         name_test_entry.grid(column = 1, row = y, padx = [5, 5], pady = [5, 5])
         name_test_entry.bind('<FocusIn>', (lambda args: [placeholder_name_delete()]))
         name_test_entry.bind('<FocusOut>', (lambda args: [placeholder_name_insert()]))
@@ -495,33 +530,35 @@ class Wiget_Generator_GET:
         y += 1
         selected_console = StringVar()
         selected_console.set('')
-        console_radiobutton_on = Radiobutton(master = generate_GET, text = 'включить', value = 'true', variable = selected_console)
+        console_radiobutton_on = Radiobutton(master = generate_get, text = 'включить', value = 'true', variable = selected_console)
         console_radiobutton_on.grid(column = 1, row = y, sticky = W, padx = [15, 5])
-        console_radiobutton_off = Radiobutton(master = generate_GET, text = 'отключить', value = 'false', variable = selected_console)
+        console_radiobutton_off = Radiobutton(master = generate_get, text = 'отключить', value = 'false', variable = selected_console)
         console_radiobutton_off.grid(column = 1, row = y, padx = [55, 5])
 
         y += 1
         selected_overload = StringVar()
         selected_overload.set('')
-        overload_radiobutton_on = Radiobutton(master = generate_GET, text = 'включить', value = 'true', variable = selected_overload)
+        overload_radiobutton_on = Radiobutton(master = generate_get, text = 'включить', value = 'true', variable = selected_overload)
         overload_radiobutton_on.grid(column = 1, row = y, sticky = W, padx = [15, 5])
-        overload_radiobutton_off = Radiobutton(master = generate_GET, text = 'отключить', value = 'false', variable = selected_overload)
+        overload_radiobutton_off = Radiobutton(master = generate_get, text = 'отключить', value = 'false', variable = selected_overload)
         overload_radiobutton_off.grid(column = 1, row = y, padx = [55, 5])
 
 
-        path_url_label = Label(master = generate_GET, text = 'Введите ссылки на страницы без хоста сайта:', font = ('Arial', 12))
+        path_url_label = Label(master = generate_get, text = 'Введите ссылки на страницы без хоста сайта:', font = ('Arial', 12))
         path_url_label.grid(columnspan = 3, row = (y + 1), pady = [25, 5])
-        path_url_entry = scrolledtext.ScrolledText(master = generate_GET, width = 57, height = 5)
+        path_url_entry = scrolledtext.ScrolledText(master = generate_get, width = 57, height = 5)
         path_url_entry.insert(1.0, 'Пример ввода:\n-/my/example/url\n\nКаждая ссылка должна быть с новой строки')
-        path_url_entry.configure(foreground = 'gray')
+        path_url_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
         path_url_entry.grid(columnspan = 3, row = (y + 2), padx = [5, 5], pady = [5, 5])
         path_url_entry.bind('<FocusIn>', (lambda args:[placeholder_url_delete()]))
         path_url_entry.bind('<FocusOut>', (lambda args:[placeholder_url_insert()]))
 
-        select_btn = Button(master = generate_GET, text = 'Принять', command = created_file_for_get)
+        select_btn = Button(master = generate_get, text = 'Принять', command = lambda: [created_file_for_get(), create_next_wiget(), generate_get.destroy()])
         select_btn.grid(column = 2, row = (y + 3), padx = [10, 10], pady = [20, 10])
-        back_btn =Button(master = generate_GET, text = 'Вернуться к выбору запросов', command = lambda:[generate_GET.destroy(), wiget_generate()])
+        back_btn =Button(master = generate_get, text = 'Вернуться к выбору запросов', command = lambda:[generate_get.destroy(), wiget_generate()])
         back_btn.grid(column = 1, row = (y + 3), padx = [10, 10], pady = [20, 10])
+
+        Hovertip(select_btn, 'adfgaertqergtrh')
     
 
 # \\----------------------- КОД ВИДЖЕТА ГЕНЕРАТОРА КОНФИГУРАЦИЙ GET ЗАПРОСОВ ----------------------//
@@ -634,12 +671,12 @@ def generateFiles():
             if "yes" in selected.get(): 
                 create_wiget = Wiget_Generator_GET('create_wiget')
                 create_wiget.create_token = selected.get()
-                create_wiget.generator_GET()
+                create_wiget.generator_get()
 
             elif "no" in selected.get(): 
                 create_wiget = Wiget_Generator_GET('create_wiget')
                 create_wiget.create_token = selected.get()
-                create_wiget.generator_GET()
+                create_wiget.generator_get()
 
     else:
         messagebox.showinfo('Ошибка ввода', 'Необходимо указать нужен ли токен для авторизации на сайте')

@@ -69,7 +69,7 @@ class loadPOST:
         return tank
 
 
-class loadGET:
+class Load_GET_Non_Token:
 
     def __init__(get, name):
         get.name = name
@@ -118,11 +118,64 @@ class loadGET:
             ),
         )
         return tank
+    
+
+class Load_GET_With_Token:
+
+    def __init__(get, name):
+        get.name = name
+        get.host = ""
+        get.port = ""
+        get.agent = ""
+        get.token = ""
+        get.url = """"""
+        get.ssl = ""
+        get.instances = ""
+        get.schedule = ""
+        get.c_enabled = ""
+        get.t_enabled = ""
+        get.o_enabled = ""
+        get.job_dsc = ""
+
+    
+    def load(get):
+        tank = "{phantom}\r\n{console}\r\n{telegraf}\r\n{autostop}\r\n{overload}".format(
+            phantom = "phantom:\r\n  address: {host}:{port}\r\n  header_http: \"1.1\"\r\n{headers}\r\n{uris}\r\n  ssl: {ssl}\r\n  instances: {instances}\r\n{load_profile}".format(
+                host = get.host,
+                port = get.port,
+                headers = "  headers:\r\n-\"[Host: {host}]\"\r\n-\"[User-Agent: {agent}]\"\r\n-\"[Authorization: {token}]\"".format(
+                    host = get.host,
+                    agent = get.agent,
+                    token = get.token
+                ).replace('-"[', '    - "['),
+                uris = "  uris:\r\n{url}".format(
+                    url = get.url.replace('-/', '    - /')
+                ),
+                ssl = get.ssl,
+                instances = get.instances,
+                load_profile = "  load_profile:\r\n    load_type: rps\r\n    schedule: {schedule}".format(
+                    schedule = get.schedule
+                ),
+            ),
+            console = "console:\r\n  enabled: {c_enabled}".format(
+                c_enabled = get.c_enabled
+            ),
+            telegraf = "telegraf:\r\n enabled: {t_enabled}".format(
+                t_enabled = get.t_enabled
+            ),
+            autostop = "autostp:\r\n  enabled: true\r\n  package: yandextank.plugins.Autostop\r\n  autostop:\r\n    - http(5xx,10%,20s), time(10s,20s), net(110,5%,60s)",
+            overload = "overload:\r\n  enabled: {o_enabled}\r\n  job_name: {name}\r\n  job_dsc: {dsc}\r\n  package: yandextank.plugins.DataUploader\r\n  token_file: \"token.txt\"".format(
+                o_enabled = get.o_enabled,
+                name = get.name,
+                dsc = get.job_dsc
+            ),
+        )
+        return tank
 
 
 def generateGET():
 
-    create_loadGET = loadGET("loadGET")
+    create_loadGET = LoadGET("loadGET")
     create_loadGET.host = "example.net"
     create_loadGET.port = "443"
     create_loadGET.agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
@@ -142,11 +195,56 @@ def generateGET():
     print(loadGET_text)
 
 
+
+def generateAmmo():
+    global nameAmmoFile
+
+    create_ammo = ammo_POST("POST")
+    create_ammo.method = "POST"
+    create_ammo.path_url = "/pmc/create"
+    create_ammo.host = "10.0.16.223"
+    create_ammo.port = "80"
+    create_ammo.body = """
+    {
+    "logo": {
+        "uid": null,
+        "category": "pmc_logo",
+        "sub_category": "pmc-dm"
+    },
+    "name": "Петушок",
+    "ogrn": "1111111111111",
+    "district": 2,
+    "address": "Васька",
+    "working_days": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+    ],
+    "contact_phone_number": "11111111111",
+    "latitude": "59.94075334758153",
+    "longitude": "30.267137726375182",
+    "work_begins": "07:00",
+    "work_ends": "14:00"
+}
+    """
+    ammo_text = create_ammo.ammo()
+    nameAmmoFile = 'Редиска' #str(input('Введите имя для создаваемого файла: '))
+    with open(nameAmmoFile+'.json', "w+") as file:
+        file.write(create_ammo.ammo())
+    print("Файл с запросом успешно создан")
+    print(ammo_text)
+
+#generateAmmo()
+
 def generatePOST():
     
     create_loadPOST = loadPOST("loadPOST")
-    create_loadPOST.host = "example.net"
-    create_loadPOST.port = "443"
+    create_loadPOST.host = "10.0.16.223"
+    create_loadPOST.port = "80"
     create_loadPOST.ammo_file = nameAmmoFile + '.json'
     create_loadPOST.ssl = "true"
     create_loadPOST.schedule = "line(1, 10000, 5m) const(5000,2m)"
@@ -160,30 +258,4 @@ def generatePOST():
         loadPOST_file.write(loadPOST_text)
     print(loadPOST_text)
 
-
-def generateAmmo():
-    global nameAmmoFile
-
-    create_ammo = ammo_POST("POST")
-    create_ammo.method = "POST"
-    create_ammo.path_url = "/my/test"
-    create_ammo.host = "example.net"
-    create_ammo.port = "443"
-    create_ammo.body = """
-    {
-        Сережа
-        самый
-        пандовый
-        редиска
-        из
-        всех
-        пандовых
-        редисок
-    }
-    """
-    ammo_text = create_ammo.ammo()
-    nameAmmoFile = 'Редиска' #str(input('Введите имя для создаваемого файла: '))
-    with open(nameAmmoFile+'.json', "w+") as file:
-        file.write(create_ammo.ammo())
-    print("Файл с запросом успешно создан")
-    print(ammo_text)
+#generatePOST()
