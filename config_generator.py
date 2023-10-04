@@ -172,7 +172,7 @@ class Load_GET_With_Token:
         )
         return tank
 
-
+'''
 def generateGET():
 
     create_loadGET = LoadGET("loadGET")
@@ -259,3 +259,4 @@ def generatePOST():
     print(loadPOST_text)
 
 #generatePOST()
+'''
