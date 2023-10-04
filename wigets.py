@@ -99,7 +99,7 @@ class Wiget_GET_and_POST_Requests:
         iterTestPOST_entry = Entry(master = POSTreq, width = 25)
         iterTestPOST_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
 
-        bodyTestPOST = Label(master = POSTreq, text = "Путь или имя файла конфигурации:", font = ("Arial", 12))
+        bodyTestPOST = Label(master = POSTreq, text = "Файл с конфигурацией:", font = ("Arial", 12))
         bodyTestPOST.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
         bodyTestPOST_path = Entry(master = POSTreq, width = 25)
         bodyTestPOST_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
@@ -117,7 +117,7 @@ class Wiget_GET_and_POST_Requests:
         iterTestGET_entry = Entry(master = GETreq, width = 25)
         iterTestGET_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'w')
 
-        bodyTestGET = Label(master = GETreq, text = "Путь или имя файла конфигурации:", font = ("Arial", 12))
+        bodyTestGET = Label(master = GETreq, text = "Файл с конфигурацией:", font = ("Arial", 12))
         bodyTestGET.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
         bodyTestGET_path = Entry(master = GETreq, width = 25)
         bodyTestGET_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'w')
@@ -177,7 +177,7 @@ class Wiget_POST_Requests:
         iterTestPOST_entry = Entry(master = POSTreq, width = 25)
         iterTestPOST_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
 
-        bodyTestPOST = Label(master = POSTreq, text = "Путь или имя файла конфигурации:", font = ("Arial", 12))
+        bodyTestPOST = Label(master = POSTreq, text = "Файл с конфигурацией:", font = ("Arial", 12))
         bodyTestPOST.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
         bodyTestPOST_path = Entry(master = POSTreq, width = 25)
         bodyTestPOST_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
@@ -272,7 +272,7 @@ class Wiget_GET_Requests:
             iter_test_get_entry.bind('<FocusOut>', (lambda args: [iter_test_get_entry_insert()]))
             iter_test_get_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
 
-            body_test_get = Label(master = get_req, text = "Путь или имя файла конфигурации:", font = ("Arial", 12))
+            body_test_get = Label(master = get_req, text = "Файл с конфигурацией:", font = ("Arial", 12))
             body_test_get.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
             body_test_get_path = Entry(master = get_req, width = 25)
             body_test_get_path.insert(0, 'Укажите путь к файлу')
@@ -310,7 +310,7 @@ class Wiget_GET_Requests:
             iter_test_get_entry.bind('<FocusOut>', (lambda args: [iter_test_get_entry_insert()]))
             iter_test_get_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
 
-            body_test_get = Label(master = get_req, text = "Путь или имя файла конфигурации:", font = ("Arial", 12))
+            body_test_get = Label(master = get_req, text = "Файл с конфигурацией:", font = ("Arial", 12))
             body_test_get.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
             body_test_get_path = Entry(master = get_req, width = 25)
             body_test_get_path.insert(0, self.file_name)
