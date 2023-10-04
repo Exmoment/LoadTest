@@ -9,13 +9,13 @@ import config_generator
 
 
 def create_post():
-    if len(bodyTestPOST_path.get()) > 0 and len(ammoTest_path.get()) > 0:
+    if len(bodyTestPOST_path.get()) > 0 and len(ammo_test_path.get()) > 0:
 
         if  ((iterTestPOST_entry.get().isdigit()) > 0) and (int(iterTestPOST_entry.get()) > 0):
             POST = run_test.Choice_Type('POST')
             POST.iterrationPOST = int(iterTestPOST_entry.get())
             POST.pathBodyPOST = bodyTestPOST_path.get()
-            POST.pathAmmo = ammoTest_path.get()
+            POST.pathAmmo = ammo_test_path.get()
             POST.POST()
 
         else:
@@ -26,12 +26,12 @@ def create_post():
 
 
 def create_get():
-    if len(bodyTestGET_path.get()) > 0:
+    if len(body_test_get_path.get()) > 0:
 
-        if  ((iterTestGET_entry.get().isdigit()) > 0) and (int(iterTestGET_entry.get()) > 0):
+        if  ((iter_test_get_entry.get().isdigit()) > 0) and (int(iter_test_get_entry.get()) > 0):
             GET = run_test.Choice_Type('GET')
-            GET.iterrationGET = int(iterTestGET_entry.get())
-            GET.pathBodyGET = bodyTestGET_path.get()
+            GET.iterrationGET = int(iter_test_get_entry.get())
+            GET.pathBodyGET = body_test_get_path.get()
 
             GET.GET()
 
@@ -73,10 +73,10 @@ class Wiget_GET_and_POST_Requests:
 
     def GETandPOST(self):
         global iterTestPOST_entry
-        global iterTestGET_entry
-        global ammoTest_path
+        global iter_test_get_entry
+        global ammo_test_path
         global bodyTestPOST_path
-        global bodyTestGET_path
+        global body_test_get_path
         global POSTreq
         global GETreq
 
@@ -106,21 +106,21 @@ class Wiget_GET_and_POST_Requests:
 
         ammoTest = Label(master = POSTreq, text = "Путь или имя файла запросов:", font = ("Arial", 12))
         ammoTest.grid(column = 0, row = 3, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        ammoTest_path = Entry(master = POSTreq, width = 25)
-        ammoTest_path.grid(column = 1, row = 3, padx = [5, 5], pady = [5, 5])
+        ammo_test_path = Entry(master = POSTreq, width = 25)
+        ammo_test_path.grid(column = 1, row = 3, padx = [5, 5], pady = [5, 5])
 
         nameTestGET = Label(master = GETreq, text = "--- GET ---", font = ("Arial", 16), foreground = 'gray')
         nameTestGET.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [25, 30])
 
         iterTest = Label(master = GETreq, text = "Количество итераций тестов:", font = ("Arial", 12))
         iterTest.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        iterTestGET_entry = Entry(master = GETreq, width = 25)
-        iterTestGET_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'w')
+        iter_test_get_entry = Entry(master = GETreq, width = 25)
+        iter_test_get_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'w')
 
         bodyTestGET = Label(master = GETreq, text = "Файл с конфигурацией:", font = ("Arial", 12))
         bodyTestGET.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        bodyTestGET_path = Entry(master = GETreq, width = 25)
-        bodyTestGET_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'w')
+        body_test_get_path = Entry(master = GETreq, width = 25)
+        body_test_get_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'w')
 
         
         if 'yes' in self.btnType:
@@ -137,11 +137,11 @@ class Wiget_GET_and_POST_Requests:
             back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), POSTreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
             back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
 
-        btn_insertFile = Button(master = POSTreq, text = 'Открыть', command = insertFilePOST)
+        btn_insertFile = Button(master = POSTreq, text = 'Открыть', command = iinsert_file_post)
         btn_insertFile.grid(column = 2, row = 2, padx = [44, 20], pady = [5, 5])
-        btn1_insertFile = Button(master = POSTreq, text = 'Открыть', command = insertFileAmmo)
+        btn1_insertFile = Button(master = POSTreq, text = 'Открыть', command = insert_file_ammo)
         btn1_insertFile.grid(column = 2, row = 3, padx = [44, 20], pady = [5, 5])
-        btn2_insertFile = Button(master = GETreq, text = 'Открыть', command = insertFileGET)
+        btn2_insertFile = Button(master = GETreq, text = 'Открыть', command = insert_file_get)
         btn2_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
 
 # \\-------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET И POST ЗАПРОСОВ ---------------//
@@ -156,7 +156,7 @@ class Wiget_POST_Requests:
 
     def POST(self):
         global iterTestPOST_entry
-        global ammoTest_path
+        global ammo_test_path
         global bodyTestPOST_path
         global POSTreq
 
@@ -184,8 +184,8 @@ class Wiget_POST_Requests:
 
         ammoTest = Label(master = POSTreq, text = "Путь или имя файла запросов:", font = ("Arial", 12))
         ammoTest.grid(column = 0, row = 3, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        ammoTest_path = Entry(master = POSTreq, width = 25)
-        ammoTest_path.grid(column = 1, row = 3, padx = [5, 5], pady = [5, 5])
+        ammo_test_path = Entry(master = POSTreq, width = 25)
+        ammo_test_path.grid(column = 1, row = 3, padx = [5, 5], pady = [5, 5])
 
         if 'yes' in self.btnType:
             iterTest_btn = Button(master = POSTreq, text = 'Принять', command = create_post)
@@ -201,9 +201,9 @@ class Wiget_POST_Requests:
             back_btn = Button(master = POSTreq, text = 'Вернуться к выбору запросов', command = lambda:[POSTreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
             back_btn.grid(column = 1, row = 4, padx = [10, 20], pady = [50, 10])
 
-        btn_insertFile = Button(master = POSTreq, text = 'Открыть', command = insertFilePOST)
+        btn_insertFile = Button(master = POSTreq, text = 'Открыть', command = iinsert_file_post)
         btn_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
-        btn1_insertFile = Button(master = POSTreq, text = 'Открыть', command = insertFileAmmo)
+        btn1_insertFile = Button(master = POSTreq, text = 'Открыть', command = insert_file_ammo)
         btn1_insertFile.grid(column = 2, row = 3, padx = [10, 20], pady = [5, 5])
 
 # \\----------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ POST ЗАПРОСОВ ------------------//
@@ -218,8 +218,8 @@ class Wiget_GET_Requests:
         self.file_name = ''
 
     def GET(self):
-        global iterTestGET_entry
-        global bodyTestGET_path
+        global iter_test_get_entry
+        global body_test_get_path
         global get_req
 
         start.destroy()
@@ -287,7 +287,7 @@ class Wiget_GET_Requests:
             back_btn = Button(master = get_req, text = 'Вернуться к выбору запросов', command = lambda:[get_req.destroy(), wiget_dontgenerate(), window_yes.config(load_file_menu.destroy())])
             back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
 
-            btn_insert_file = Button(master = get_req, text = 'Открыть', command = insertFileGET)
+            btn_insert_file = Button(master = get_req, text = 'Открыть', command = insert_file_get)
             btn_insert_file.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
 
         elif 'no' in self.btnType:
@@ -325,7 +325,7 @@ class Wiget_GET_Requests:
             back_btn = Button(master = get_req, text = 'Вернуться к конфигуратору', command = lambda:[get_req.destroy(), generateFiles(), window_no.config(load_file_menu.destroy())])
             back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
 
-            btn_insert_file = Button(master = get_req, text = 'Открыть', command = insertFileGET)
+            btn_insert_file = Button(master = get_req, text = 'Открыть', command = insert_file_get)
             btn_insert_file.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
 
 # \\------------------ КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET ЗАПРОСОВ ------------------//
@@ -344,11 +344,11 @@ class Wiget_Generator_GET:
         generate_get = Frame(window_no, relief = FLAT)
         generate_get.pack(pady = [5, 5])
 
-        generatorGET_name = Label(master = generate_get, text = '--- GET query customization generator ---', font = ('Arial', 16), foreground = 'gray')
-        generatorGET_name.grid(columnspan = 3, row = 0, pady = [5, 5])
+        generator_get_name = Label(master = generate_get, text = '--- GET query customization generator ---', font = ('Arial', 16), foreground = 'gray')
+        generator_get_name.grid(columnspan = 3, row = 0, pady = [5, 5])
 
         if 'no' in self.create_token:
-            labels = ['Хост сайта:', 'Порт:', 'Agent:', 'Количество потоков:',
+            labels = ['Хост сайта:', 'Порт:', 'Agent:', 'Количество экземпляров:',
                       'Параметры нагрузки:', 'Имя теста:', 'Вывод в консоли',
                       'Загрузить и обработать результат']
         
@@ -605,20 +605,55 @@ class Wiget_Generator_GET:
     
 
 # \\----------------------- КОД ВИДЖЕТА ГЕНЕРАТОРА КОНФИГУРАЦИЙ GET ЗАПРОСОВ ----------------------//
+# ---------------------------------------------------------------------------------------------------
+# //--------------------- КОД ВИДЖЕТА ГЕНЕРАТОРА КОНФИГУРАЦИЙ POST ЗАПРОСОВ -----------------------\\
 
-def insertFileGET():
+class Wiget_Generator_POST:
+
+    def __init__(self, name):
+        self.name = name
+        self.create_token = ''
+
+    def generator_post(self):
+        global generate_post
+
+        generate_post = Frame(window_no, relief = FLAT)
+        generate_post.pack(pady = [5, 5])
+
+        generator_get_name = Label(master = generate_post, text = '--- POST query customization generator ---', font = ('Arial', 16), foreground = 'gray')
+        generator_get_name.grid(columnspan = 3, row = 0, pady = [5, 5])
+
+        labels = ['Хост сайта:', 'Порт:', 'Файл с запросами:', 'Количество экземпляров:',
+                  'Параметры нагрузки:', 'Имя теста:', 'Вывод в консоли',
+                  'Загрузить и обработать результат']
+        
+        y = 1
+        for a in labels:
+            enter_name = Label(master = generate_post, text = a, font = ('Arial', 12))
+            enter_name.grid(column = 0, row = y, padx = [5, 5], pady = [5, 5], sticky = 'se')
+            if a == 'Порт:':
+                enter_name.grid(column = 0, row = y, padx = [5, 5], pady = [5, 5], sticky = 'e')
+            if a == 'Хост сайта:':
+                enter_name.grid(column = 0, row = y, padx = [5, 5], pady = [5, 15], sticky = 'se')
+            if a == 'User agent:':
+                enter_name.grid(column = 0, row = y, padx = [5, 5], pady = [15, 5], sticky = 'se')
+            y += 1
+
+# \\---------------------- КОД ВИДЖЕТА ГЕНЕРАТОРА КОНФИГУРАЦИЙ POST ЗАПРОСОВ ----------------------//
+
+def insert_file_get():
     file_name = fd.askopenfilename()
-    bodyTestGET_path.insert(0, file_name)
+    body_test_get_path.insert(0, file_name)
 
 
-def insertFilePOST():
+def iinsert_file_post():
     file_name = fd.askopenfilename()
     bodyTestPOST_path.insert(0, file_name)
 
 
-def insertFileAmmo():
+def insert_file_ammo():
     file_name = fd.askopenfilename()
-    ammoTest_path.insert(0, file_name)
+    ammo_test_path.insert(0, file_name)
 
 
 # //--------------------- ВИДЖЕТ ДЛЯ РАБОТЫ С НАПИСАННЫМИ ЗАРАНЕЕ КОНФИГАМИ -----------------------\\
@@ -692,7 +727,7 @@ def generateFiles():
         if 'GET and POST' in typeREQ:
             choice_auth.destroy()
 
-            if "yes" in selected.get():
+            if 'yes' in selected.get():
 
                 print(selected.get())
                 #config_generator.generateGET()
@@ -702,21 +737,25 @@ def generateFiles():
         elif 'POST' in typeREQ:
             choice_auth.destroy()
 
-            if "yes" in selected.get():
+            if 'yes' in selected.get():
+                create_wiget = Wiget_Generator_POST('create_wiget')
+                create_wiget.create_token = selected.get()
+                create_wiget.generator_post()
                 
-                print(selected.get())
-                #config_generator.generatePOST()
-                #config_generator.generateAmmo()
+            elif 'no' in selected.get():
+                create_wiget = Wiget_Generator_POST('create_wiget')
+                create_wiget.create_token = selected.get()
+                create_wiget.generator_post()
 
         elif 'GET' in typeREQ:
             choice_auth.destroy()
 
-            if "yes" in selected.get(): 
+            if 'yes' in selected.get(): 
                 create_wiget = Wiget_Generator_GET('create_wiget')
                 create_wiget.create_token = selected.get()
                 create_wiget.generator_get()
 
-            elif "no" in selected.get(): 
+            elif 'no' in selected.get(): 
                 create_wiget = Wiget_Generator_GET('create_wiget')
                 create_wiget.create_token = selected.get()
                 create_wiget.generator_get()
