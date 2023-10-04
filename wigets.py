@@ -224,6 +224,34 @@ class Wiget_GET_Requests:
 
         start.destroy()
 
+        def iter_test_get_entry_delete():
+            if iter_test_get_entry.get() == '1':
+                iter_test_get_entry.delete(0, 'end')
+                iter_test_get_entry.configure(foreground = 'black', font = ('Arial', 11))
+
+        def body_test_get_path_delete():
+            if body_test_get_path.get() == self.file_name:
+                body_test_get_path.delete(0, 'end')
+                body_test_get_path.configure(foreground = 'black', font = ('Arial', 11))
+            
+            elif body_test_get_path.get() == 'Укажите путь к файлу':
+                body_test_get_path.delete(0, 'end')
+                body_test_get_path.configure(foreground = 'black', font = ('Arial', 11))
+
+        def iter_test_get_entry_insert():
+            if iter_test_get_entry.get() == '':
+                iter_test_get_entry.insert(0, '1')
+                iter_test_get_entry.configure(foreground = 'gray', font = 'Arial 11 italic')
+
+        def body_test_get_path_insert():
+            if (len(self.file_name) > 0) and body_test_get_path.get() == '':
+                body_test_get_path.insert(0, self.file_name)
+                body_test_get_path.configure(foreground = 'gray', font = 'Arial 11 italic')
+
+            elif (len(self.file_name) == 0) and body_test_get_path.get() == '':
+                body_test_get_path.insert(0, 'Укажите путь к файлу')
+                body_test_get_path.configure(foreground = 'gray', font = 'Arial 11 italic')
+
         if 'yes' in self.btnType:
             get_req = Frame(window_yes, relief = FLAT)
             get_req.pack(pady = [5, 5])
@@ -238,11 +266,19 @@ class Wiget_GET_Requests:
             iter_test = Label(master = get_req, text = "Количество итераций тестов:", font = ("Arial", 12))
             iter_test.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
             iter_test_get_entry = Entry(master = get_req, width = 25)
+            iter_test_get_entry.insert(0, '1')
+            iter_test_get_entry.configure(foreground = 'gray', font = 'Arial 11 italic')
+            iter_test_get_entry.bind('<FocusIn>', (lambda args: [iter_test_get_entry_delete()]))
+            iter_test_get_entry.bind('<FocusOut>', (lambda args: [iter_test_get_entry_insert()]))
             iter_test_get_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
 
             body_test_get = Label(master = get_req, text = "Путь или имя файла конфигурации:", font = ("Arial", 12))
             body_test_get.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
             body_test_get_path = Entry(master = get_req, width = 25)
+            body_test_get_path.insert(0, 'Укажите путь к файлу')
+            body_test_get_path.configure(foreground = 'gray', font = 'Arial 11 italic')
+            body_test_get_path.bind('<FocusIn>', (lambda args: [body_test_get_path_delete()]))
+            body_test_get_path.bind('<FocusOut>', (lambda args: [body_test_get_path_insert()]))
             body_test_get_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
 
             iter_test_btn = Button(master = get_req, text = 'Принять', command = create_get)
@@ -268,12 +304,19 @@ class Wiget_GET_Requests:
             iter_test = Label(master = get_req, text = "Количество итераций тестов:", font = ("Arial", 12))
             iter_test.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
             iter_test_get_entry = Entry(master = get_req, width = 25)
+            iter_test_get_entry.insert(0, '1')
+            iter_test_get_entry.configure(foreground = 'gray', font = 'Arial 11 italic')
+            iter_test_get_entry.bind('<FocusIn>', (lambda args: [iter_test_get_entry_delete()]))
+            iter_test_get_entry.bind('<FocusOut>', (lambda args: [iter_test_get_entry_insert()]))
             iter_test_get_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
 
             body_test_get = Label(master = get_req, text = "Путь или имя файла конфигурации:", font = ("Arial", 12))
             body_test_get.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
             body_test_get_path = Entry(master = get_req, width = 25)
             body_test_get_path.insert(0, self.file_name)
+            body_test_get_path.configure(foreground = 'gray', font = 'Arial 11 italic')
+            body_test_get_path.bind('<FocusIn>', (lambda args: [body_test_get_path_delete()]))
+            body_test_get_path.bind('<FocusOut>', (lambda args: [body_test_get_path_insert()]))
             body_test_get_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
 
             iter_test_btn = Button(master = get_req, text = 'Принять', command = create_get)
