@@ -1,8 +1,5 @@
 import time
 import check
-from tkinter import *
-from tkinter.ttk import *
-from tkinter import messagebox
 
 
 class Choice_Type:
