@@ -9,12 +9,12 @@ import config_generator
 
 
 def create_post():
-    if len(bodyTestPOST_path.get()) > 0 and len(ammo_test_path.get()) > 0:
+    if len(body_test_post_path.get()) > 0 and len(ammo_test_path.get()) > 0:
 
-        if  ((iterTestPOST_entry.get().isdigit()) > 0) and (int(iterTestPOST_entry.get()) > 0):
+        if  ((iter_test_post_entry.get().isdigit()) > 0) and (int(iter_test_post_entry.get()) > 0):
             POST = run_test.Choice_Type('POST')
-            POST.iterrationPOST = int(iterTestPOST_entry.get())
-            POST.pathBodyPOST = bodyTestPOST_path.get()
+            POST.iterrationPOST = int(iter_test_post_entry.get())
+            POST.pathBodyPOST = body_test_post_path.get()
             POST.pathAmmo = ammo_test_path.get()
             POST.POST()
 
@@ -48,7 +48,7 @@ def insert_file_get():
 
 def iinsert_file_post():
     file_name = fd.askopenfilename()
-    bodyTestPOST_path.insert(0, file_name)
+    body_test_post_path.insert(0, file_name)
 
 
 def insert_file_ammo():
@@ -64,18 +64,18 @@ class Wiget_GET_and_POST_Requests:
         self.btnType = ''
 
     def GETandPOST(self):
-        global iterTestPOST_entry
+        global iter_test_post_entry
         global iter_test_get_entry
         global ammo_test_path
-        global bodyTestPOST_path
+        global body_test_post_path
         global body_test_get_path
-        global POSTreq
+        global post_req
         global GETreq
 
         start.destroy()
 
-        POSTreq = Frame(window_yes, relief = FLAT)
-        POSTreq.pack(padx = [5, 5])
+        post_req = Frame(window_yes, relief = FLAT)
+        post_req.pack(padx = [5, 5])
         GETreq = Frame(window_yes, relief = FLAT)
         GETreq.pack(padx = [5, 5])
 
@@ -83,22 +83,22 @@ class Wiget_GET_and_POST_Requests:
         window_yes.config(menu = loadFileMenu)
         loadFileMenu.add_command(label = 'Справка')
 
-        nameTestPOST = Label(master = POSTreq, text = "--- POST ---", font = ("Arial", 16), foreground = 'gray')
+        nameTestPOST = Label(master = post_req, text = "--- POST ---", font = ("Arial", 16), foreground = 'gray')
         nameTestPOST.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 30])
 
-        iterTest = Label(master = POSTreq, text = "Количество итераций тестов:", font = ("Arial", 12))
+        iterTest = Label(master = post_req, text = "Количество итераций тестов:", font = ("Arial", 12))
         iterTest.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        iterTestPOST_entry = Entry(master = POSTreq, width = 25)
-        iterTestPOST_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
+        iter_test_post_entry = Entry(master = post_req, width = 25)
+        iter_test_post_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
 
-        bodyTestPOST = Label(master = POSTreq, text = "Файл с конфигурацией:", font = ("Arial", 12))
+        bodyTestPOST = Label(master = post_req, text = "Файл с конфигурацией:", font = ("Arial", 12))
         bodyTestPOST.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        bodyTestPOST_path = Entry(master = POSTreq, width = 25)
-        bodyTestPOST_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
+        body_test_post_path = Entry(master = post_req, width = 25)
+        body_test_post_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
 
-        ammoTest = Label(master = POSTreq, text = "Путь или имя файла запросов:", font = ("Arial", 12))
+        ammoTest = Label(master = post_req, text = "Путь или имя файла запросов:", font = ("Arial", 12))
         ammoTest.grid(column = 0, row = 3, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        ammo_test_path = Entry(master = POSTreq, width = 25)
+        ammo_test_path = Entry(master = post_req, width = 25)
         ammo_test_path.grid(column = 1, row = 3, padx = [5, 5], pady = [5, 5])
 
         nameTestGET = Label(master = GETreq, text = "--- GET ---", font = ("Arial", 16), foreground = 'gray')
@@ -119,19 +119,19 @@ class Wiget_GET_and_POST_Requests:
             iterTest_btn = Button(master = GETreq, text = 'Принять', command = lambda:[create_get(), create_post()])
             iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
 
-            back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), POSTreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
+            back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), post_req.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
             back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
 
         elif 'no' in self.btnType:
             iterTest_btn = Button(master = GETreq, text = 'Принять', command = lambda:[create_get(), create_get()])
             iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
 
-            back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), POSTreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
+            back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), post_req.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
             back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
 
-        btn_insertFile = Button(master = POSTreq, text = 'Открыть', command = iinsert_file_post)
+        btn_insertFile = Button(master = post_req, text = 'Открыть', command = iinsert_file_post)
         btn_insertFile.grid(column = 2, row = 2, padx = [44, 20], pady = [5, 5])
-        btn1_insertFile = Button(master = POSTreq, text = 'Открыть', command = insert_file_ammo)
+        btn1_insertFile = Button(master = post_req, text = 'Открыть', command = insert_file_ammo)
         btn1_insertFile.grid(column = 2, row = 3, padx = [44, 20], pady = [5, 5])
         btn2_insertFile = Button(master = GETreq, text = 'Открыть', command = insert_file_get)
         btn2_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
@@ -145,57 +145,105 @@ class Wiget_POST_Requests:
     def __init__(self, name):
         self.name = name
         self.btnType = ''
+        self.file_name = ''
 
     def POST(self):
-        global iterTestPOST_entry
+        global iter_test_post_entry
         global ammo_test_path
-        global bodyTestPOST_path
-        global POSTreq
+        global body_test_post_path
+        global post_req
 
         start.destroy()
 
-        POSTreq = Frame(window_yes, relief = FLAT)
-        POSTreq.pack(pady = [5, 5])
+        def iter_test_get_entry_delete():
+            if iter_test_post_entry.get() == '1':
+                iter_test_post_entry.delete(0, 'end')
+                iter_test_post_entry.configure(foreground = 'black', font = ('Arial', 11))
+
+        def body_test_get_path_delete():
+            if (body_test_post_path.get() == self.file_name) or (body_test_post_path.get() == 'Укажите путь к файлу'):
+                body_test_post_path.delete(0, 'end')
+                body_test_post_path.configure(foreground = 'black', font = ('Arial', 11))
+
+        def ammo_test_path_delete():
+            if (ammo_test_path.get() == 'Укажите путь к файлу'):
+                ammo_test_path.delete(0, 'end')
+                ammo_test_path.configure(foreground = 'black', font = ('Arial', 11))
+
+        def iter_test_get_entry_insert():
+            if iter_test_post_entry.get() == '':
+                iter_test_post_entry.insert(0, '1')
+                iter_test_post_entry.configure(foreground = 'gray', font = 'Arial 11 italic')
+
+        def body_test_get_path_insert():
+            if (len(self.file_name) > 0) and body_test_post_path.get() == '':
+                body_test_post_path.insert(0, self.file_name)
+                body_test_post_path.configure(foreground = 'gray', font = 'Arial 11 italic')
+
+            elif (len(self.file_name) == 0) and body_test_post_path.get() == '':
+                body_test_post_path.insert(0, 'Укажите путь к файлу')
+                body_test_post_path.configure(foreground = 'gray', font = 'Arial 11 italic')
+
+        def ammo_test_path_insert():
+            if ammo_test_path.get() == '':
+                ammo_test_path.insert(0, 'Укажите путь к файлу')
+                ammo_test_path.configure(foreground = 'gray', font = 'Arial 11 italic')
+
+        post_req = Frame(window_yes, relief = FLAT)
+        post_req.pack(pady = [5, 5])
 
         loadFileMenu = Menu(window_yes)
         window_yes.config(menu = loadFileMenu)
         loadFileMenu.add_command(label = 'Справка')
 
-        nameTestPOST = Label(master = POSTreq, text = "--- POST ---", font = ("Arial", 16), foreground = 'gray')
+        nameTestPOST = Label(master = post_req, text = "--- POST ---", font = ("Arial", 16), foreground = 'gray')
         nameTestPOST.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 30])
 
-        iterTest = Label(master = POSTreq, text = "Количество итераций тестов:", font = ("Arial", 12))
-        iterTest.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        iterTestPOST_entry = Entry(master = POSTreq, width = 25)
-        iterTestPOST_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
+        iter_test = Label(master = post_req, text = "Количество итераций тестов:", font = ("Arial", 12))
+        iter_test.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
+        iter_test_post_entry = Entry(master = post_req, width = 25)
+        iter_test_post_entry.insert(0, '1')
+        iter_test_post_entry.configure(foreground = 'gray', font = 'Arial 11 italic')
+        iter_test_post_entry.bind('<FocusIn>', (lambda args: [iter_test_get_entry_delete()]))
+        iter_test_post_entry.bind('<FocusOut>', (lambda args: [iter_test_get_entry_insert()]))
+        iter_test_post_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
 
-        bodyTestPOST = Label(master = POSTreq, text = "Файл с конфигурацией:", font = ("Arial", 12))
-        bodyTestPOST.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        bodyTestPOST_path = Entry(master = POSTreq, width = 25)
-        bodyTestPOST_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
 
-        ammoTest = Label(master = POSTreq, text = "Путь или имя файла запросов:", font = ("Arial", 12))
-        ammoTest.grid(column = 0, row = 3, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        ammo_test_path = Entry(master = POSTreq, width = 25)
+        body_test_post = Label(master = post_req, text = "Файл с конфигурацией:", font = ("Arial", 12))
+        body_test_post.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
+        body_test_post_path = Entry(master = post_req, width = 25)
+        body_test_post_path.insert(0, 'Укажите путь к файлу')
+        body_test_post_path.configure(foreground = 'gray', font = 'Arial 11 italic')
+        body_test_post_path.bind('<FocusIn>', (lambda args: [body_test_get_path_delete()]))
+        body_test_post_path.bind('<FocusOut>', (lambda args: [body_test_get_path_insert()]))
+        body_test_post_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
+
+        ammo_test = Label(master = post_req, text = "Путь или имя файла запросов:", font = ("Arial", 12))
+        ammo_test.grid(column = 0, row = 3, padx = [5, 5], pady = [5, 5], sticky = 'e')
+        ammo_test_path = Entry(master = post_req, width = 25)
+        ammo_test_path.insert(0, 'Укажите путь к файлу')
+        ammo_test_path.configure(foreground = 'gray', font = 'Arial 11 italic')
+        ammo_test_path.bind('<FocusIn>', (lambda args: [ammo_test_path_delete()]))
+        ammo_test_path.bind('<FocusOut>', (lambda args: [ammo_test_path_insert()]))
         ammo_test_path.grid(column = 1, row = 3, padx = [5, 5], pady = [5, 5])
 
         if 'yes' in self.btnType:
-            iterTest_btn = Button(master = POSTreq, text = 'Принять', command = create_post)
+            iterTest_btn = Button(master = post_req, text = 'Принять', command = create_post)
             iterTest_btn.grid(column = 2, row = 4, padx = [10, 20], pady = [50, 10])
         
-            back_btn = Button(master = POSTreq, text = 'Вернуться к выбору запросов', command = lambda:[POSTreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
+            back_btn = Button(master = post_req, text = 'Вернуться к выбору запросов', command = lambda:[post_req.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
             back_btn.grid(column = 1, row = 4, padx = [10, 20], pady = [50, 10])
 
         elif 'no' in self.btnType:
-            iterTest_btn = Button(master = POSTreq, text = 'Принять', command = create_post)
+            iterTest_btn = Button(master = post_req, text = 'Принять', command = create_post)
             iterTest_btn.grid(column = 2, row = 4, padx = [10, 20], pady = [50, 10])
 
-            back_btn = Button(master = POSTreq, text = 'Вернуться к выбору запросов', command = lambda:[POSTreq.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
+            back_btn = Button(master = post_req, text = 'Вернуться к выбору запросов', command = lambda:[post_req.destroy(), wiget_dontgenerate(), window_yes.config(loadFileMenu.destroy())])
             back_btn.grid(column = 1, row = 4, padx = [10, 20], pady = [50, 10])
 
-        btn_insertFile = Button(master = POSTreq, text = 'Открыть', command = iinsert_file_post)
+        btn_insertFile = Button(master = post_req, text = 'Открыть', command = iinsert_file_post)
         btn_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
-        btn1_insertFile = Button(master = POSTreq, text = 'Открыть', command = insert_file_ammo)
+        btn1_insertFile = Button(master = post_req, text = 'Открыть', command = insert_file_ammo)
         btn1_insertFile.grid(column = 2, row = 3, padx = [10, 20], pady = [5, 5])
 
 # \\----------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ POST ЗАПРОСОВ ------------------//
@@ -368,14 +416,14 @@ class Wiget_Generator_GET:
                 created_file = config_generator.Load_GET_Non_Token('Load_GET_Non_Token')
             created_file.host = host_entry.get()
             created_file.port = port_entry.get()
-            created_file.agent = user_agent_entry.get()
-            if 'yes' in self.create_token:
-                created_file.token = auth_token_entry.get()
-            created_file.url = path_url_entry.get(1.0, 'end-1c')
             if port_entry.get() == '443':
                 created_file.ssl = 'true'
             elif port_entry.get() == '80':
                 created_file.ssl = 'false'
+            created_file.agent = user_agent_entry.get()
+            if 'yes' in self.create_token:
+                created_file.token = auth_token_entry.get()
+            created_file.url = path_url_entry.get(1.0, 'end-1c')
             created_file.instances = quantity_threads_entry.get()
             created_file.schedule = load_params_entry.get()
             created_file.c_enabled = selected_console.get()
@@ -631,6 +679,32 @@ class Wiget_Generator_POST:
                 enter_name.grid(column = 0, row = y, padx = [5, 5], pady = [15, 5], sticky = 'se')
             y += 1
 
+        def created_file_for_post():
+            created_file = config_generator.load_POST('Load_POST')
+            created_file.host = host_entry.get()
+            created_file.port = port_entry.get()
+            if port_entry.get() == '443':
+                created_file.ssl = 'true'
+            elif port_entry.get() == '80':
+                created_file.ssl = 'false'
+            created_file.ammo_file = request_file_entry.get()
+            created_file.instances = quantity_threads_entry.get()
+            created_file.schedule = load_params_entry.get()
+            created_file.c_enabled = selected_console.get()
+            created_file.t_enabled = 'false'
+            created_file.o_enabled = selected_overload.get()
+            created_file.job_dsc = name_test_entry.get()
+            created_config_text = created_file.load()
+            with open(name_test_entry.get()+'.yaml', 'w+') as file:
+                file.write(created_file.load())
+            print(created_config_text)
+
+        def create_next_wiget():
+            next_wiget = Wiget_POST_Requests('next_wiget')
+            next_wiget.btnType = 'no'
+            next_wiget.file_name = name_test_entry.get()+'.yaml'
+            next_wiget.POST()
+
         def placeholder_host_entry_delete():
             if host_entry.get() == 'Например: example.com':
                 host_entry.delete(0, 'end')
@@ -654,7 +728,7 @@ class Wiget_Generator_POST:
                 port_entry.configure(foreground = 'black', font = ('Arial', 11))
 
         def placeholder_request_file_delete():
-            if request_file_entry.get() == 'Путь к файлу':
+            if request_file_entry.get() == 'Укажите путь к файлу':
                 request_file_entry.delete(0, 'end')
                 request_file_entry.configure(foreground = 'black', font = ('Arial', 11))
 
@@ -702,7 +776,7 @@ class Wiget_Generator_POST:
 
         def placeholder_request_file_insert():
             if request_file_entry.get() == '':
-                request_file_entry.insert(0, 'Путь к файлу')
+                request_file_entry.insert(0, 'Укажите путь к файлу')
                 request_file_entry.configure(foreground = 'gray', font = ('Arial 11 italic'))
 
         def placeholder_quantity_threads_entry_insert():
@@ -741,7 +815,7 @@ class Wiget_Generator_POST:
         port_radiobutton_80.grid(column = 1, row = 2, sticky = S, padx = [25, 15])
 
         request_file_entry = Entry(master = generate_post, width = 35)
-        request_file_entry.insert(0, 'Путь к файлу')
+        request_file_entry.insert(0, 'Укажите путь к файлу')
         request_file_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
         request_file_entry.bind('<FocusIn>', (lambda args: [placeholder_request_file_delete()]))
         request_file_entry.bind('<FocusOut>', (lambda args: [placeholder_request_file_insert()]))
@@ -781,6 +855,13 @@ class Wiget_Generator_POST:
         overload_radiobutton_on.grid(column = 1, row = 8, sticky = W, padx = [15, 5])
         overload_radiobutton_off = Radiobutton(master = generate_post, text = 'отключить', value = 'false', variable = selected_overload)
         overload_radiobutton_off.grid(column = 1, row = 8, padx = [55, 5])
+
+        save_btn = Button(master = generate_post, text = 'Создать файл с конфигурацией', command = created_file_for_post)
+        save_btn.grid(columnspan = 3, row = 9, padx = [10, 10], pady = [10, 10], ipadx = 50)
+        select_btn = Button(master = generate_post, text = 'Принять', command = lambda: [created_file_for_post(), create_next_wiget(), generate_get.destroy()])
+        select_btn.grid(column = 2, row = 10, padx = [10, 10], pady = [20, 10])
+        back_btn =Button(master = generate_post, text = 'Вернуться к выбору запросов', command = lambda:[generate_get.destroy(), wiget_generate()])
+        back_btn.grid(column = 1, row = 10, padx = [10, 10], pady = [20, 10])
 
 # \\---------------------- КОД ВИДЖЕТА ГЕНЕРАТОРА КОНФИГУРАЦИЙ POST ЗАПРОСОВ ----------------------//
 # ---------------------------------------------------------------------------------------------------
