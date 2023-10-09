@@ -41,28 +41,20 @@ def create_get():
     else:
         messagebox.showinfo('Error', 'Все поля GET запросов должны быть заполнены')
 
-# //---------------------------- ОБЪЕКТЫ, СОЗДАВАЕМЫЕ В ГЕНЕРАТОРАХ -------------------------------\\
-'''
-def generatePOST():
+def insert_file_get():
+    file_name = fd.askopenfilename()
+    body_test_get_path.insert(0, file_name)
 
-    generatePOST = config_generator.loadPOST("loadPOST")
-    generatePOST.host = "example.net"
-    generatePOST.port = "443"
-    generatePOST.ammo_file = "ammo_POST.txt"
-    generatePOST.ssl = "true"
-    generatePOST.schedule = "line(1, 10000, 5m) const(5000,2m)"
-    generatePOST.instances = "1000"
-    generatePOST.c_enabled = "true"
-    generatePOST.t_enabled = "false"
-    generatePOST.o_enabled = "true"
-    generatePOST.job_dsc = "testing_POST_requests"
-    loadPOST_text = generatePOST.load()
-    with open('load.yaml', 'w+') as loadPOST_file:
-        loadPOST_file.write(loadPOST_text)
-    print(loadPOST_text)
-'''
-# \\------------------------------ ОБЪЕКТЫ, СОЗДАВАЕМЫЕ В ГЕНЕРАТОРАХ -----------------------------//
-# ---------------------------------------------------------------------------------------------------
+
+def iinsert_file_post():
+    file_name = fd.askopenfilename()
+    bodyTestPOST_path.insert(0, file_name)
+
+
+def insert_file_ammo():
+    file_name = fd.askopenfilename()
+    ammo_test_path.insert(0, file_name)
+
 # //-------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET И POST ЗАПРОСОВ ---------------\\
 
 class Wiget_GET_and_POST_Requests:
@@ -348,13 +340,13 @@ class Wiget_Generator_GET:
         generator_get_name.grid(columnspan = 3, row = 0, pady = [5, 5])
 
         if 'no' in self.create_token:
-            labels = ['Хост сайта:', 'Порт:', 'Agent:', 'Количество экземпляров:',
+            labels = ['Хост сайта:', 'Порт:', 'User agent:', 'Количество экземпляров:',
                       'Параметры нагрузки:', 'Имя теста:', 'Вывод в консоли',
                       'Загрузить и обработать результат']
         
         elif 'yes' in self.create_token:
             labels = ['Хост сайта:', 'Порт:', 'User agent:', 'Токен авторизации:',
-                      'Количество потоков:', 'Параметры нагрузки:', 'Имя теста:',
+                      'Количество экземпляров:', 'Параметры нагрузки:', 'Имя теста:',
                       'Вывод в консоли', 'Загрузить и обработать результат']
 
         y = 1
@@ -639,23 +631,159 @@ class Wiget_Generator_POST:
                 enter_name.grid(column = 0, row = y, padx = [5, 5], pady = [15, 5], sticky = 'se')
             y += 1
 
+        def placeholder_host_entry_delete():
+            if host_entry.get() == 'Например: example.com':
+                host_entry.delete(0, 'end')
+                host_entry.configure(foreground = 'black', font = ('Arial', 11))
+
+        def placeholder_port_entry_delete():
+            if port_entry.get() == 'Введите или выберите значение':
+                port_entry.delete(0, 'end')
+                port_entry.configure(foreground = 'black', font = ('Arial', 11))
+
+        def selected_https():
+            if port_entry.get() == 'Введите или выберите значение' or '80':
+                port_entry.delete(0, 'end')
+                port_entry.insert(0, '443')
+                port_entry.configure(foreground = 'black', font = ('Arial', 11))
+
+        def selected_http():
+            if port_entry.get() == 'Введите или выберите значение' or '443':
+                port_entry.delete(0, 'end')
+                port_entry.insert(0, '80')
+                port_entry.configure(foreground = 'black', font = ('Arial', 11))
+
+        def placeholder_request_file_delete():
+            if request_file_entry.get() == 'Путь к файлу':
+                request_file_entry.delete(0, 'end')
+                request_file_entry.configure(foreground = 'black', font = ('Arial', 11))
+
+        def placeholder_quantity_threads_entry_delete():
+            if quantity_threads_entry.get() == '1000':
+                quantity_threads_entry.delete(0, 'end')
+                quantity_threads_entry.configure(foreground = 'black', font = ('Arial', 11))
+        
+        def placeholder_load_params_delete():
+            if load_params_entry.get() == 'line(1, 100, 5m) const(50,2m)':
+                load_params_entry.delete(0, 'end')
+                load_params_entry.configure(foreground = 'black', font = ('Arial', 11))
+
+        def placeholder_name_delete():            
+            if name_test_entry.get() == 'Введите название теста':
+                name_test_entry.delete(0, 'end')
+                name_test_entry.configure(foreground = 'black', font = ('Arial', 11))
+
+        def placeholder_host_entry_insert():
+            if host_entry.get() == '':
+                host_entry.insert(0, 'Например: example.com')
+                host_entry.configure(foreground = 'gray', font = ('Arial 11 italic'))
+
+        def placeholder_port_entry_insert():
+            if port_entry.get() == '':
+                selected_port.set('')
+                port_entry.insert(0, 'Введите или выберите значение')
+                port_entry.configure(foreground = 'gray', font = ('Arial 11 italic'))
+            
+            if port_entry.get() == '443':
+                selected_port.set('443')
+
+            if (port_entry.get() == 'https') or (port_entry.get() == 'https://') or (port_entry.get() == 'https:') or (port_entry.get() == 'https:/'):
+                selected_port.set('443')
+                port_entry.delete(0, 'end')
+                port_entry.insert(0, '443')
+
+            if (port_entry.get() == 'http') or (port_entry.get() == 'http://') or (port_entry.get() == 'http:') or (port_entry.get() == 'http:/'):
+                selected_port.set('80')
+                port_entry.delete(0, 'end')
+                port_entry.insert(0, '80')
+
+            if port_entry.get() == '80':
+                selected_port.set('80')
+
+        def placeholder_request_file_insert():
+            if request_file_entry.get() == '':
+                request_file_entry.insert(0, 'Путь к файлу')
+                request_file_entry.configure(foreground = 'gray', font = ('Arial 11 italic'))
+
+        def placeholder_quantity_threads_entry_insert():
+            if quantity_threads_entry.get() == '':
+                quantity_threads_entry.insert(0, '1000')
+                quantity_threads_entry.configure(foreground = 'gray', font = ('Arial 11 italic'))
+
+        def placeholder_load_params_insert():
+            if load_params_entry.get() == '':
+                load_params_entry.insert(0, 'line(1, 100, 5m) const(50,2m)')
+                load_params_entry.configure(foreground = 'gray', font = ('Arial 11 italic'))
+
+        def placeholder_name_insert():
+            if name_test_entry.get() == '':
+                name_test_entry.insert(0, 'Введите название теста')
+                name_test_entry.configure(foreground = 'gray', font = ('Arial 11 italic'))
+
+        host_entry = Entry(master = generate_post, width = 35)
+        host_entry.insert(0, 'Например: example.com')
+        host_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
+        host_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 15])
+        host_entry.bind('<FocusIn>', (lambda args: [placeholder_host_entry_delete()]))
+        host_entry.bind('<FocusOut>', (lambda args: [placeholder_host_entry_insert()]))
+
+        port_entry = Entry(master = generate_post, width = 35)
+        port_entry.insert(0, 'Введите или выберите значение')
+        port_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
+        port_entry.bind('<FocusIn>', (lambda args: [placeholder_port_entry_delete()]))
+        port_entry.bind('<FocusOut>', (lambda args: [placeholder_port_entry_insert()]))
+        port_entry.grid(column = 1, row = 2, sticky = N, padx = [5, 5], pady = [5, 25])
+        selected_port = StringVar()
+        selected_port.set('')
+        port_radiobutton_443 = Radiobutton(master = generate_post, text = 'https://', command = selected_https, value = '443', variable = selected_port)
+        port_radiobutton_443.grid(column = 1, row = 2, sticky = SW, padx = [15, 15])
+        port_radiobutton_80 = Radiobutton(master = generate_post, text = 'http://', command = selected_http, value = '80', variable = selected_port)
+        port_radiobutton_80.grid(column = 1, row = 2, sticky = S, padx = [25, 15])
+
+        request_file_entry = Entry(master = generate_post, width = 35)
+        request_file_entry.insert(0, 'Путь к файлу')
+        request_file_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
+        request_file_entry.bind('<FocusIn>', (lambda args: [placeholder_request_file_delete()]))
+        request_file_entry.bind('<FocusOut>', (lambda args: [placeholder_request_file_insert()]))
+        request_file_entry.grid(column = 1, row = 3, padx = [5, 5], pady = [15, 5])
+
+        quantity_threads_entry = Entry(master = generate_post, width = 35)
+        quantity_threads_entry.insert(0, '1000')
+        quantity_threads_entry.configure(foreground = 'gray')
+        quantity_threads_entry.grid(column = 1, row = 4, padx = [5, 5], pady = [5, 5])
+        quantity_threads_entry.bind('<FocusIn>', (lambda args: [placeholder_quantity_threads_entry_delete()]))
+        quantity_threads_entry.bind('<FocusOut>', (lambda args: [placeholder_quantity_threads_entry_insert()]))
+
+        load_params_entry = Entry(master = generate_post, width = 35)
+        load_params_entry.insert(0, 'line(1, 100, 5m) const(50,2m)')
+        load_params_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
+        load_params_entry.grid(column = 1, row = 5, padx = [5, 5], pady = [5, 5])
+        load_params_entry.bind('<FocusIn>', (lambda args: [placeholder_load_params_delete()]))
+        load_params_entry.bind('<FocusOut>', (lambda args: [placeholder_load_params_insert()]))
+
+        name_test_entry = Entry(master = generate_post, width = 35)
+        name_test_entry.insert(0, 'Введите название теста')
+        name_test_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
+        name_test_entry.grid(column = 1, row = 6, padx = [5, 5], pady = [5, 5])
+        name_test_entry.bind('<FocusIn>', (lambda args: [placeholder_name_delete()]))
+        name_test_entry.bind('<FocusOut>', (lambda args: [placeholder_name_insert()]))
+
+        selected_console = StringVar()
+        selected_console.set('')
+        console_radiobutton_on = Radiobutton(master = generate_post, text = 'включить', value = 'true', variable = selected_console)
+        console_radiobutton_on.grid(column = 1, row = 7, sticky = W, padx = [15, 5])
+        console_radiobutton_off = Radiobutton(master = generate_post, text = 'отключить', value = 'false', variable = selected_console)
+        console_radiobutton_off.grid(column = 1, row = 7, padx = [55, 5])
+
+        selected_overload = StringVar()
+        selected_overload.set('')
+        overload_radiobutton_on = Radiobutton(master = generate_post, text = 'включить', value = 'true', variable = selected_overload)
+        overload_radiobutton_on.grid(column = 1, row = 8, sticky = W, padx = [15, 5])
+        overload_radiobutton_off = Radiobutton(master = generate_post, text = 'отключить', value = 'false', variable = selected_overload)
+        overload_radiobutton_off.grid(column = 1, row = 8, padx = [55, 5])
+
 # \\---------------------- КОД ВИДЖЕТА ГЕНЕРАТОРА КОНФИГУРАЦИЙ POST ЗАПРОСОВ ----------------------//
-
-def insert_file_get():
-    file_name = fd.askopenfilename()
-    body_test_get_path.insert(0, file_name)
-
-
-def iinsert_file_post():
-    file_name = fd.askopenfilename()
-    bodyTestPOST_path.insert(0, file_name)
-
-
-def insert_file_ammo():
-    file_name = fd.askopenfilename()
-    ammo_test_path.insert(0, file_name)
-
-
+# ---------------------------------------------------------------------------------------------------
 # //--------------------- ВИДЖЕТ ДЛЯ РАБОТЫ С НАПИСАННЫМИ ЗАРАНЕЕ КОНФИГАМИ -----------------------\\
 
 def clicked_yes():
