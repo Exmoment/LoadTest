@@ -34,7 +34,7 @@ class LoadPOSTTesting:
             if POST in text:                                             # действия, выполняемые в случае, если load.yaml в рабочей папке оказался телом танка для POST запросов
                 print('Checking and preparing files for sending POST requests')
                 time.sleep(5)
-                os.rename('load.yaml', 'OLD_POST_load.yaml')
+                #os.rename('load.yaml', 'OLD_POST_load.yaml')
                 self.POST_File()
                 self.ammo_File()
                 os.system(run)
