@@ -16,41 +16,26 @@ def create_post():
             POST.POST()
 
         else:
-            messagebox.showinfo('Error', 'Поле итераций POST запросов должно содержать натуральное число')
+            messagebox.showinfo('Error_POST', 'Поле итераций POST запросов должно содержать натуральное число')
 
     else:
-        messagebox.showinfo('Error', 'Все поля POST запросов должны быть заполнены')
-
+        messagebox.showinfo('Error_POST', 'Необходимо указать пути файла конфигурации и файла запросов')
 
 def create_get():
-    if len(body_test_get_path.get()) > 0:
+    if len(body_test_get_path.get()) > 0 and (body_test_get_path.get() != 'Укажите путь к файлу'):
 
         if  ((iter_test_get_entry.get().isdigit()) > 0) and (int(iter_test_get_entry.get()) > 0):
-            GET = Choice_Type('GET')
-            GET.iterrationGET = int(iter_test_get_entry.get())
-            GET.pathBodyGET = body_test_get_path.get()
+            start_get = Choice_Type('GET')
+            start_get.iterrationGET = int(iter_test_get_entry.get())
+            start_get.pathBodyGET = body_test_get_path.get()
 
-            GET.GET()
+            start_get.GET()
 
         else:
-            messagebox.showinfo('Error', 'Поле итераций GET запросов должно содержать натуральное число')
+            messagebox.showinfo('Error_GET', 'Поле итераций GET запросов должно содержать натуральное число')
 
     else:
-        messagebox.showinfo('Error', 'Все поля GET запросов должны быть заполнены')
-
-def insert_file_get():
-    file_name = fd.askopenfilename()
-    body_test_get_path.insert(0, file_name)
-
-
-def iinsert_file_post():
-    file_name = fd.askopenfilename()
-    body_test_post_path.insert(0, file_name)
-
-
-def insert_file_ammo():
-    file_name = fd.askopenfilename()
-    ammo_test_path.insert(0, file_name)
+        messagebox.showinfo('Error_POST', 'Необходимо указать путь к файлу конфигурации')
 
 
 # //-------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET И POST ЗАПРОСОВ ---------------\\
@@ -71,6 +56,45 @@ class Widget_GET_and_POST_Requests:
         global GETreq
 
         controller_widgets.start.destroy()
+
+        def select_file():
+            file_path = fd.askopenfilename()
+
+            if file_path:          
+                body_test_get_path.delete(0, 'end')
+                body_test_get_path.insert(0, file_path)
+
+                if len(file_path) > 0 and (body_test_get_path.get() != 'Укажите путь к файлу'):
+                    body_test_get_path.configure(foreground = 'black', font = ('Arial', 11))
+            
+            else:
+                pass
+
+        def select_load_file():
+            file_path = fd.askopenfilename()
+
+            if file_path:          
+                body_test_post_path.delete(0, 'end')
+                body_test_post_path.insert(0, file_path)
+
+                if len(file_path) > 0 and (body_test_post_path.get() != 'Укажите путь к файлу'):
+                    body_test_post_path.configure(foreground = 'black', font = ('Arial', 11))
+            
+            else:
+                pass
+
+        def select_ammo_file():
+            file_path = fd.askopenfilename()
+
+            if file_path:          
+                ammo_test_path.delete(0, 'end')
+                ammo_test_path.insert(0, file_path)
+
+                if len(file_path) > 0 and (ammo_test_path.get() != 'Укажите путь к файлу'):
+                    ammo_test_path.configure(foreground = 'black', font = ('Arial', 11))
+            
+            else:
+                pass
 
         post_req = Frame(controller_widgets.window_yes, relief = FLAT)
         post_req.pack(padx = [5, 5])
@@ -118,11 +142,11 @@ class Widget_GET_and_POST_Requests:
         back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), post_req.destroy(), controller_widgets.widget_dontgenerate(), controller_widgets.window_yes.config(loadFileMenu.destroy())])
         back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
 
-        btn_insertFile = Button(master = post_req, text = 'Открыть', command = iinsert_file_post)
+        btn_insertFile = Button(master = post_req, text = 'Открыть', command = select_load_file)
         btn_insertFile.grid(column = 2, row = 2, padx = [44, 20], pady = [5, 5])
-        btn1_insertFile = Button(master = post_req, text = 'Открыть', command = insert_file_ammo)
+        btn1_insertFile = Button(master = post_req, text = 'Открыть', command = select_ammo_file)
         btn1_insertFile.grid(column = 2, row = 3, padx = [44, 20], pady = [5, 5])
-        btn2_insertFile = Button(master = GETreq, text = 'Открыть', command = insert_file_get)
+        btn2_insertFile = Button(master = GETreq, text = 'Открыть', command = select_file)
         btn2_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
 
 # \\-------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET И POST ЗАПРОСОВ ---------------//

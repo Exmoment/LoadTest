@@ -24,14 +24,14 @@ class LoadPOSTTesting:
             load.write(load_config)
 
     def CasePOST(self):
-        GET = 'uris:'
-        POST = 'ammo_type: phantom'
+        text_in_get = 'uris:'
+        text_in_post = 'ammo_type: phantom'
 
         if os.path.exists(self.path_2) & os.path.exists('load.yaml'):    # self.path_2 передает текущий путь до тела танка, вызываемого в объекте
             file = open('load.yaml', 'r')                                # открываем файл load.yaml
             text = file.read()
 
-            if POST in text:                                             # действия, выполняемые в случае, если load.yaml в рабочей папке оказался телом танка для POST запросов
+            if text_in_post in text:                                             # действия, выполняемые в случае, если load.yaml в рабочей папке оказался телом танка для POST запросов
                 print('Checking and preparing files for sending POST requests')
                 time.sleep(5)
                 #os.rename('load.yaml', 'OLD_POST_load.yaml')
@@ -43,7 +43,7 @@ class LoadPOSTTesting:
                 print('Scenario complete')
                 time.sleep(5)
 
-            elif GET in text:                                            # действия, выполняемые в случае, если load.yaml в рабочей папке оказался телом танка для GET запросов
+            elif text_in_get in text:                                            # действия, выполняемые в случае, если load.yaml в рабочей папке оказался телом танка для GET запросов
                 print('Replacing a tank with GET requests for a tank with POST requests')
                 time.sleep(5)
                 os.rename('load.yaml', 'OLD_GET_load.yaml')
@@ -70,7 +70,7 @@ class LoadPOSTTesting:
             file = open('load.yaml', 'r')                                  # открываем файл load.yaml
             text = file.read()
 
-            if POST in text:                                               # действия, выполняемые в случае, если load.yaml оказался телом танка для POST запросов
+            if text_in_post in text:                                               # действия, выполняемые в случае, если load.yaml оказался телом танка для POST запросов
                 print('Checking and preparing files for sending POST requests')
                 time.sleep(5)
                 os.rename('load.yaml', 'OLD_POST_load.yaml')
@@ -82,7 +82,7 @@ class LoadPOSTTesting:
                 print('Scenario complete')
                 time.sleep(5)
 
-            elif GET in text:                                              # действия, выполняемые в случае, если load.yaml оказался телом танка для GET запросов
+            elif text_in_get in text:                                              # действия, выполняемые в случае, если load.yaml оказался телом танка для GET запросов
                 print('Replacing a tank with GET requests for a tank with POST requests')
                 time.sleep(5)
                 os.rename('load.yaml', 'OLD_GET_load.yaml')
@@ -116,14 +116,14 @@ class LoadGETTesting:
             load.write(load_config)
 
     def CaseGET(self):
-        GET = 'uris:'
-        POST = 'ammo_type: phantom'
+        text_in_get = 'uris:'
+        text_in_post = 'ammo_type: phantom'
 
         if os.path.exists(self.path) & os.path.exists('load.yaml'):          # self.path передает текущий путь до тела танка, вызываемого в объекте
             file = open('load.yaml', 'r')                                    # открываем файл load.yaml
             text = file.read()
 
-            if POST in text:                                                 # действия, выполняемые в случае, если load.yaml оказался телом танка для POST запросов
+            if text_in_post in text:                                                 # действия, выполняемые в случае, если load.yaml оказался телом танка для POST запросов
                 print('Checking files for sending GET requests')
                 print('Changing a tank with POST requests to tank GET requests')
                 time.sleep(5)
@@ -134,7 +134,7 @@ class LoadGETTesting:
                 print('Scenario complete')
                 time.sleep(5)
 
-            elif GET in text:                                                 # действия, выполняемые в случае, если load.yaml оказался телом танка для GET запросов
+            elif text_in_get in text:                                                 # действия, выполняемые в случае, если load.yaml оказался телом танка для GET запросов
                 print('Checking files for sending GET requests')
                 time.sleep(5)
                 os.rename('load.yaml', 'OLD_GET_load.yaml')
@@ -160,7 +160,7 @@ class LoadGETTesting:
             file = open('load.yaml', 'r')                                      # открываем файл load.yaml
             text = file.read()
 
-            if GET in text:                                                    # действия, выполняемые в случае, если load.yaml оказался телом танка для GET запросов
+            if text_in_get in text:                                                    # действия, выполняемые в случае, если load.yaml оказался телом танка для GET запросов
                 print('Checking files for sending GET requests')
                 time.sleep(5)
                 os.rename('load.yaml', 'OLD_GET_load.yaml')
@@ -170,7 +170,7 @@ class LoadGETTesting:
                 print('Scenario complete')
                 time.sleep(5)
 
-            elif POST in text:                                                 # действия, выполняемые в случае, если load.yaml оказался телом танка для POST запросов
+            elif text_in_post in text:                                                 # действия, выполняемые в случае, если load.yaml оказался телом танка для POST запросов
                 print('Checking files for sending GET requests')
                 print('Changing a tank with POST requests to tank GET requests')
                 time.sleep(5)

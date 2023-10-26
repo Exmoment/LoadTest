@@ -9,25 +9,20 @@ import interface.controller_widgets as controller_widgets
 
 
 def create_get():
-    if len(body_test_get_path.get()) > 0:
+    if len(body_test_get_path.get()) > 0 and (body_test_get_path.get() != 'Укажите путь к файлу'):
 
         if  ((iter_test_get_entry.get().isdigit()) > 0) and (int(iter_test_get_entry.get()) > 0):
-            GET = Choice_Type('GET')
-            GET.iterrationGET = int(iter_test_get_entry.get())
-            GET.pathBodyGET = body_test_get_path.get()
+            start_get = Choice_Type('GET')
+            start_get.iterrationGET = int(iter_test_get_entry.get())
+            start_get.pathBodyGET = body_test_get_path.get()
 
-            GET.GET()
+            start_get.GET()
 
         else:
-            messagebox.showinfo('Error', 'Поле итераций GET запросов должно содержать натуральное число')
+            messagebox.showinfo('Error_GET', 'Поле итераций GET запросов должно содержать натуральное число')
 
     else:
-        messagebox.showinfo('Error', 'Все поля GET запросов должны быть заполнены')
-
-
-def insert_file_get():
-    file_name = fd.askopenfilename()
-    body_test_get_path.insert(0, file_name)
+        messagebox.showinfo('Error_POST', 'Необходимо указать путь к файлу конфигурации')
 
 
 # //------------------ КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET ЗАПРОСОВ ------------------\\
@@ -44,6 +39,19 @@ class Widget_GET_Requests:
         global get_req
 
         controller_widgets.start.destroy()
+
+        def select_file():
+            file_path = fd.askopenfilename()
+
+            if file_path:          
+                body_test_get_path.delete(0, 'end')
+                body_test_get_path.insert(0, file_path)
+
+                if len(file_path) > 0 and (body_test_get_path.get() != 'Укажите путь к файлу'):
+                    body_test_get_path.configure(foreground = 'black', font = ('Arial', 11))
+            
+            else:
+                pass
 
         def iter_test_get_entry_delete():
             if iter_test_get_entry.get() == '1':
@@ -107,7 +115,7 @@ class Widget_GET_Requests:
         iter_test_btn = Button(master = get_req, text = 'Принять', command = create_get)
         iter_test_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
 
-        btn_insert_file = Button(master = get_req, text = 'Открыть', command = insert_file_get)
+        btn_insert_file = Button(master = get_req, text = 'Открыть', command = select_file)
         btn_insert_file.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
 
 # \\------------------ КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET ЗАПРОСОВ ------------------//

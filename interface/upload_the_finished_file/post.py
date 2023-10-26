@@ -16,20 +16,10 @@ def create_post():
             POST.POST()
 
         else:
-            messagebox.showinfo('Error', 'Поле итераций POST запросов должно содержать натуральное число')
+            messagebox.showinfo('Error_POST', 'Поле итераций POST запросов должно содержать натуральное число')
 
     else:
-        messagebox.showinfo('Error', 'Все поля POST запросов должны быть заполнены')
-
-
-def iinsert_file_post():
-    file_name = fd.askopenfilename()
-    body_test_post_path.insert(0, file_name)
-
-
-def insert_file_ammo():
-    file_name = fd.askopenfilename()
-    ammo_test_path.insert(0, file_name)
+        messagebox.showinfo('Error_POST', 'Необходимо указать пути файла конфигурации и файла запросов')
 
 
 # //----------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ POST ЗАПРОСОВ ------------------\\
@@ -48,6 +38,32 @@ class Widget_POST_Requests:
         global post_req
 
         controller_widgets.start.destroy()
+
+        def select_load_file():
+            file_path = fd.askopenfilename()
+
+            if file_path:          
+                body_test_post_path.delete(0, 'end')
+                body_test_post_path.insert(0, file_path)
+
+                if len(file_path) > 0 and (body_test_post_path.get() != 'Укажите путь к файлу'):
+                    body_test_post_path.configure(foreground = 'black', font = ('Arial', 11))
+            
+            else:
+                pass
+
+        def select_ammo_file():
+            file_path = fd.askopenfilename()
+
+            if file_path:          
+                ammo_test_path.delete(0, 'end')
+                ammo_test_path.insert(0, file_path)
+
+                if len(file_path) > 0 and (ammo_test_path.get() != 'Укажите путь к файлу'):
+                    ammo_test_path.configure(foreground = 'black', font = ('Arial', 11))
+            
+            else:
+                pass
 
         def iter_test_get_entry_delete():
             if iter_test_post_entry.get() == '1':
@@ -130,9 +146,9 @@ class Widget_POST_Requests:
         iterTest_btn = Button(master = post_req, text = 'Принять', command = create_post)
         iterTest_btn.grid(column = 2, row = 4, padx = [10, 20], pady = [50, 10])
 
-        btn_insertFile = Button(master = post_req, text = 'Открыть', command = iinsert_file_post)
+        btn_insertFile = Button(master = post_req, text = 'Открыть', command = select_load_file)
         btn_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
-        btn1_insertFile = Button(master = post_req, text = 'Открыть', command = insert_file_ammo)
+        btn1_insertFile = Button(master = post_req, text = 'Открыть', command = select_ammo_file)
         btn1_insertFile.grid(column = 2, row = 3, padx = [10, 20], pady = [5, 5])
 
 # \\----------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ POST ЗАПРОСОВ ------------------//
