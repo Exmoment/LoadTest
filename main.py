@@ -1,3 +1,3 @@
-from wigets import create_main
+from interface.controller_widgets import create_main
 
 create_main()

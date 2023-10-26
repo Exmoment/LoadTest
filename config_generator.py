@@ -26,7 +26,7 @@ class ammo_POST:
         return "{request_size}\n{request}\r\n".format(request_size = len(request.encode('utf-8')), request = request)
 
 
-class loadPOST:
+class load_POST:
 
     def __init__(post, name):
         post.name = name
