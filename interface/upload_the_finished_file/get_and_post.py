@@ -6,7 +6,7 @@ import interface.controller_widgets as controller_widgets
 
 
 def create_post():
-    if len(body_test_post_path.get()) > 0 and len(ammo_test_path.get()) > 0:
+    if len(body_test_post_path.get()) > 0 and len(ammo_test_path.get()) > 0 and (body_test_post_path.get() != 'Укажите путь к файлу'):
 
         if  ((iter_test_post_entry.get().isdigit()) > 0) and (int(iter_test_post_entry.get()) > 0):
             POST = Choice_Type('POST')
@@ -139,7 +139,8 @@ class Widget_GET_and_POST_Requests:
         iterTest_btn = Button(master = GETreq, text = 'Принять', command = lambda:[create_get(), create_post()])
         iterTest_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
 
-        back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), post_req.destroy(), controller_widgets.widget_dontgenerate(), controller_widgets.window_yes.config(loadFileMenu.destroy())])
+        back_btn = Button(master = GETreq, text = 'Вернуться к выбору запросов', command = lambda:[GETreq.destroy(), post_req.destroy(), controller_widgets.widget_dontgenerate(), 
+                                                                                                   controller_widgets.window_yes.config(loadFileMenu.destroy())])
         back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
 
         btn_insertFile = Button(master = post_req, text = 'Открыть', command = select_load_file)

@@ -8,7 +8,7 @@ import interface.controller_widgets as controller_widgets
 
 
 def create_post():
-    if len(body_test_post_path.get()) > 0 and len(ammo_test_path.get()) > 0:
+    if len(body_test_post_path.get()) > 0 and len(ammo_test_path.get()) > 0 and (body_test_post_path.get() != 'Укажите путь к файлу'):
 
         if  ((iter_test_post_entry.get().isdigit()) > 0) and (int(iter_test_post_entry.get()) > 0):
             POST = Choice_Type('POST')
