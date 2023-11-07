@@ -36,6 +36,44 @@ class Widget_GET_Requests:
         global get_req
 
         controller_widgets.start.destroy()
+ 
+        get_req = Frame(controller_widgets.window_yes, relief = FLAT)
+        get_req.pack(pady = [5, 5])
+
+        load_file_menu = Menu(controller_widgets.window_yes)
+        controller_widgets.window_yes.config(menu = load_file_menu)
+        load_file_menu.add_command(label = 'Справка')
+
+        back_btn = Button(master = get_req, text = 'Вернуться к выбору запросов', command = lambda:[get_req.destroy(), controller_widgets.widget_dontgenerate(), 
+                                                                                                    controller_widgets.window_yes.config(load_file_menu.destroy())])
+        back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
+
+        name_test_get = Label(master = get_req, text = "--- GET ---", font = ("Arial", 16), foreground = 'gray')
+        name_test_get.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 30])
+
+        iter_test = Label(master = get_req, text = "Количество итераций тестов:", font = ("Arial", 12))
+        iter_test.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
+        iter_test_get_entry = Entry(master = get_req, width = 25)
+        iter_test_get_entry.insert(0, '1')
+        iter_test_get_entry.configure(foreground = 'gray', font = 'Arial 11 italic')
+        iter_test_get_entry.bind('<FocusIn>', (lambda args: [iter_test_get_entry_delete()]))
+        iter_test_get_entry.bind('<FocusOut>', (lambda args: [iter_test_get_entry_insert()]))
+        iter_test_get_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
+
+        body_test_get = Label(master = get_req, text = "Файл с конфигурацией:", font = ("Arial", 12))
+        body_test_get.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
+        body_test_get_path = Entry(master = get_req, width = 25)
+        body_test_get_path.insert(0, 'Укажите путь к файлу')
+        body_test_get_path.configure(foreground = 'gray', font = 'Arial 11 italic')
+        body_test_get_path.bind('<FocusIn>', (lambda args: [body_test_get_path_delete()]))
+        body_test_get_path.bind('<FocusOut>', (lambda args: [body_test_get_path_insert()]))
+        body_test_get_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
+
+        iter_test_btn = Button(master = get_req, text = 'Принять', command = create_get)
+        iter_test_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
+
+        btn_insert_file = Button(master = get_req, text = 'Открыть', command = select_file)
+        btn_insert_file.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
 
         def select_file():
             file_path = fd.askopenfilename()
@@ -78,42 +116,5 @@ class Widget_GET_Requests:
                 body_test_get_path.insert(0, 'Укажите путь к файлу')
                 body_test_get_path.configure(foreground = 'gray', font = 'Arial 11 italic')
 
-        get_req = Frame(controller_widgets.window_yes, relief = FLAT)
-        get_req.pack(pady = [5, 5])
-
-        load_file_menu = Menu(controller_widgets.window_yes)
-        controller_widgets.window_yes.config(menu = load_file_menu)
-        load_file_menu.add_command(label = 'Справка')
-
-        back_btn = Button(master = get_req, text = 'Вернуться к выбору запросов', command = lambda:[get_req.destroy(), controller_widgets.widget_dontgenerate(), 
-                                                                                                    controller_widgets.window_yes.config(load_file_menu.destroy())])
-        back_btn.grid(column = 1, row = 3, padx = [10, 20], pady = [50, 10])
-
-        name_test_get = Label(master = get_req, text = "--- GET ---", font = ("Arial", 16), foreground = 'gray')
-        name_test_get.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 30])
-
-        iter_test = Label(master = get_req, text = "Количество итераций тестов:", font = ("Arial", 12))
-        iter_test.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        iter_test_get_entry = Entry(master = get_req, width = 25)
-        iter_test_get_entry.insert(0, '1')
-        iter_test_get_entry.configure(foreground = 'gray', font = 'Arial 11 italic')
-        iter_test_get_entry.bind('<FocusIn>', (lambda args: [iter_test_get_entry_delete()]))
-        iter_test_get_entry.bind('<FocusOut>', (lambda args: [iter_test_get_entry_insert()]))
-        iter_test_get_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
-
-        body_test_get = Label(master = get_req, text = "Файл с конфигурацией:", font = ("Arial", 12))
-        body_test_get.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        body_test_get_path = Entry(master = get_req, width = 25)
-        body_test_get_path.insert(0, 'Укажите путь к файлу')
-        body_test_get_path.configure(foreground = 'gray', font = 'Arial 11 italic')
-        body_test_get_path.bind('<FocusIn>', (lambda args: [body_test_get_path_delete()]))
-        body_test_get_path.bind('<FocusOut>', (lambda args: [body_test_get_path_insert()]))
-        body_test_get_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
-
-        iter_test_btn = Button(master = get_req, text = 'Принять', command = create_get)
-        iter_test_btn.grid(column = 2, row = 3, padx = [10, 20], pady = [50, 10])
-
-        btn_insert_file = Button(master = get_req, text = 'Открыть', command = select_file)
-        btn_insert_file.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
 
 # \\------------------ КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET ЗАПРОСОВ ------------------//

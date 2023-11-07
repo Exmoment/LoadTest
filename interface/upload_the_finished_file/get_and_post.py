@@ -57,45 +57,6 @@ class Widget_GET_and_POST_Requests:
 
         controller_widgets.start.destroy()
 
-        def select_file():
-            file_path = fd.askopenfilename()
-
-            if file_path:          
-                body_test_get_path.delete(0, 'end')
-                body_test_get_path.insert(0, file_path)
-
-                if len(file_path) > 0 and (body_test_get_path.get() != 'Укажите путь к файлу'):
-                    body_test_get_path.configure(foreground = 'black', font = ('Arial', 11))
-            
-            else:
-                pass
-
-        def select_load_file():
-            file_path = fd.askopenfilename()
-
-            if file_path:          
-                body_test_post_path.delete(0, 'end')
-                body_test_post_path.insert(0, file_path)
-
-                if len(file_path) > 0 and (body_test_post_path.get() != 'Укажите путь к файлу'):
-                    body_test_post_path.configure(foreground = 'black', font = ('Arial', 11))
-            
-            else:
-                pass
-
-        def select_ammo_file():
-            file_path = fd.askopenfilename()
-
-            if file_path:          
-                ammo_test_path.delete(0, 'end')
-                ammo_test_path.insert(0, file_path)
-
-                if len(file_path) > 0 and (ammo_test_path.get() != 'Укажите путь к файлу'):
-                    ammo_test_path.configure(foreground = 'black', font = ('Arial', 11))
-            
-            else:
-                pass
-
         post_req = Frame(controller_widgets.window_yes, relief = FLAT)
         post_req.pack(padx = [5, 5])
         GETreq = Frame(controller_widgets.window_yes, relief = FLAT)
@@ -150,4 +111,43 @@ class Widget_GET_and_POST_Requests:
         btn2_insertFile = Button(master = GETreq, text = 'Открыть', command = select_file)
         btn2_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
 
+        def select_file():
+            file_path = fd.askopenfilename()
+
+            if file_path:          
+                body_test_get_path.delete(0, 'end')
+                body_test_get_path.insert(0, file_path)
+
+                if len(file_path) > 0 and (body_test_get_path.get() != 'Укажите путь к файлу'):
+                    body_test_get_path.configure(foreground = 'black', font = ('Arial', 11))
+            
+            else:
+                pass
+
+        def select_load_file():
+            file_path = fd.askopenfilename()
+
+            if file_path:          
+                body_test_post_path.delete(0, 'end')
+                body_test_post_path.insert(0, file_path)
+
+                if len(file_path) > 0 and (body_test_post_path.get() != 'Укажите путь к файлу'):
+                    body_test_post_path.configure(foreground = 'black', font = ('Arial', 11))
+            
+            else:
+                pass
+
+        def select_ammo_file():
+            file_path = fd.askopenfilename()
+
+            if file_path:          
+                ammo_test_path.delete(0, 'end')
+                ammo_test_path.insert(0, file_path)
+
+                if len(file_path) > 0 and (ammo_test_path.get() != 'Укажите путь к файлу'):
+                    ammo_test_path.configure(foreground = 'black', font = ('Arial', 11))
+            
+            else:
+                pass
+            
 # \\-------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ GET И POST ЗАПРОСОВ ---------------//

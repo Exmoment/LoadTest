@@ -23,138 +23,6 @@ def create_post():
     else:
         messagebox.showinfo('Error_POST', 'Необходимо указать пути файла конфигурации и файла запросов')
 
-
-# //----------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ POST ЗАПРОСОВ ------------------\\
-
-class Widget_POST_Requests:
-
-    def __init__(self, name):
-        self.name = name
-        self.body_file_name = ''
-        self.ammo_file_name = ''
-
-    def POST(self):
-        global iter_test_post_entry
-        global ammo_test_path
-        global body_test_post_path
-        global post_req
-
-        controller_widgets.start.destroy()
-
-        def select_load_file():
-            file_path = fd.askopenfilename()
-
-            if file_path:          
-                body_test_post_path.delete(0, 'end')
-                body_test_post_path.insert(0, file_path)
-
-                if len(file_path) > 0 and (body_test_post_path.get() != 'Укажите путь к файлу'):
-                    body_test_post_path.configure(foreground = 'black', font = ('Arial', 11))
-            
-            else:
-                pass
-
-        def select_ammo_file():
-            file_path = fd.askopenfilename()
-
-            if file_path:          
-                ammo_test_path.delete(0, 'end')
-                ammo_test_path.insert(0, file_path)
-
-                if len(file_path) > 0 and (ammo_test_path.get() != 'Укажите путь к файлу'):
-                    ammo_test_path.configure(foreground = 'black', font = ('Arial', 11))
-            
-            else:
-                pass
-
-        def iter_test_get_entry_delete():
-            if iter_test_post_entry.get() == '1':
-                iter_test_post_entry.delete(0, 'end')
-                iter_test_post_entry.configure(foreground = 'black', font = ('Arial', 11))
-
-        def body_test_get_path_delete():
-            if (body_test_post_path.get() == self.body_file_name) or (body_test_post_path.get() == 'Укажите путь к файлу'):
-                body_test_post_path.delete(0, 'end')
-                body_test_post_path.configure(foreground = 'black', font = ('Arial', 11))
-
-        def ammo_test_path_delete():
-            if (ammo_test_path.get() == self.ammo_file_name) or (ammo_test_path.get() == 'Укажите путь к файлу'):
-                ammo_test_path.delete(0, 'end')
-                ammo_test_path.configure(foreground = 'black', font = ('Arial', 11))
-
-        def iter_test_get_entry_insert():
-            if iter_test_post_entry.get() == '':
-                iter_test_post_entry.insert(0, '1')
-                iter_test_post_entry.configure(foreground = 'gray', font = 'Arial 11 italic')
-
-        def body_test_get_path_insert():
-            if (len(self.body_file_name) > 0) and body_test_post_path.get() == '':
-                body_test_post_path.insert(0, self.body_file_name)
-                body_test_post_path.configure(foreground = 'gray', font = 'Arial 11 italic')
-
-            elif (len(self.body_file_name) == 0) and body_test_post_path.get() == '':
-                body_test_post_path.insert(0, 'Укажите путь к файлу')
-                body_test_post_path.configure(foreground = 'gray', font = 'Arial 11 italic')
-
-        def ammo_test_path_insert():
-            if (len(self.ammo_file_name) > 0) and ammo_test_path.get() == '':
-                ammo_test_path.insert(0, self.ammo_file_name)
-                ammo_test_path.configure(foreground = 'gray', font = 'Arial 11 italic')
-
-            elif (len(self.ammo_file_name) == 0) and ammo_test_path.get() == '':
-                ammo_test_path.insert(0, 'Укажите путь к файлу')
-                ammo_test_path.configure(foreground = 'gray', font = 'Arial 11 italic')
-
-        post_req = Frame(controller_widgets.window_no, relief = FLAT)
-        post_req.pack(pady = [5, 5])
-
-        loadFileMenu = Menu(controller_widgets.window_no)
-        controller_widgets.window_no.config(menu = loadFileMenu)
-        loadFileMenu.add_command(label = 'Справка')
-
-        body_test_post = Label(master = post_req, text = 'Файл с конфигурацией', font = ("Arial", 12))
-        body_test_post.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        body_test_post_path = Entry(master = post_req, width = 25)
-        body_test_post_path.insert(0, self.body_file_name)
-        body_test_post_path.configure(foreground = 'gray', font = 'Arial 11 italic')
-        body_test_post_path.bind('<FocusIn>', (lambda args: [body_test_get_path_delete()]))
-        body_test_post_path.bind('<FocusOut>', (lambda args: [body_test_get_path_insert()]))
-        body_test_post_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
-
-        ammo_test = Label(master = post_req, text = 'Файл запросов', font = ("Arial", 12))
-        ammo_test.grid(column = 0, row = 3, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        ammo_test_path = Entry(master = post_req, width = 25)
-        ammo_test_path.insert(0, self.ammo_file_name)
-        ammo_test_path.configure(foreground = 'gray', font = 'Arial 11 italic')
-        ammo_test_path.bind('<FocusIn>', (lambda args: [ammo_test_path_delete()]))
-        ammo_test_path.bind('<FocusOut>', (lambda args: [ammo_test_path_insert()]))
-        ammo_test_path.grid(column = 1, row = 3, padx = [5, 5], pady = [5, 5])
-
-        back_btn = Button(master = post_req, text = 'Вернуться к выбору запросов', command = lambda:[post_req.destroy(), controller_widgets.generate_files(), controller_widgets.window_no.config(loadFileMenu.destroy())])
-        back_btn.grid(column = 1, row = 4, padx = [10, 20], pady = [50, 10])
-
-        nameTestPOST = Label(master = post_req, text = "--- POST ---", font = ("Arial", 16), foreground = 'gray')
-        nameTestPOST.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 30])
-
-        iter_test = Label(master = post_req, text = "Количество итераций тестов:", font = ("Arial", 12))
-        iter_test.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
-        iter_test_post_entry = Entry(master = post_req, width = 25)
-        iter_test_post_entry.insert(0, '1')
-        iter_test_post_entry.configure(foreground = 'gray', font = 'Arial 11 italic')
-        iter_test_post_entry.bind('<FocusIn>', (lambda args: [iter_test_get_entry_delete()]))
-        iter_test_post_entry.bind('<FocusOut>', (lambda args: [iter_test_get_entry_insert()]))
-        iter_test_post_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
-
-        iterTest_btn = Button(master = post_req, text = 'Принять', command = create_post)
-        iterTest_btn.grid(column = 2, row = 4, padx = [10, 20], pady = [50, 10])
-
-        btn_insertFile = Button(master = post_req, text = 'Открыть', command = select_load_file)
-        btn_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
-        btn1_insertFile = Button(master = post_req, text = 'Открыть', command = select_ammo_file)
-        btn1_insertFile.grid(column = 2, row = 3, padx = [10, 20], pady = [5, 5])
-
-# \\----------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ POST ЗАПРОСОВ ------------------//
-# --------------------------------------------------------------------------------------------------
 # //--------------------- КОД ВИДЖЕТА ГЕНЕРАТОРА КОНФИГУРАЦИЙ POST ЗАПРОСОВ -----------------------\\
 
 class Widget_Generator_POST:
@@ -187,6 +55,75 @@ class Widget_Generator_POST:
             if a == 'User agent:':
                 enter_name.grid(column = 0, row = y, padx = [5, 5], pady = [15, 5], sticky = 'se')
             y += 1
+
+        host_entry = Entry(master = generate_post, width = 35)
+        host_entry.insert(0, 'Например: example.com')
+        host_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
+        host_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 15])
+        host_entry.bind('<FocusIn>', (lambda args: [placeholder_host_entry_delete()]))
+        host_entry.bind('<FocusOut>', (lambda args: [placeholder_host_entry_insert()]))
+
+        port_entry = Entry(master = generate_post, width = 35)
+        port_entry.insert(0, 'Введите или выберите значение')
+        port_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
+        port_entry.bind('<FocusIn>', (lambda args: [placeholder_port_entry_delete()]))
+        port_entry.bind('<FocusOut>', (lambda args: [placeholder_port_entry_insert()]))
+        port_entry.grid(column = 1, row = 2, sticky = N, padx = [5, 5], pady = [5, 25])
+        selected_port = StringVar()
+        selected_port.set('')
+        port_radiobutton_443 = Radiobutton(master = generate_post, text = 'https://', command = selected_https, value = '443', variable = selected_port)
+        port_radiobutton_443.grid(column = 1, row = 2, sticky = SW, padx = [15, 15])
+        port_radiobutton_80 = Radiobutton(master = generate_post, text = 'http://', command = selected_http, value = '80', variable = selected_port)
+        port_radiobutton_80.grid(column = 1, row = 2, sticky = S, padx = [25, 15])
+
+        request_file_entry = Entry(master = generate_post, width = 35)
+        request_file_entry.insert(0, 'Сгенерируйте или укажите путь к файлу')
+        request_file_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
+        request_file_entry.bind('<FocusIn>', (lambda args: [placeholder_request_file_delete()]))
+        request_file_entry.bind('<FocusOut>', (lambda args: [placeholder_request_file_insert()]))
+        request_file_entry.grid(column = 1, row = 3, padx = [5, 5], pady = [15, 5])
+
+        quantity_threads_entry = Entry(master = generate_post, width = 35)
+        quantity_threads_entry.insert(0, '1000')
+        quantity_threads_entry.configure(foreground = 'gray')
+        quantity_threads_entry.grid(column = 1, row = 4, padx = [5, 5], pady = [5, 5])
+        quantity_threads_entry.bind('<FocusIn>', (lambda args: [placeholder_quantity_threads_entry_delete()]))
+        quantity_threads_entry.bind('<FocusOut>', (lambda args: [placeholder_quantity_threads_entry_insert()]))
+
+        load_params_entry = Entry(master = generate_post, width = 35)
+        load_params_entry.insert(0, 'line(1, 100, 5m) const(50,2m)')
+        load_params_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
+        load_params_entry.grid(column = 1, row = 5, padx = [5, 5], pady = [5, 5])
+        load_params_entry.bind('<FocusIn>', (lambda args: [placeholder_load_params_delete()]))
+        load_params_entry.bind('<FocusOut>', (lambda args: [placeholder_load_params_insert()]))
+
+        name_test_entry = Entry(master = generate_post, width = 35)
+        name_test_entry.insert(0, 'Введите название теста')
+        name_test_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
+        name_test_entry.grid(column = 1, row = 6, padx = [5, 5], pady = [5, 5])
+        name_test_entry.bind('<FocusIn>', (lambda args: [placeholder_name_delete()]))
+        name_test_entry.bind('<FocusOut>', (lambda args: [placeholder_name_insert()]))
+
+        selected_console = StringVar()
+        selected_console.set('')
+        console_radiobutton_on = Radiobutton(master = generate_post, text = 'включить', value = 'true', variable = selected_console)
+        console_radiobutton_on.grid(column = 1, row = 7, sticky = W, padx = [15, 5])
+        console_radiobutton_off = Radiobutton(master = generate_post, text = 'отключить', value = 'false', variable = selected_console)
+        console_radiobutton_off.grid(column = 1, row = 7, padx = [55, 5])
+
+        selected_overload = StringVar()
+        selected_overload.set('')
+        overload_radiobutton_on = Radiobutton(master = generate_post, text = 'включить', value = 'true', variable = selected_overload)
+        overload_radiobutton_on.grid(column = 1, row = 8, sticky = W, padx = [15, 5])
+        overload_radiobutton_off = Radiobutton(master = generate_post, text = 'отключить', value = 'false', variable = selected_overload)
+        overload_radiobutton_off.grid(column = 1, row = 8, padx = [55, 5])
+
+        save_btn = Button(master = generate_post, text = 'Создать файл с конфигурацией', command = created_file_for_post)
+        save_btn.grid(columnspan = 3, row = 9, padx = [10, 10], pady = [10, 10], ipadx = 50)
+        select_btn = Button(master = generate_post, text = 'Принять', command = lambda: [created_file_for_post(), create_next_widget(), generate_post.destroy()])
+        select_btn.grid(column = 2, row = 10, padx = [10, 10], pady = [20, 10])
+        back_btn =Button(master = generate_post, text = 'Вернуться к выбору запросов', command = lambda:[generate_post.destroy(), controller_widgets.widget_generate()])
+        back_btn.grid(column = 1, row = 10, padx = [10, 10], pady = [20, 10])
 
         def created_file_for_post():
             created_file = load_POST('Load_POST')
@@ -303,73 +240,135 @@ class Widget_Generator_POST:
                 name_test_entry.insert(0, 'Введите название теста')
                 name_test_entry.configure(foreground = 'gray', font = ('Arial 11 italic'))
 
-        host_entry = Entry(master = generate_post, width = 35)
-        host_entry.insert(0, 'Например: example.com')
-        host_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
-        host_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 15])
-        host_entry.bind('<FocusIn>', (lambda args: [placeholder_host_entry_delete()]))
-        host_entry.bind('<FocusOut>', (lambda args: [placeholder_host_entry_insert()]))
-
-        port_entry = Entry(master = generate_post, width = 35)
-        port_entry.insert(0, 'Введите или выберите значение')
-        port_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
-        port_entry.bind('<FocusIn>', (lambda args: [placeholder_port_entry_delete()]))
-        port_entry.bind('<FocusOut>', (lambda args: [placeholder_port_entry_insert()]))
-        port_entry.grid(column = 1, row = 2, sticky = N, padx = [5, 5], pady = [5, 25])
-        selected_port = StringVar()
-        selected_port.set('')
-        port_radiobutton_443 = Radiobutton(master = generate_post, text = 'https://', command = selected_https, value = '443', variable = selected_port)
-        port_radiobutton_443.grid(column = 1, row = 2, sticky = SW, padx = [15, 15])
-        port_radiobutton_80 = Radiobutton(master = generate_post, text = 'http://', command = selected_http, value = '80', variable = selected_port)
-        port_radiobutton_80.grid(column = 1, row = 2, sticky = S, padx = [25, 15])
-
-        request_file_entry = Entry(master = generate_post, width = 35)
-        request_file_entry.insert(0, 'Сгенерируйте или укажите путь к файлу')
-        request_file_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
-        request_file_entry.bind('<FocusIn>', (lambda args: [placeholder_request_file_delete()]))
-        request_file_entry.bind('<FocusOut>', (lambda args: [placeholder_request_file_insert()]))
-        request_file_entry.grid(column = 1, row = 3, padx = [5, 5], pady = [15, 5])
-
-        quantity_threads_entry = Entry(master = generate_post, width = 35)
-        quantity_threads_entry.insert(0, '1000')
-        quantity_threads_entry.configure(foreground = 'gray')
-        quantity_threads_entry.grid(column = 1, row = 4, padx = [5, 5], pady = [5, 5])
-        quantity_threads_entry.bind('<FocusIn>', (lambda args: [placeholder_quantity_threads_entry_delete()]))
-        quantity_threads_entry.bind('<FocusOut>', (lambda args: [placeholder_quantity_threads_entry_insert()]))
-
-        load_params_entry = Entry(master = generate_post, width = 35)
-        load_params_entry.insert(0, 'line(1, 100, 5m) const(50,2m)')
-        load_params_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
-        load_params_entry.grid(column = 1, row = 5, padx = [5, 5], pady = [5, 5])
-        load_params_entry.bind('<FocusIn>', (lambda args: [placeholder_load_params_delete()]))
-        load_params_entry.bind('<FocusOut>', (lambda args: [placeholder_load_params_insert()]))
-
-        name_test_entry = Entry(master = generate_post, width = 35)
-        name_test_entry.insert(0, 'Введите название теста')
-        name_test_entry.configure(foreground = 'gray', font = 'helvetica 11 italic')
-        name_test_entry.grid(column = 1, row = 6, padx = [5, 5], pady = [5, 5])
-        name_test_entry.bind('<FocusIn>', (lambda args: [placeholder_name_delete()]))
-        name_test_entry.bind('<FocusOut>', (lambda args: [placeholder_name_insert()]))
-
-        selected_console = StringVar()
-        selected_console.set('')
-        console_radiobutton_on = Radiobutton(master = generate_post, text = 'включить', value = 'true', variable = selected_console)
-        console_radiobutton_on.grid(column = 1, row = 7, sticky = W, padx = [15, 5])
-        console_radiobutton_off = Radiobutton(master = generate_post, text = 'отключить', value = 'false', variable = selected_console)
-        console_radiobutton_off.grid(column = 1, row = 7, padx = [55, 5])
-
-        selected_overload = StringVar()
-        selected_overload.set('')
-        overload_radiobutton_on = Radiobutton(master = generate_post, text = 'включить', value = 'true', variable = selected_overload)
-        overload_radiobutton_on.grid(column = 1, row = 8, sticky = W, padx = [15, 5])
-        overload_radiobutton_off = Radiobutton(master = generate_post, text = 'отключить', value = 'false', variable = selected_overload)
-        overload_radiobutton_off.grid(column = 1, row = 8, padx = [55, 5])
-
-        save_btn = Button(master = generate_post, text = 'Создать файл с конфигурацией', command = created_file_for_post)
-        save_btn.grid(columnspan = 3, row = 9, padx = [10, 10], pady = [10, 10], ipadx = 50)
-        select_btn = Button(master = generate_post, text = 'Принять', command = lambda: [created_file_for_post(), create_next_widget(), generate_post.destroy()])
-        select_btn.grid(column = 2, row = 10, padx = [10, 10], pady = [20, 10])
-        back_btn =Button(master = generate_post, text = 'Вернуться к выбору запросов', command = lambda:[generate_post.destroy(), controller_widgets.widget_generate()])
-        back_btn.grid(column = 1, row = 10, padx = [10, 10], pady = [20, 10])
-
 # \\---------------------- КОД ВИДЖЕТА ГЕНЕРАТОРА КОНФИГУРАЦИЙ POST ЗАПРОСОВ ----------------------//
+# --------------------------------------------------------------------------------------------------
+# //----------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ POST ЗАПРОСОВ ------------------\\
+
+class Widget_POST_Requests:
+
+    def __init__(self, name):
+        self.name = name
+        self.body_file_name = ''
+        self.ammo_file_name = ''
+
+    def POST(self):
+        global iter_test_post_entry
+        global ammo_test_path
+        global body_test_post_path
+        global post_req
+
+        controller_widgets.start.destroy()
+
+        def iter_test_get_entry_delete():
+            if iter_test_post_entry.get() == '1':
+                iter_test_post_entry.delete(0, 'end')
+                iter_test_post_entry.configure(foreground = 'black', font = ('Arial', 11))
+
+        def body_test_get_path_delete():
+            if (body_test_post_path.get() == self.body_file_name) or (body_test_post_path.get() == 'Укажите путь к файлу'):
+                body_test_post_path.delete(0, 'end')
+                body_test_post_path.configure(foreground = 'black', font = ('Arial', 11))
+
+        def ammo_test_path_delete():
+            if (ammo_test_path.get() == self.ammo_file_name) or (ammo_test_path.get() == 'Укажите путь к файлу'):
+                ammo_test_path.delete(0, 'end')
+                ammo_test_path.configure(foreground = 'black', font = ('Arial', 11))
+
+        def iter_test_get_entry_insert():
+            if iter_test_post_entry.get() == '':
+                iter_test_post_entry.insert(0, '1')
+                iter_test_post_entry.configure(foreground = 'gray', font = 'Arial 11 italic')
+
+        def body_test_get_path_insert():
+            if (len(self.body_file_name) > 0) and body_test_post_path.get() == '':
+                body_test_post_path.insert(0, self.body_file_name)
+                body_test_post_path.configure(foreground = 'gray', font = 'Arial 11 italic')
+
+            elif (len(self.body_file_name) == 0) and body_test_post_path.get() == '':
+                body_test_post_path.insert(0, 'Укажите путь к файлу')
+                body_test_post_path.configure(foreground = 'gray', font = 'Arial 11 italic')
+
+        def ammo_test_path_insert():
+            if (len(self.ammo_file_name) > 0) and ammo_test_path.get() == '':
+                ammo_test_path.insert(0, self.ammo_file_name)
+                ammo_test_path.configure(foreground = 'gray', font = 'Arial 11 italic')
+
+            elif (len(self.ammo_file_name) == 0) and ammo_test_path.get() == '':
+                ammo_test_path.insert(0, 'Укажите путь к файлу')
+                ammo_test_path.configure(foreground = 'gray', font = 'Arial 11 italic')
+
+        post_req = Frame(controller_widgets.window_no, relief = FLAT)
+        post_req.pack(pady = [5, 5])
+
+        loadFileMenu = Menu(controller_widgets.window_no)
+        controller_widgets.window_no.config(menu = loadFileMenu)
+        loadFileMenu.add_command(label = 'Справка')
+
+        body_test_post = Label(master = post_req, text = 'Файл с конфигурацией', font = ("Arial", 12))
+        body_test_post.grid(column = 0, row = 2, padx = [5, 5], pady = [5, 5], sticky = 'e')
+        body_test_post_path = Entry(master = post_req, width = 25)
+        body_test_post_path.insert(0, self.body_file_name)
+        body_test_post_path.configure(foreground = 'gray', font = 'Arial 11 italic')
+        body_test_post_path.bind('<FocusIn>', (lambda args: [body_test_get_path_delete()]))
+        body_test_post_path.bind('<FocusOut>', (lambda args: [body_test_get_path_insert()]))
+        body_test_post_path.grid(column = 1, row = 2, padx = [5, 5], pady = [5, 5])
+
+        ammo_test = Label(master = post_req, text = 'Файл запросов', font = ("Arial", 12))
+        ammo_test.grid(column = 0, row = 3, padx = [5, 5], pady = [5, 5], sticky = 'e')
+        ammo_test_path = Entry(master = post_req, width = 25)
+        ammo_test_path.insert(0, self.ammo_file_name)
+        ammo_test_path.configure(foreground = 'gray', font = 'Arial 11 italic')
+        ammo_test_path.bind('<FocusIn>', (lambda args: [ammo_test_path_delete()]))
+        ammo_test_path.bind('<FocusOut>', (lambda args: [ammo_test_path_insert()]))
+        ammo_test_path.grid(column = 1, row = 3, padx = [5, 5], pady = [5, 5])
+
+        back_btn = Button(master = post_req, text = 'Вернуться к выбору запросов', command = lambda:[post_req.destroy(), controller_widgets.generate_files(), controller_widgets.window_no.config(loadFileMenu.destroy())])
+        back_btn.grid(column = 1, row = 4, padx = [10, 20], pady = [50, 10])
+
+        nameTestPOST = Label(master = post_req, text = "--- POST ---", font = ("Arial", 16), foreground = 'gray')
+        nameTestPOST.grid(columnspan = 3, row = 0, padx = [5, 5], pady = [5, 30])
+
+        iter_test = Label(master = post_req, text = "Количество итераций тестов:", font = ("Arial", 12))
+        iter_test.grid(column = 0, row = 1, padx = [5, 5], pady = [5, 5], sticky = 'e')
+        iter_test_post_entry = Entry(master = post_req, width = 25)
+        iter_test_post_entry.insert(0, '1')
+        iter_test_post_entry.configure(foreground = 'gray', font = 'Arial 11 italic')
+        iter_test_post_entry.bind('<FocusIn>', (lambda args: [iter_test_get_entry_delete()]))
+        iter_test_post_entry.bind('<FocusOut>', (lambda args: [iter_test_get_entry_insert()]))
+        iter_test_post_entry.grid(column = 1, row = 1, padx = [5, 5], pady = [5, 5])
+
+        iterTest_btn = Button(master = post_req, text = 'Принять', command = create_post)
+        iterTest_btn.grid(column = 2, row = 4, padx = [10, 20], pady = [50, 10])
+
+        btn_insertFile = Button(master = post_req, text = 'Открыть', command = select_load_file)
+        btn_insertFile.grid(column = 2, row = 2, padx = [10, 20], pady = [5, 5])
+        btn1_insertFile = Button(master = post_req, text = 'Открыть', command = select_ammo_file)
+        btn1_insertFile.grid(column = 2, row = 3, padx = [10, 20], pady = [5, 5])
+
+        def select_load_file():
+            file_path = fd.askopenfilename()
+
+            if file_path:          
+                body_test_post_path.delete(0, 'end')
+                body_test_post_path.insert(0, file_path)
+
+                if len(file_path) > 0 and (body_test_post_path.get() != 'Укажите путь к файлу'):
+                    body_test_post_path.configure(foreground = 'black', font = ('Arial', 11))
+            
+            else:
+                pass
+
+        def select_ammo_file():
+            file_path = fd.askopenfilename()
+
+            if file_path:          
+                ammo_test_path.delete(0, 'end')
+                ammo_test_path.insert(0, file_path)
+
+                if len(file_path) > 0 and (ammo_test_path.get() != 'Укажите путь к файлу'):
+                    ammo_test_path.configure(foreground = 'black', font = ('Arial', 11))
+            
+            else:
+                pass
+
+# \\----------------- КОД ВИДЖЕТА ДЛЯ ЗАГРУЗКИ ФАЙЛОВ КОНФИГУРАЦИИ POST ЗАПРОСОВ ------------------//
