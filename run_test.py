@@ -1,5 +1,5 @@
 import time
-import check
+import phantom_check
 
 
 class Choice_Type:
@@ -17,7 +17,7 @@ class Choice_Type:
         if (self.iterrationGET > 0) and (self.iterrationPOST > 0):
             
             while self.iterrationGET > 0:
-                case = check.LoadGETTesting("CaseGET")
+                case = phantom_check.LoadGETTesting("CaseGET")
                 try:
                     case.path = self.pathBodyGET
                 except:
@@ -28,7 +28,7 @@ class Choice_Type:
                 time.sleep(30)
             
             while self.iterrationPOST > 0:
-                case = check.LoadPOSTTesting("CasePOST")                    
+                case = phantom_check.LoadPOSTTesting("CasePOST")                    
                 try:
                     case.path = self.pathAmmo
                     case.path_2 = self.pathBodyPOST
@@ -49,7 +49,7 @@ class Choice_Type:
         if self.iterrationPOST > 0:
 
             while self.iterrationPOST > 0:
-                case = check.LoadPOSTTesting("CasePOST")                    
+                case = phantom_check.LoadPOSTTesting("CasePOST")                    
                 try:
                     case.path = self.pathAmmo
                     case.path_2 = self.pathBodyPOST
@@ -70,7 +70,7 @@ class Choice_Type:
         if self.iterrationGET > 0:
 
             while self.iterrationGET > 0:
-                case = check.LoadGETTesting("CaseGET")
+                case = phantom_check.LoadGETTesting("CaseGET")
                 try:
                     case.path = self.pathBodyGET
                 except:
