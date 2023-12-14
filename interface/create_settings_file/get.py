@@ -78,9 +78,9 @@ class Widget_Generator_GET:
         port_entry.grid(column = 1, row = 2, sticky = N, padx = [5, 5], pady = [5, 25])
         selected_port = StringVar()
         selected_port.set('')
-        port_radiobutton_443 = Radiobutton(master = generate_get, text = 'https://', command = selected_https, value = '443', variable = selected_port)
+        port_radiobutton_443 = Radiobutton(master = generate_get, text = 'https://', command = lambda:[selected_https()], value = '443', variable = selected_port)
         port_radiobutton_443.grid(column = 1, row = 2, sticky = SW, padx = [15, 15])
-        port_radiobutton_80 = Radiobutton(master = generate_get, text = 'http://', command = selected_http, value = '80', variable = selected_port)
+        port_radiobutton_80 = Radiobutton(master = generate_get, text = 'http://', command = lambda:[selected_http()], value = '80', variable = selected_port)
         port_radiobutton_80.grid(column = 1, row = 2, sticky = S, padx = [25, 15])
 
         user_agent_entry = Entry(master = generate_get, width = 35)
